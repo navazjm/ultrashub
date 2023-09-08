@@ -8,32 +8,32 @@
             </a>
             <ul class="navbar-nav d-none d-md-flex flex-md-row flex-wrap">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
                         Schedule
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">All</a></li>
                         <li><a class="dropdown-item" href="#">Fixtures</a></li>
                         <li><a class="dropdown-item" href="#">Results</a></li>
-                     </ul>
+                    </ul>
                 </li>
             </ul>
         </div>
-        <ul class="navbar-nav d-none d-md-flex flex-md-row flex-wrap">
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    Signup
-                </a>
-            </li>
-            <div class="vr"></div>
+        <ul class="navbar-nav d-none d-md-flex flex-md-row flex-wrap align-items-center">
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     Login
                 </a>
             </li>
+            <div class="vr"></div>
+            <li class="nav-item">
+                {{template "themeSwitcher" .}}
+            </li>
         </ul>
         {{/*toggles mobile nav slideout*/}}
-        <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNav" aria-controls="offcanvasExample">
+        <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNav"
+            aria-controls="offcanvasExample">
             <span class="navbar-toggler-icon"></span>
         </button>
     </nav>
@@ -51,27 +51,26 @@
     <div class="offcanvas-body d-flex flex-column justify-content-between">
         <ul class="navbar-nav d-flex flex-column">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
                     Schedule
                 </a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="#">All</a></li>
                     <li><a class="dropdown-item" href="#">Fixtures</a></li>
                     <li><a class="dropdown-item" href="#">Results</a></li>
-                 </ul>
+                </ul>
             </li>
         </ul>
-        <ul class="navbar-nav d-flex flex-row flex-wrap gap-2">
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    Signup
-                </a>
-            </li>
-            <div class="vr"></div>
+        <ul class="navbar-nav d-flex flex-row flex-wrap align-items-center">
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     Login
                 </a>
+            </li>
+            <div class="vr ms-3"></div>
+            <li class="nav-item">
+                {{template "themeSwitcher" .}}
             </li>
         </ul>
     </div>

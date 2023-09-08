@@ -1,7 +1,7 @@
 (() => {
     "use strict"
 
-    const themeSwitcherBtn = document.querySelector("#bd-theme");
+    const themeSwitcherBtns = document.querySelectorAll(".bd-theme");
     const getStoredTheme = () => localStorage.getItem("theme");
     const setStoredTheme = theme => localStorage.setItem("theme", theme);
 
@@ -21,12 +21,12 @@
     setTheme(getPreferredTheme());
 
     const showActiveTheme = (theme) => {
-        if (!themeSwitcherBtn) {
+        if (themeSwitcherBtns.length === 0) {
             return;
         }
 
         const svgIconHref = theme === "light" ? "#sun-fill" : "#moon-stars-fill";
-        themeSwitcherBtn.querySelector("svg use").setAttribute("href", svgIconHref);
+        themeSwitcherBtns.forEach(btn => btn.querySelector("svg use").setAttribute("href", svgIconHref))
         document.documentElement.setAttribute("data-bs-theme", theme);
     }
 
@@ -34,14 +34,14 @@
         showActiveTheme(getPreferredTheme());
     });
 
-    if (themeSwitcherBtn) {
+    themeSwitcherBtns.forEach(themeSwitcherBtn => {
         themeSwitcherBtn.addEventListener("click", () => {
             const currentTheme = document.documentElement.getAttribute("data-bs-theme");
             const newTheme = currentTheme === "light" ? "dark" : "light";
             const svgIconHref = newTheme === "light" ? "#sun-fill" : "#moon-stars-fill";
-            themeSwitcherBtn.querySelector("svg use").setAttribute("href", svgIconHref);
+            themeSwitcherBtns.forEach(btn => btn.querySelector("svg use").setAttribute("href", svgIconHref))
             document.documentElement.setAttribute("data-bs-theme", newTheme);
             setStoredTheme(newTheme);
         });
-    }
+    });
 })()
