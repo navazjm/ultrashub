@@ -31,6 +31,7 @@ func newTemplateCache() (map[string]*template.Template, error) {
 		patterns := []string{
 			"templates/base.html",
 			"templates/layouts/*.html",
+			"templates/svg/*.html",
 			page,
 		}
 

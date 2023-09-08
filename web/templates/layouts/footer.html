@@ -1,5 +1,23 @@
 {{define "footer"}}
-<footer>
-    <p>I am a footer</p>
+<footer class="navbar navbar-expand-md py-3">
+    <nav class="container-xxl bd-gutter flex-wrap flex-lg-nowrap">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-row flex-wrap">
+                <li class="nav-item me-3 me-md-0" style="font-size: 0.75rem;">
+                    <a class="nav-link icon-link" href="https://github.com/navazjm/ultrashub" target="_blank">
+                        {{template "githubSVG" .}}
+                        Github
+                    </a>
+                </li>
+                <li class="nav-item" style="font-size: 0.75rem;">
+                    <a class="nav-link icon-link" href="https://twitter.com/navazjm" target="_blank">
+                        {{template "twitterSVG" .}}
+                        Twitter
+                    </a>
+                </li>
+            </ul>
+            <div class="text-secondary" style="font-size: 0.75rem;">UltrasHub &copy; 2023</div>
+        </div>
+    </nav>
 </footer>
 {{end}}
