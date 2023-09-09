@@ -42,7 +42,7 @@ git clone https://github.com/navazjm/ultrashub && cd ultrashub
 ```
 
 6. copy .env.sample to .env \
-   _Note: Update ULTRASHUB_DB_DSN with your unique username and password_
+   _Note: Update with your unique keys_
 
 ```sh
 cp .env.sample .env
