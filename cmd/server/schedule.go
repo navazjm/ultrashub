@@ -5,8 +5,6 @@ import (
 	"net/url"
 	"sort"
 	"time"
-
-	"github.com/navazjm/ultrashub/internal/apifootball"
 )
 
 func (app *application) getFixturesForCurrentDate(w http.ResponseWriter, r *http.Request) {
@@ -22,10 +20,11 @@ func (app *application) getFixturesForCurrentDate(w http.ResponseWriter, r *http
 		return
 	}
 
-	leagueMatches := make(map[string][]apifootball.Match)
+	leagueMatches := make(map[string][]MatchesTemplateData)
 	for _, match := range fixturesData.Response {
 		currentLeagueName := match.League.Name
-		leagueMatches[currentLeagueName] = append(leagueMatches[currentLeagueName], match)
+		matchTemplateData := app.newMatchesTemplateData(match)
+		leagueMatches[currentLeagueName] = append(leagueMatches[currentLeagueName], *matchTemplateData)
 	}
 
 	queryParams = url.Values{}

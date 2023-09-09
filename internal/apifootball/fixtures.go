@@ -10,7 +10,7 @@ import (
 type Match struct {
 	Fixture Fixture     `json:"fixture"`
 	League  MatchLeague `json:"league"`
-	Teams   MatchTeam   `json:"teams"`
+	Teams   MatchTeams  `json:"teams"`
 	Goals   struct {
 		Home int `json:"home"`
 		Away int `json:"away"`
@@ -67,7 +67,7 @@ type MatchLeague struct {
 	Round   string `json:"round"`
 }
 
-type MatchTeam struct {
+type MatchTeams struct {
 	Home struct {
 		ID     int    `json:"id"`
 		Name   string `json:"name"`

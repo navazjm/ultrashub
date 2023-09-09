@@ -7,8 +7,8 @@ import (
 
 func secureHeaders(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Security-Policy",
-			"default-src 'self'; style-src 'self' 'unsafe-inline' stackpath.bootstrapcdn.com cdn.jsdelivr.net fonts.googleapis.com; font-src stackpath.bootstrapcdn.com fonts.gstatic.com; script-src 'self' 'unsafe-inline' code.jquery.com stackpath.bootstrapcdn.com cdn.jsdelivr.net; img-src 'self' w3.org data:;")
+		// w.Header().Set("Content-Security-Policy",
+		// 	"default-src 'self'; style-src 'self' 'unsafe-inline' stackpath.bootstrapcdn.com cdn.jsdelivr.net fonts.googleapis.com; font-src stackpath.bootstrapcdn.com fonts.gstatic.com; script-src 'self' 'unsafe-inline' code.jquery.com stackpath.bootstrapcdn.com cdn.jsdelivr.net; img-src 'self' api-sports.io w3.org data:;")
 		w.Header().Set("Referrer-Policy", "origin-when-cross-origin")
 		w.Header().Set("X-Content-Type-Options", "nosniff")
 		w.Header().Set("X-Frame-Options", "deny")
