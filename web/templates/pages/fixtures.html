@@ -1,5 +1,36 @@
 {{define "title"}}Fixtures{{end}}
 
 {{define "content"}}
-<main>Hello from fixtures</main>
+<main class="my-4 container">
+    <div class="d-flex flex-row justify-content-between align-items-center flex-wrap">
+        <h3>Upcoming Fixtures</h3>
+        <div class="row justify-content-end">
+            <div class="col-12 col-md-8">
+                <select class="form-select" aria-label="Select league name">
+                    <option selected>Select Competition</option>
+                    {{range .Leagues}}
+                    <option value="{{.}}">{{.}}</option>
+                    {{end}}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div id="leaguesContainer">
+        {{range $league, $matches := .LeagueMatches}}
+        <div class="my-3">
+            <h5>{{$league}}</h5>
+            <div class="row gap-2 px-3">
+                {{range $matches}}
+                <div class="card col-12 col-md-5 col-lg-4 col-xl-3">
+                    <div class="card-body">
+                        <div>{{.Teams.Home.Name}}</div>
+                        <div>{{.Teams.Away.Name}}</div>
+                    </div>
+                </div>
+                {{end}}
+            </div>
+        </div>
+        {{end}}
+    </div>
+</main>
 {{end}}

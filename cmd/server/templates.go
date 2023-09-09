@@ -6,10 +6,13 @@ import (
 	"net/http"
 	"path/filepath"
 
+	"github.com/navazjm/ultrashub/internal/apifootball"
 	"github.com/navazjm/ultrashub/web"
 )
 
 type templateData struct {
+	LeagueMatches map[string][]apifootball.Match
+	Leagues       []string
 }
 
 func (app *application) newTemplateData(r *http.Request) *templateData {

@@ -10,12 +10,14 @@ import (
 	"time"
 
 	"github.com/joho/godotenv"
+	"github.com/navazjm/ultrashub/internal/apifootball"
 )
 
 type config struct {
-	port int
-	env  string
-	db   struct {
+	port              int
+	env               string
+	APIFootballAPIKey string
+	db                struct {
 		dsn          string
 		maxOpenConns int
 		maxIdleConns int
@@ -28,6 +30,7 @@ type application struct {
 	errorLog      *log.Logger
 	infoLog       *log.Logger
 	templateCache map[string]*template.Template
+	APIFootball   *apifootball.Handler
 }
 
 func main() {
@@ -43,6 +46,7 @@ func main() {
 
 	flag.IntVar(&cfg.port, "port", 8080, "Server port")
 	flag.StringVar(&cfg.env, "env", "development", "Environment (development|staging|production)")
+	flag.StringVar(&cfg.APIFootballAPIKey, "api-key", os.Getenv("API_FOOTBALL_KEY"), "API Key for API-Football")
 	flag.StringVar(&cfg.db.dsn, "dsn", os.Getenv("ULTRASHUB_DB_DSN"), "PostgreSQL DSN")
 	flag.IntVar(&cfg.db.maxOpenConns, "db-max-open-conns", 25, "PostgreSQL max open connections")
 	flag.IntVar(&cfg.db.maxIdleConns, "db-max-idle-conns", 25, "PostgreSQL max idle connections")
@@ -65,6 +69,7 @@ func main() {
 		errorLog:      errorLog,
 		infoLog:       infoLog,
 		templateCache: templateCache,
+		APIFootball:   apifootball.New(cfg.APIFootballAPIKey),
 	}
 
 	srv := &http.Server{
