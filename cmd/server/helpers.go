@@ -4,7 +4,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
+	"os"
 	"runtime/debug"
 )
 
@@ -50,4 +52,20 @@ func formatJSONResponse[T comparable](inputMap T) string {
 	}
 
 	return string(jsonData)
+}
+
+func readJSONFile(filePath string) ([]byte, error) {
+	file, err := os.Open(filePath)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	// Read the file content into a byte slice
+	jsonData, err := io.ReadAll(file)
+	if err != nil {
+		return nil, err
+	}
+
+	return jsonData, nil
 }
