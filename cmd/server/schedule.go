@@ -1,23 +1,43 @@
 package main
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/url"
 	"sort"
 	"time"
+
+	"github.com/navazjm/ultrashub/internal/apifootball"
 )
 
 func (app *application) getFixturesForCurrentDate(w http.ResponseWriter, r *http.Request) {
-	currentTime := time.Now()
-	formattedDate := currentTime.Format("2006-01-02")
+	var (
+		fixturesData *apifootball.FixtureResponse
+		err          error
+	)
 
-	queryParams := url.Values{}
-	queryParams.Add("date", formattedDate)
+	if app.config.env == "development" {
+		jsonData, err := readJSONFile("./test/data/fixtures.json")
+		if err != nil {
+			app.serverError(w, err)
+			return
+		}
+		if err = json.Unmarshal(jsonData, &fixturesData); err != nil {
+			app.serverError(w, err)
+			return
+		}
+	} else {
+		currentTime := time.Now()
+		formattedDate := currentTime.Format("2006-01-02")
 
-	fixturesData, err := app.APIFootball.GetFixtures(queryParams)
-	if err != nil {
-		app.serverError(w, err)
-		return
+		queryParams := url.Values{}
+		queryParams.Add("date", formattedDate)
+
+		fixturesData, err = app.APIFootball.GetFixtures(queryParams)
+		if err != nil {
+			app.serverError(w, err)
+			return
+		}
 	}
 
 	leagueMatches := make(map[string][]MatchesTemplateData)
@@ -27,7 +47,7 @@ func (app *application) getFixturesForCurrentDate(w http.ResponseWriter, r *http
 		leagueMatches[currentLeagueName] = append(leagueMatches[currentLeagueName], *matchTemplateData)
 	}
 
-	queryParams = url.Values{}
+	queryParams := url.Values{}
 	queryParams.Add("current", "true")
 	leaguesData, err := app.APIFootball.GetLeagues(queryParams)
 	if err != nil {
