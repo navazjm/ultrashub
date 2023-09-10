@@ -1,6 +1,7 @@
 # UltrasHub - Roadmap 
 
 ### v0.1.0
+- create cli tool to create json file from API Football api call to limit amount of api calls during development
 - "/fixtures/date/YYYY-MM-DD" -> returns all fixtures for given date, display 7 day calendar to navigate between dates
 - "/fixtures/id/:id" -> returns a single fixture based on id, display details of fixture based on its status
 
