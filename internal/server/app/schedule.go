@@ -1,4 +1,4 @@
-package main
+package app
 
 import (
 	"encoding/json"
@@ -16,7 +16,7 @@ func (app *application) getFixturesForCurrentDate(w http.ResponseWriter, r *http
 		err          error
 	)
 
-	if app.config.env == "development" {
+	if app.Config.Env == "development" {
 		jsonData, err := readJSONFile("./test/data/fixtures.json")
 		if err != nil {
 			app.serverError(w, err)

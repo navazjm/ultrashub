@@ -1,4 +1,4 @@
-package main
+package app
 
 import (
 	"net/http"
@@ -8,7 +8,7 @@ import (
 	"github.com/navazjm/ultrashub/web"
 )
 
-func (app *application) routes() http.Handler {
+func (app *application) Routes() http.Handler {
 	router := httprouter.New()
 
 	router.NotFound = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

@@ -1,4 +1,4 @@
-package main
+package app
 
 import (
 	"context"
@@ -8,19 +8,19 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func openDB(cfg config) (*sql.DB, error) {
-	db, err := sql.Open("postgres", cfg.db.dsn)
+func openDB(cfg Config) (*sql.DB, error) {
+	db, err := sql.Open("postgres", cfg.DB.DSN)
 	if err != nil {
 		return nil, err
 	}
 
-	duration, err := time.ParseDuration(cfg.db.maxIdleTime)
+	duration, err := time.ParseDuration(cfg.DB.MaxIdleTime)
 	if err != nil {
 		return nil, err
 	}
 	db.SetConnMaxIdleTime(duration)
-	db.SetMaxOpenConns(cfg.db.maxOpenConns)
-	db.SetMaxIdleConns(cfg.db.maxIdleConns)
+	db.SetMaxOpenConns(cfg.DB.MaxOpenConns)
+	db.SetMaxIdleConns(cfg.DB.MaxIdleConns)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
