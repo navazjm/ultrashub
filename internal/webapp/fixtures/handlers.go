@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/navazjm/ultrashub/internal/apifootball"
-	"github.com/navazjm/ultrashub/internal/server/core"
-	"github.com/navazjm/ultrashub/internal/server/utils"
+	"github.com/navazjm/ultrashub/internal/webapp/core"
+	"github.com/navazjm/ultrashub/internal/webapp/utils"
 )
 
 func GetFixturesByDate(w http.ResponseWriter, r *http.Request, app *core.Application) {

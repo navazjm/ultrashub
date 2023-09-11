@@ -1,6 +1,6 @@
 package server
 
-import "github.com/navazjm/ultrashub/internal/server/core"
+import "github.com/navazjm/ultrashub/internal/webapp/core"
 
 type Server struct {
 	Application *core.Application

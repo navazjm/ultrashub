@@ -5,7 +5,7 @@ import (
 
 	"github.com/julienschmidt/httprouter"
 	"github.com/justinas/alice"
-	"github.com/navazjm/ultrashub/internal/server/fixtures"
+	"github.com/navazjm/ultrashub/internal/webapp/fixtures"
 	"github.com/navazjm/ultrashub/web"
 )
 

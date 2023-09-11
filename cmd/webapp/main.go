@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/navazjm/ultrashub/internal/server/server"
+	"github.com/navazjm/ultrashub/internal/webapp/server"
 )
 
 func main() {
