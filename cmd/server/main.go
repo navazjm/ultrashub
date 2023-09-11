@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	ultrashub := server.NewServer()
+	ultrashub := server.New()
 
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", ultrashub.Application.Config.Port),

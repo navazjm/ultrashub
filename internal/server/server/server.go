@@ -6,7 +6,7 @@ type Server struct {
 	Application *core.Application
 }
 
-func NewServer() *Server {
+func New() *Server {
 	return &Server{
 		Application: core.New(),
 	}
