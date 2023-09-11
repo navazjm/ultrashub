@@ -1,4 +1,4 @@
-package app
+package fixtures
 
 import (
 	"encoding/json"
@@ -8,22 +8,22 @@ import (
 	"time"
 
 	"github.com/navazjm/ultrashub/internal/apifootball"
+	"github.com/navazjm/ultrashub/internal/server/core"
+	"github.com/navazjm/ultrashub/internal/server/utils"
 )
 
-func (app *application) getFixturesForCurrentDate(w http.ResponseWriter, r *http.Request) {
-	var (
-		fixturesData *apifootball.FixtureResponse
-		err          error
-	)
+func GetFixturesByDate(w http.ResponseWriter, r *http.Request, app *core.Application) {
+	var fixturesData *apifootball.FixtureResponse
+	var err error
 
 	if app.Config.Env == "development" {
-		jsonData, err := readJSONFile("./test/data/fixtures.json")
+		jsonData, err := utils.ReadJSONFile("./test/data/fixtures.json")
 		if err != nil {
-			app.serverError(w, err)
+			app.ServerError(w, err)
 			return
 		}
 		if err = json.Unmarshal(jsonData, &fixturesData); err != nil {
-			app.serverError(w, err)
+			app.ServerError(w, err)
 			return
 		}
 	} else {
@@ -35,7 +35,7 @@ func (app *application) getFixturesForCurrentDate(w http.ResponseWriter, r *http
 
 		fixturesData, err = app.APIFootball.GetFixtures(queryParams)
 		if err != nil {
-			app.serverError(w, err)
+			app.ServerError(w, err)
 			return
 		}
 	}
@@ -43,7 +43,7 @@ func (app *application) getFixturesForCurrentDate(w http.ResponseWriter, r *http
 	leagueMatches := make(map[string][]MatchesTemplateData)
 	for _, match := range fixturesData.Response {
 		currentLeagueName := match.League.Name
-		matchTemplateData := app.newMatchesTemplateData(match)
+		matchTemplateData := newMatchesTemplateData(match)
 		leagueMatches[currentLeagueName] = append(leagueMatches[currentLeagueName], *matchTemplateData)
 	}
 
@@ -51,7 +51,7 @@ func (app *application) getFixturesForCurrentDate(w http.ResponseWriter, r *http
 	queryParams.Add("current", "true")
 	leaguesData, err := app.APIFootball.GetLeagues(queryParams)
 	if err != nil {
-		app.serverError(w, err)
+		app.ServerError(w, err)
 		return
 	}
 	var leagueNames []string
@@ -62,8 +62,8 @@ func (app *application) getFixturesForCurrentDate(w http.ResponseWriter, r *http
 
 	sort.Strings(leagueNames)
 
-	templateData := app.newTemplateData(r)
+	templateData := newTemplateData(r)
 	templateData.LeagueMatches = leagueMatches
 	templateData.Leagues = leagueNames
-	app.render(w, http.StatusOK, "fixtures.html", templateData)
+	app.Render(w, http.StatusOK, "fixtures.html", templateData)
 }

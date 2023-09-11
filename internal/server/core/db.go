@@ -1,4 +1,4 @@
-package app
+package core
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func openDB(cfg Config) (*sql.DB, error) {
+func openDB(cfg *Config) (*sql.DB, error) {
 	db, err := sql.Open("postgres", cfg.DB.DSN)
 	if err != nil {
 		return nil, err

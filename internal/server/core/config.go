@@ -1,13 +1,10 @@
-package app
+package core
 
 import (
 	"flag"
-	"html/template"
-	"log"
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/navazjm/ultrashub/internal/apifootball"
 )
 
 type Config struct {
@@ -22,24 +19,13 @@ type Config struct {
 	}
 }
 
-type application struct {
-	Config        Config
-	ErrorLog      *log.Logger
-	InfoLog       *log.Logger
-	TemplateCache map[string]*template.Template
-	APIFootball   *apifootball.Handler
-}
-
-func New() *application {
-	infoLog := log.New(os.Stdout, "INFO \t", log.Ldate|log.Ltime)
-	errorLog := log.New(os.Stdout, "ERROR \t", log.Ldate|log.Ltime|log.Lshortfile)
-
+func newConfig() (*Config, error) {
 	err := godotenv.Load()
 	if err != nil {
-		errorLog.Fatal(err)
+		return nil, err
 	}
 
-	var cfg Config
+	cfg := &Config{}
 
 	flag.IntVar(&cfg.Port, "port", 8080, "Server port")
 	flag.StringVar(&cfg.Env, "env", "development", "Environment (development|staging|production)")
@@ -50,24 +36,5 @@ func New() *application {
 	flag.StringVar(&cfg.DB.MaxIdleTime, "db-max-idle-time", "15m", "PostgreSQL max connection idle time")
 	flag.Parse()
 
-	db, err := openDB(cfg)
-	if err != nil {
-		errorLog.Fatal(err)
-	}
-	defer db.Close()
-
-	templateCache, err := newTemplateCache()
-	if err != nil {
-		errorLog.Fatal(err)
-	}
-
-	app := &application{
-		Config:        cfg,
-		ErrorLog:      errorLog,
-		InfoLog:       infoLog,
-		TemplateCache: templateCache,
-		APIFootball:   apifootball.New(cfg.APIFootballAPIKey),
-	}
-
-	return app
+	return cfg, nil
 }
