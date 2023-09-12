@@ -10,6 +10,7 @@ import (
 type Config struct {
 	Port              int
 	Env               string
+	UseLiveData       bool
 	APIFootballAPIKey string
 	DB                struct {
 		DSN          string
@@ -29,6 +30,7 @@ func newConfig() (*Config, error) {
 
 	flag.IntVar(&cfg.Port, "port", 8080, "Server port")
 	flag.StringVar(&cfg.Env, "env", "development", "Environment (development|staging|production)")
+	flag.BoolVar(&cfg.UseLiveData, "live-data", false, "Use data from API-Football response or JSON file")
 	flag.StringVar(&cfg.APIFootballAPIKey, "api-key", os.Getenv("API_FOOTBALL_KEY"), "API Key for API-Football")
 	flag.StringVar(&cfg.DB.DSN, "dsn", os.Getenv("ULTRASHUB_DB_DSN"), "PostgreSQL DSN")
 	flag.IntVar(&cfg.DB.MaxOpenConns, "db-max-open-conns", 25, "PostgreSQL max open connections")
