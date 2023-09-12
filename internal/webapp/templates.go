@@ -7,11 +7,34 @@ import (
 	"io/fs"
 	"net/http"
 	"path/filepath"
+	"time"
 
 	"github.com/navazjm/ultrashub/web"
 )
 
-var templateFuns = template.FuncMap{}
+func formatDate(t time.Time) string {
+	return t.Format("01/02/2006")
+}
+
+func formatDateTime(t time.Time) string {
+	return t.Format("01/02/2006 15:04:05")
+}
+
+func formatTime(t time.Time) string {
+	return t.Format("15:04:05")
+}
+
+func formatMatchTime(datetime string) string {
+	t, _ := time.Parse("2006-01-02T15:04:05-07:00", datetime)
+	return formatTime(t)
+}
+
+var templateFuns = template.FuncMap{
+	"formatDate":      formatDate,
+	"formatDateTime":  formatDateTime,
+	"formatTime":      formatTime,
+	"formatMatchTime": formatMatchTime,
+}
 
 func newTemplateCache() (map[string]*template.Template, error) {
 	cache := map[string]*template.Template{}

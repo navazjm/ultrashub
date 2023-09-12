@@ -2,18 +2,26 @@ package webapp
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/url"
-	"sort"
+	"strings"
 	"time"
 
+	"github.com/julienschmidt/httprouter"
 	"github.com/navazjm/ultrashub/internal/apifootball"
 	"github.com/navazjm/ultrashub/internal/utils"
 )
 
+type DateSelection struct {
+	Weekday string
+	Date    string
+	HREF    string
+}
+
 type fixturesTemplateData struct {
+	DateRanges    map[int]DateSelection
 	LeagueMatches map[string][]leagueMatchesTemplateData
-	Leagues       []string
 }
 
 func newFixturesTemplateData(r *http.Request) *fixturesTemplateData {
@@ -71,7 +79,39 @@ func (app *Application) getFixturesByDate(w http.ResponseWriter, r *http.Request
 	var fixturesData *apifootball.FixtureResponse
 	var err error
 
-	if app.Config.Env == "development" {
+	params := httprouter.ParamsFromContext(r.Context())
+	date := params.ByName("date")
+	layout := "2006-01-02"
+	formattedDate, err := time.Parse(layout, date)
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
+
+	dateRanges := make(map[int]DateSelection)
+	for i := -3; i <= 3; i++ {
+		date := formattedDate.AddDate(0, 0, i)
+		weekday := date.Weekday().String()
+		weekday = strings.ToUpper(weekday[:3])
+
+		newDateSelection := DateSelection{
+			Weekday: weekday,
+			Date:    date.Format("01/02"),
+			HREF:    date.Format(layout),
+		}
+		dateRanges[i] = newDateSelection
+	}
+
+	if app.Config.UseLiveData {
+		queryParams := url.Values{}
+		queryParams.Add("date", date)
+
+		fixturesData, err = app.APIFootball.GetFixtures(queryParams)
+		if err != nil {
+			app.serverError(w, err)
+			return
+		}
+	} else {
 		jsonData, err := utils.ReadFile("./test/data/fixtures.json")
 		if err != nil {
 			app.serverError(w, err)
@@ -81,44 +121,17 @@ func (app *Application) getFixturesByDate(w http.ResponseWriter, r *http.Request
 			app.serverError(w, err)
 			return
 		}
-	} else {
-		currentTime := time.Now()
-		formattedDate := currentTime.Format("2006-01-02")
-
-		queryParams := url.Values{}
-		queryParams.Add("date", formattedDate)
-
-		fixturesData, err = app.APIFootball.GetFixtures(queryParams)
-		if err != nil {
-			app.serverError(w, err)
-			return
-		}
 	}
 
 	leagueMatches := make(map[string][]leagueMatchesTemplateData)
 	for _, match := range fixturesData.Response {
-		currentLeagueName := match.League.Name
+		currentLeagueName := fmt.Sprintf("%s %s # %d", match.League.Country, match.League.Name, match.League.ID)
 		matchTemplateData := newLeagueMatchesTemplateData(match)
 		leagueMatches[currentLeagueName] = append(leagueMatches[currentLeagueName], *matchTemplateData)
 	}
 
-	queryParams := url.Values{}
-	queryParams.Add("current", "true")
-	leaguesData, err := app.APIFootball.GetLeagues(queryParams)
-	if err != nil {
-		app.serverError(w, err)
-		return
-	}
-	var leagueNames []string
-	for _, league := range leaguesData.Response {
-		currentLeagueName := league.League.Name
-		leagueNames = append(leagueNames, currentLeagueName)
-	}
-
-	sort.Strings(leagueNames)
-
 	templateData := newFixturesTemplateData(r)
+	templateData.DateRanges = dateRanges
 	templateData.LeagueMatches = leagueMatches
-	templateData.Leagues = leagueNames
 	app.Render(w, http.StatusOK, "fixtures.html", templateData)
 }
