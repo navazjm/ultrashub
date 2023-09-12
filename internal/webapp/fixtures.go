@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/navazjm/ultrashub/internal/apifootball"
+	"github.com/navazjm/ultrashub/internal/utils"
 )
 
 type fixturesTemplateData struct {
@@ -71,7 +72,7 @@ func (app *Application) getFixturesByDate(w http.ResponseWriter, r *http.Request
 	var err error
 
 	if app.Config.Env == "development" {
-		jsonData, err := ReadJSONFile("./test/data/fixtures.json")
+		jsonData, err := utils.ReadFile("./test/data/fixtures.json")
 		if err != nil {
 			app.serverError(w, err)
 			return

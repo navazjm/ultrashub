@@ -1,4 +1,4 @@
-package webapp
+package utils
 
 import (
 	"encoding/json"
@@ -15,7 +15,7 @@ func FormatJSONResponse[T comparable](inputMap T) string {
 	return string(jsonData)
 }
 
-func ReadJSONFile(filePath string) ([]byte, error) {
+func ReadFile(filePath string) ([]byte, error) {
 	file, err := os.Open(filePath)
 	if err != nil {
 		return nil, err
@@ -23,10 +23,10 @@ func ReadJSONFile(filePath string) ([]byte, error) {
 	defer file.Close()
 
 	// Read the file content into a byte slice
-	jsonData, err := io.ReadAll(file)
+	fileContent, err := io.ReadAll(file)
 	if err != nil {
 		return nil, err
 	}
 
-	return jsonData, nil
+	return fileContent, nil
 }

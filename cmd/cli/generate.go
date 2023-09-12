@@ -8,6 +8,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/navazjm/ultrashub/internal/apifootball"
+	"github.com/navazjm/ultrashub/internal/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -44,7 +45,7 @@ var generateCmd = &cobra.Command{
 			return
 		}
 
-		dataStr := formatJSONResponse(data)
+		dataStr := utils.FormatJSONResponse(data)
 		filePath := "test/data/" + Endpoint + ".json"
 		jsonData := []byte(dataStr)
 
