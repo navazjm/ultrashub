@@ -1,4 +1,4 @@
-package utils
+package webapp
 
 import (
 	"encoding/json"

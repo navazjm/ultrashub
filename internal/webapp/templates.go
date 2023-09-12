@@ -1,4 +1,4 @@
-package core
+package webapp
 
 import (
 	"bytes"
@@ -46,14 +46,14 @@ func (app *Application) Render(w http.ResponseWriter, status int, page string, d
 	ts, ok := app.TemplateCache[page]
 	if !ok {
 		err := fmt.Errorf("the template %s does not exist", page)
-		app.ServerError(w, err)
+		app.serverError(w, err)
 		return
 	}
 
 	buf := new(bytes.Buffer)
 	err := ts.ExecuteTemplate(buf, "base", data)
 	if err != nil {
-		app.ServerError(w, err)
+		app.serverError(w, err)
 		return
 	}
 

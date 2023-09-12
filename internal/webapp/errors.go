@@ -1,4 +1,4 @@
-package core
+package webapp
 
 import (
 	"fmt"
@@ -6,17 +6,17 @@ import (
 	"runtime/debug"
 )
 
-func (app *Application) ServerError(w http.ResponseWriter, err error) {
+func (app *Application) serverError(w http.ResponseWriter, err error) {
 	trace := fmt.Sprintf("%s\n%s", err.Error(), debug.Stack())
 	app.ErrorLog.Print(2, trace)
 
 	http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 }
 
-func (app *Application) ClientError(w http.ResponseWriter, status int) {
+func (app *Application) clientError(w http.ResponseWriter, status int) {
 	http.Error(w, http.StatusText(status), status)
 }
 
-func (app *Application) NotFound(w http.ResponseWriter) {
-	app.ClientError(w, http.StatusNotFound)
+func (app *Application) notFound(w http.ResponseWriter) {
+	app.clientError(w, http.StatusNotFound)
 }

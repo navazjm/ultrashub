@@ -1,29 +1,26 @@
-package server
+package webapp
 
 import (
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
 	"github.com/justinas/alice"
-	"github.com/navazjm/ultrashub/internal/webapp/fixtures"
 	"github.com/navazjm/ultrashub/web"
 )
 
-func (s *Server) Routes() http.Handler {
+func (app *Application) Routes() http.Handler {
 	router := httprouter.New()
 
 	router.NotFound = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		s.Application.NotFound(w)
+		app.notFound(w)
 	})
 
 	// static routes
 	fileServer := http.FileServer(http.FS(web.Files))
 	router.Handler(http.MethodGet, "/static/*filepath", fileServer)
 
-	router.HandlerFunc(http.MethodGet, "/fixtures/date/:date", func(w http.ResponseWriter, r *http.Request) {
-		fixtures.GetFixturesByDate(w, r, s.Application)
-	})
+	router.HandlerFunc(http.MethodGet, "/fixtures/date/:date", app.getFixturesByDate)
 
-	standardMiddlewares := alice.New(s.recoverPanic, s.logRequest, secureHeaders)
+	standardMiddlewares := alice.New(app.recoverPanic, app.logRequest, secureHeaders)
 	return standardMiddlewares.Then(router)
 }
