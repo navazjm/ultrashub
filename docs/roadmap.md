@@ -13,6 +13,7 @@
 - "/leagues/" -> returns list of leagues to navigate to "/leagues/id/:id" 
 - "/leagues/id/:id" -> returns matches, table, stats(show details like top goal scorer, assists??), clubs (links to "/clubs/id/:id"), and transfers for the specific league 
 - "/clubs/id/:id" -> returns fixtures (upcoming and history), league table with team highlighted, roster (show details like goals and assists??), transfers
+- "/fixtures/date/YYYY-MM-DD" -> filter by league
 
 ### v0.4.0
 - "/users/new" -> create a new user account
