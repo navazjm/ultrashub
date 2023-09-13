@@ -12,6 +12,38 @@ import (
 	"github.com/navazjm/ultrashub/web"
 )
 
+type templateData struct {
+	CurrentDate          string
+	FixturesTemplateData *fixturesTemplateData
+}
+
+func newTemplateData(r *http.Request) *templateData {
+	currentDate := time.Now().Format("2006-01-02")
+	return &templateData{
+		CurrentDate: currentDate,
+	}
+}
+
+func (app *Application) Render(w http.ResponseWriter, status int, page string, data *templateData) {
+	ts, ok := app.TemplateCache[page]
+	if !ok {
+		err := fmt.Errorf("the template %s does not exist", page)
+		app.serverError(w, err)
+		return
+	}
+
+	buf := new(bytes.Buffer)
+	err := ts.ExecuteTemplate(buf, "base", data)
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
+
+	w.WriteHeader(status)
+
+	buf.WriteTo(w)
+}
+
 func formatDate(t time.Time) string {
 	return t.Format("01/02/2006")
 }
@@ -63,24 +95,4 @@ func newTemplateCache() (map[string]*template.Template, error) {
 	}
 
 	return cache, nil
-}
-
-func (app *Application) Render(w http.ResponseWriter, status int, page string, data any) {
-	ts, ok := app.TemplateCache[page]
-	if !ok {
-		err := fmt.Errorf("the template %s does not exist", page)
-		app.serverError(w, err)
-		return
-	}
-
-	buf := new(bytes.Buffer)
-	err := ts.ExecuteTemplate(buf, "base", data)
-	if err != nil {
-		app.serverError(w, err)
-		return
-	}
-
-	w.WriteHeader(status)
-
-	buf.WriteTo(w)
 }

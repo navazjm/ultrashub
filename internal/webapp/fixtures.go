@@ -130,8 +130,11 @@ func (app *Application) getFixturesByDate(w http.ResponseWriter, r *http.Request
 		leagueMatches[currentLeagueName] = append(leagueMatches[currentLeagueName], *matchTemplateData)
 	}
 
-	templateData := newFixturesTemplateData(r)
-	templateData.DateRanges = dateRanges
-	templateData.LeagueMatches = leagueMatches
+	fixturesTemplateData := newFixturesTemplateData(r)
+	fixturesTemplateData.DateRanges = dateRanges
+	fixturesTemplateData.LeagueMatches = leagueMatches
+	templateData := newTemplateData(r)
+	templateData.FixturesTemplateData = fixturesTemplateData
+
 	app.Render(w, http.StatusOK, "fixtures.html", templateData)
 }

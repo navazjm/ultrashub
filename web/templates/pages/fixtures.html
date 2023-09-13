@@ -1,6 +1,7 @@
 {{define "title"}}Fixtures{{end}}
 
 {{define "content"}}
+{{with .FixturesTemplateData}}
 <main class="my-4 container p-sm-0">
     <div class="row justify-content-evenly justify-content-sm-between mb-4">
         <div class="col-1 d-none d-sm-flex"></div>
@@ -79,4 +80,5 @@
         {{end}}
     </div>
 </main>
+{{end}}
 {{end}}
