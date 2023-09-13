@@ -102,7 +102,7 @@ func (app *Application) getFixturesByDate(w http.ResponseWriter, r *http.Request
 		dateRanges[i] = newDateSelection
 	}
 
-	if app.Config.UseLiveData {
+	if app.Config.Env == "prod" {
 		queryParams := url.Values{}
 		queryParams.Add("date", date)
 
