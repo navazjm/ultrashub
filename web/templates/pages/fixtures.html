@@ -52,11 +52,13 @@
                                     <div class="d-flex flex-row align-items-center gap-2">
                                         <img src="{{.Teams.Home.Logo}}" width="30px" height="30px"
                                             alt="{{.Teams.Home.Name}} Logo" loading="lazy" />
-                                        <p class="d-block m-0 text-truncate">{{.Teams.Home.Name}}</p>
+                                        <p
+                                            class="d-block m-0 text-truncate{{if .Teams.Away.Winner}} text-secondary {{end}}">
+                                            {{.Teams.Home.Name}}</p>
                                     </div>
                                     {{if eq .Fixture.Status.Short "TBD" "NS"}}
                                     {{else}}
-                                    <p class="fs-5 m-0{{if .Teams.Home.Winner}} text-secondary {{end}}">
+                                    <p class="fs-5 m-0{{if .Teams.Away.Winner}} text-secondary {{end}}">
                                         {{.Goals.Home}}
                                         {{if eq .Fixture.Status.Short "PEN"}}
                                         <span>({{.Score.Penalty.Home}})</span>
@@ -68,11 +70,13 @@
                                     <div class="d-flex flex-row align-items-center gap-2">
                                         <img src="{{.Teams.Away.Logo}}" width="30px" height="30px"
                                             alt="{{.Teams.Away.Name}} Logo" loading="lazy" />
-                                        <p class="d-block m-0 text-truncate">{{.Teams.Away.Name}}</p>
+                                        <p
+                                            class="d-block m-0 text-truncate{{if .Teams.Home.Winner}} text-secondary {{end}}">
+                                            {{.Teams.Away.Name}}</p>
                                     </div>
                                     {{if eq .Fixture.Status.Short "TBD" "NS"}}
                                     {{else}}
-                                    <p class="fs-5 m-0{{if .Teams.Away.Winner}} text-secondary {{end}}">
+                                    <p class="fs-5 m-0{{if .Teams.Home.Winner}} text-secondary {{end}}">
                                         {{.Goals.Away}}
                                         {{if eq .Fixture.Status.Short "PEN"}}
                                         <span>({{.Score.Penalty.Away}})</span>
