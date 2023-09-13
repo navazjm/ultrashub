@@ -11,28 +11,8 @@ type Match struct {
 	Fixture Fixture     `json:"fixture"`
 	League  MatchLeague `json:"league"`
 	Teams   MatchTeams  `json:"teams"`
-	Goals   struct {
-		Home int `json:"home"`
-		Away int `json:"away"`
-	} `json:"goals"`
-	Score struct {
-		Halftime struct {
-			Home int `json:"home"`
-			Away int `json:"away"`
-		} `json:"halftime"`
-		Fulltime struct {
-			Home int `json:"home"`
-			Away int `json:"away"`
-		} `json:"fulltime"`
-		Extratime struct {
-			Home int `json:"home"`
-			Away int `json:"away"`
-		} `json:"extratime"`
-		Penalty struct {
-			Home int `json:"home"`
-			Away int `json:"away"`
-		} `json:"penalty"`
-	} `json:"score"`
+	Goals   MatchGoals  `json:"goals"`
+	Score   MatchScore  `json:"score"`
 }
 
 type Fixture struct {
@@ -50,11 +30,7 @@ type Fixture struct {
 		Name string `json:"name"`
 		City string `json:"city"`
 	} `json:"venue"`
-	Status struct {
-		Long    string `json:"long"`
-		Short   string `json:"short"`
-		Elapsed int    `json:"elapsed"`
-	} `json:"status"`
+	Status MatchStatus `json:"status"`
 }
 
 type MatchLeague struct {
@@ -80,6 +56,36 @@ type MatchTeams struct {
 		Logo   string `json:"logo"`
 		Winner bool   `json:"winner"`
 	} `json:"away"`
+}
+
+type MatchGoals struct {
+	Home int `json:"home"`
+	Away int `json:"away"`
+}
+
+type MatchStatus struct {
+	Long    string `json:"long"`
+	Short   string `json:"short"`
+	Elapsed int    `json:"elapsed"`
+}
+
+type MatchScore struct {
+	Halftime struct {
+		Home int `json:"home"`
+		Away int `json:"away"`
+	} `json:"halftime"`
+	Fulltime struct {
+		Home int `json:"home"`
+		Away int `json:"away"`
+	} `json:"fulltime"`
+	Extratime struct {
+		Home int `json:"home"`
+		Away int `json:"away"`
+	} `json:"extratime"`
+	Penalty struct {
+		Home int `json:"home"`
+		Away int `json:"away"`
+	} `json:"penalty"`
 }
 
 // returns all fixtures based on queryParams

@@ -21,58 +21,11 @@ type DateSelection struct {
 
 type fixturesTemplateData struct {
 	DateRanges    map[int]DateSelection
-	LeagueMatches map[string][]leagueMatchesTemplateData
+	LeagueMatches map[string][]apifootball.Match
 }
 
 func newFixturesTemplateData(r *http.Request) *fixturesTemplateData {
 	return &fixturesTemplateData{}
-}
-
-type leagueMatchesTemplateData struct {
-	Date  string
-	Goals struct {
-		Home int
-		Away int
-	}
-	Status string
-	Teams  apifootball.MatchTeams
-	Venue  struct {
-		Name string
-		City string
-	}
-}
-
-func newLeagueMatchesTemplateData(match apifootball.Match) *leagueMatchesTemplateData {
-	var status string
-	switch match.Fixture.Status.Short {
-	case "TBD", "NS":
-		status = "Scheduled"
-	case "1H", "HT", "2H", "ET", "BT", "P", "SUSP", "INT":
-		status = "In play"
-	case "FT", "AET", "PEN":
-		status = "Finished"
-	default:
-		status = "UNKNOWN"
-	}
-	return &leagueMatchesTemplateData{
-		Date:  match.Fixture.Date,
-		Teams: match.Teams,
-		Goals: struct {
-			Home int
-			Away int
-		}{
-			Home: match.Goals.Home,
-			Away: match.Goals.Away,
-		},
-		Venue: struct {
-			Name string
-			City string
-		}{
-			Name: match.Fixture.Venue.Name,
-			City: match.Fixture.Venue.City,
-		},
-		Status: status,
-	}
 }
 
 func (app *Application) getFixturesByDate(w http.ResponseWriter, r *http.Request) {
@@ -123,11 +76,10 @@ func (app *Application) getFixturesByDate(w http.ResponseWriter, r *http.Request
 		}
 	}
 
-	leagueMatches := make(map[string][]leagueMatchesTemplateData)
+	leagueMatches := make(map[string][]apifootball.Match)
 	for _, match := range fixturesData.Response {
 		currentLeagueName := fmt.Sprintf("%s %s # %d", match.League.Country, match.League.Name, match.League.ID)
-		matchTemplateData := newLeagueMatchesTemplateData(match)
-		leagueMatches[currentLeagueName] = append(leagueMatches[currentLeagueName], *matchTemplateData)
+		leagueMatches[currentLeagueName] = append(leagueMatches[currentLeagueName], match)
 	}
 
 	fixturesTemplateData := newFixturesTemplateData(r)
