@@ -82,6 +82,7 @@ func newTemplateCache() (map[string]*template.Template, error) {
 			"templates/base.html",
 			"templates/layouts/*.html",
 			"templates/components/*.html",
+			"templates/components/**/*.html",
 			"templates/svg/*.html",
 			page,
 		}

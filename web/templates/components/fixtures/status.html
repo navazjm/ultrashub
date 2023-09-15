@@ -1,0 +1,15 @@
+{{define "fixturesStatus"}}
+{{if eq .Fixture.Status.Short "TBD" "HT" "FT" "BT" "LIVE"}}
+<div>{{.Fixture.Status.Short}}</div>
+{{else if eq .Fixture.Status.Short "NS"}}
+<div>{{formatMatchTime .Fixture.Date}}</div>
+{{else if eq .Fixture.Status.Short "1H" "2H" "ET"}}
+<div>{{.Fixture.Status.Elapsed}}'</div>
+{{else if eq .Fixture.Status.Short "AET"}}
+<div>FT <span class="text-secondary">(ET)</span></div>
+{{else if eq .Fixture.Status.Short "PEN"}}
+<div>FT <span class="text-secondary">(P)</span></div>
+{{else}}
+<div>{{.Fixture.Status.Long}}</div>
+{{end}}
+{{end}}
