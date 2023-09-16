@@ -22,10 +22,8 @@ var generateCmd = &cobra.Command{
 	Short: "Generate JSON file from API Football response",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		var (
-			data any
-			err  error
-		)
+		var data any
+		var err error
 		handler := apifootball.New(ApiKey)
 
 		switch Endpoint {
