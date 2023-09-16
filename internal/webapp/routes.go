@@ -19,7 +19,8 @@ func (app *Application) Routes() http.Handler {
 	fileServer := http.FileServer(http.FS(web.Files))
 	router.Handler(http.MethodGet, "/static/*filepath", fileServer)
 
-	router.HandlerFunc(http.MethodGet, "/fixtures/date/:date", app.getFixturesByDate)
+	router.HandlerFunc(http.MethodGet, "/", app.getMatches)
+	router.HandlerFunc(http.MethodGet, "/matches/date/:date", app.getMatchesByDate)
 
 	standardMiddlewares := alice.New(app.recoverPanic, app.logRequest, secureHeaders)
 	return standardMiddlewares.Then(router)

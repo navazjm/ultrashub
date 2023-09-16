@@ -4,15 +4,20 @@
 - [ ] cli tool to create json file from API Football api call to limit amount of api calls during development
     - API Football fixtures endpoint
 - [ ] "/" 
-    - returns all matches (both fixtures and results) for current date of access, display 7 day calendar to navigate between dates, display top leagues/cups first
-- [ ] "/matches/fixtures/date/YYYY-MM-DD"
-    - returns not started or in-play fixtures for given date, display 7 day calendar to navigate between dates, display top leagues/cups first. If date is in the past of current date, navigate to "/matches/results/YYYY-MM-DD"
-- [ ] "/matches/fixtures/id/:id"
-    - returns a single fixture based on id, display details of upcoming fixture and teams head-to-head. If match already finished, navigate to "/matches/results/id/:id"
-- [ ] "/matches/results/date/YYYY-MM-DD"
-    - returns finished fixtures for given date, display 7 day calendar to navigate between dates, display top leagues/cups first. If date is in the future of current date, navigate to "/matches/fixtures/YYYY-MM-DD"
-- [ ] "/matches/results/id/:id"
-    - returns a single finished fixture based on id, display results of match, match events, match stats, team lineups based. If match has not finished, navigate to "/matches/fixtures/id/:id"
+    - returns all matches (both fixtures and results) for current date of access
+     - displays 7 day calendar to navigate between dates 
+     - displays top leagues/cups first
+- [ ] "/matches/date/YYYY-MM-DD"
+    - if given date == todays date, redirect to "/"
+    - returns all matches for given date.
+    - displays 7 day calendar to navigate between dates
+    - displays top leagues/cups first
+- [ ] "/matches/id/:id"
+    - returns a single match based on id
+    - if match is upcoming fixture:
+        - displays details of upcoming fixture (date, time, etc) and teams head-to-head
+    - if match is finished 
+        - displays results of match, match events, match stats, team lineups based.
 
 ### v0.2.0 
 - [ ] cli tool -> API Football transfers endpoint 
@@ -32,13 +37,11 @@
     - returns matches, league table with club highlighted, roster (show details like goals and assists??), transfers
 - [ ] add filter by league to the following routes:
     - "/"
-    - "/matches/fixtures/date/YYYY-MM-DD"
-    - "/matches/results/date/YYYY-MM-DD" 
+    - "/matches/date/YYYY-MM-DD" 
 - [ ] add links to "/clubs/id/:id" and "/leagues/id/:id" in the following routes:
     - "/"
-    - "/matches/fixtures/date/YYYY-MM-DD"
-    - "/matches/fixtures/id/:id"
-    - "/matches/results/id/:id"
+    - "/matches/date/YYYY-MM-DD"
+    - "/matches/id/:id"
 
 ### v0.4.0
 - [ ] "/users/new" -> create a new user account
@@ -53,8 +56,7 @@
         - enable/disable hide scores on "/" and "/matches/fixtures/date/YYYY-MM-DD"
 - [ ] highlight users favorite teams/league/cups for the following routes:
     - "/" 
-    - "/matches/fixtures/date/YYYY-MM-DD" 
-    - "/matches/results/date/YYYY-MM-DD" 
+    - "/matches/date/YYYY-MM-DD" 
     - "/transfers/latest" 
     - "/transfers/news" 
     - "/leagues/id/:id" 

@@ -13,14 +13,17 @@ import (
 )
 
 type templateData struct {
-	CurrentDate          string
-	FixturesTemplateData *fixturesTemplateData
+	CurrentDate         string
+	Title               string
+	ActiveRoute         string
+	MatchesTemplateData *matchesTemplateData
 }
 
-func newTemplateData(r *http.Request) *templateData {
-	currentDate := time.Now().Format("2006-01-02")
+func (app *Application) newTemplateData(r *http.Request) *templateData {
+	currentDate := time.Now().Format(app.Config.APIFootball.DateFormat)
 	return &templateData{
 		CurrentDate: currentDate,
+		ActiveRoute: r.URL.Path,
 	}
 }
 

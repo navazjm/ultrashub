@@ -41,7 +41,7 @@ func New() *Application {
 		ErrorLog:      errorLog,
 		InfoLog:       infoLog,
 		TemplateCache: templateCache,
-		APIFootball:   apifootball.New(cfg.APIFootballAPIKey),
+		APIFootball:   apifootball.New(cfg.APIFootball.APIKey),
 	}
 
 	return app

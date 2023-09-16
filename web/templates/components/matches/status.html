@@ -1,4 +1,4 @@
-{{define "fixturesStatus"}}
+{{define "matchStatus"}}
 {{if eq .Fixture.Status.Short "TBD" "HT" "FT" "BT" "LIVE"}}
 <div>{{.Fixture.Status.Short}}</div>
 {{else if eq .Fixture.Status.Short "NS"}}
