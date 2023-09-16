@@ -20,11 +20,15 @@ type DateSelection struct {
 }
 
 type matchesTemplateData struct {
-	DateRanges      map[int]DateSelection
-	Matches         map[string][]apifootball.Match
-	MatchesTBD      map[string][]apifootball.Match
-	MatchesFixtures map[string][]apifootball.Match
-	MatchesResults  map[string][]apifootball.Match
+	DateRanges               map[int]DateSelection
+	Matches                  map[string][]apifootball.Match
+	MatchesTBD               map[string][]apifootball.Match
+	MatchesFixtures          map[string][]apifootball.Match
+	MatchesResults           map[string][]apifootball.Match
+	TopLeagueMatches         map[string][]apifootball.Match
+	TopLeagueMatchesTBD      map[string][]apifootball.Match
+	TopLeagueMatchesFixtures map[string][]apifootball.Match
+	TopLeagueMatchesResults  map[string][]apifootball.Match
 }
 
 func newMatchesTemplateData(r *http.Request) *matchesTemplateData {
@@ -85,24 +89,47 @@ func (app *Application) getMatches(w http.ResponseWriter, r *http.Request) {
 	matchesTBD := make(map[string][]apifootball.Match)
 	matchesFixtures := make(map[string][]apifootball.Match)
 	matchesResults := make(map[string][]apifootball.Match)
+	topLeagueMatches := make(map[string][]apifootball.Match)
+	topLeagueMatchesTBD := make(map[string][]apifootball.Match)
+	topLeagueMatchesFixtures := make(map[string][]apifootball.Match)
+	topLeagueMatchesResults := make(map[string][]apifootball.Match)
 	for _, match := range apiFootballFixturesResp.Response {
 		currentLeagueName := fmt.Sprintf("%s %s # %d", match.League.Country, match.League.Name, match.League.ID)
-		matches[currentLeagueName] = append(matches[currentLeagueName], match)
+		if isTopLeague(match.League.ID) {
+			topLeagueMatches[currentLeagueName] = append(topLeagueMatches[currentLeagueName], match)
 
-		switch match.Fixture.Status.Short {
-		case "TBD", "PST":
-			matchesTBD[currentLeagueName] = append(matchesTBD[currentLeagueName], match)
-		case "NS", "1H", "HT", "2H", "ET", "BT", "P", "SUSP", "INT", "LIVE":
-			matchesFixtures[currentLeagueName] = append(matchesFixtures[currentLeagueName], match)
-		case "FT", "AET", "PEN", "CANC", "ABD", "AWD", "WO":
-			matchesResults[currentLeagueName] = append(matchesResults[currentLeagueName], match)
-		default:
+			switch match.Fixture.Status.Short {
+			case "TBD", "PST":
+				topLeagueMatchesTBD[currentLeagueName] = append(topLeagueMatchesTBD[currentLeagueName], match)
+			case "NS", "1H", "HT", "2H", "ET", "BT", "P", "SUSP", "INT", "LIVE":
+				topLeagueMatchesFixtures[currentLeagueName] = append(topLeagueMatchesFixtures[currentLeagueName], match)
+			case "FT", "AET", "PEN", "CANC", "ABD", "AWD", "WO":
+				topLeagueMatchesResults[currentLeagueName] = append(topLeagueMatchesResults[currentLeagueName], match)
+			default:
+			}
+
+		} else {
+			matches[currentLeagueName] = append(matches[currentLeagueName], match)
+
+			switch match.Fixture.Status.Short {
+			case "TBD", "PST":
+				matchesTBD[currentLeagueName] = append(matchesTBD[currentLeagueName], match)
+			case "NS", "1H", "HT", "2H", "ET", "BT", "P", "SUSP", "INT", "LIVE":
+				matchesFixtures[currentLeagueName] = append(matchesFixtures[currentLeagueName], match)
+			case "FT", "AET", "PEN", "CANC", "ABD", "AWD", "WO":
+				matchesResults[currentLeagueName] = append(matchesResults[currentLeagueName], match)
+			default:
+			}
 		}
 	}
 	matchesTemplateData.Matches = matches
 	matchesTemplateData.MatchesTBD = matchesTBD
 	matchesTemplateData.MatchesFixtures = matchesFixtures
 	matchesTemplateData.MatchesResults = matchesResults
+	matchesTemplateData.TopLeagueMatches = topLeagueMatches
+	matchesTemplateData.TopLeagueMatchesTBD = topLeagueMatchesTBD
+	matchesTemplateData.TopLeagueMatchesFixtures = topLeagueMatchesFixtures
+	matchesTemplateData.TopLeagueMatchesResults = topLeagueMatchesResults
 
 	app.Render(w, http.StatusOK, "matches.html", templateData)
 }
@@ -173,12 +200,18 @@ func (app *Application) getMatchesByDate(w http.ResponseWriter, r *http.Request)
 		}
 	}
 
-	leagueMatches := make(map[string][]apifootball.Match)
+	matches := make(map[string][]apifootball.Match)
+	topLeagueMatches := make(map[string][]apifootball.Match)
 	for _, match := range fixturesData.Response {
 		currentLeagueName := fmt.Sprintf("%s %s # %d", match.League.Country, match.League.Name, match.League.ID)
-		leagueMatches[currentLeagueName] = append(leagueMatches[currentLeagueName], match)
+		if isTopLeague(match.League.ID) {
+			topLeagueMatches[currentLeagueName] = append(topLeagueMatches[currentLeagueName], match)
+		} else {
+			matches[currentLeagueName] = append(matches[currentLeagueName], match)
+		}
 	}
-	fixturesTemplateData.Matches = leagueMatches
+	fixturesTemplateData.Matches = matches
+	fixturesTemplateData.TopLeagueMatches = topLeagueMatches
 
 	todaysDate = time.Date(todaysDate.Year(), todaysDate.Month(), todaysDate.Day(), 0, 0, 0, 0, todaysDate.Location())
 	formattedDateParam = time.Date(formattedDateParam.Year(), formattedDateParam.Month(), formattedDateParam.Day(), 0, 0, 0, 0, formattedDateParam.Location())
@@ -189,4 +222,13 @@ func (app *Application) getMatchesByDate(w http.ResponseWriter, r *http.Request)
 	}
 
 	app.Render(w, http.StatusOK, "matchesByDate.html", templateData)
+}
+
+func isTopLeague(leagueID int) bool {
+	switch leagueID {
+	case 2, 3, 39, 45, 48, 61, 78, 135, 140, 253, 848:
+		return true
+	default:
+		return false
+	}
 }

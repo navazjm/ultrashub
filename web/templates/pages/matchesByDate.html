@@ -23,6 +23,7 @@
         <h3>{{.Title}}</h3>
     </div>
     <div id="leaguesContainer">
+        {{template "matchesList" .MatchesTemplateData.TopLeagueMatches}}
         {{template "matchesList" .MatchesTemplateData.Matches}}
     </div>
 </main>

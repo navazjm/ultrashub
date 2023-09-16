@@ -37,15 +37,19 @@
     </nav>
     <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab" tabindex="0">
+            {{template "matchesList" .MatchesTemplateData.TopLeagueMatches}}
             {{template "matchesList" .MatchesTemplateData.Matches}}
         </div>
         <div class="tab-pane fade" id="nav-tbd" role="tabpanel" aria-labelledby="nav-tbd-tab" tabindex="0">
+            {{template "matchesList" .MatchesTemplateData.TopLeagueMatchesTBD}}
             {{template "matchesList" .MatchesTemplateData.MatchesTBD}}
         </div>
         <div class="tab-pane fade" id="nav-fixtures" role="tabpanel" aria-labelledby="nav-fixtures-tab" tabindex="0">
+            {{template "matchesList" .MatchesTemplateData.TopLeagueMatchesFixtures}}
             {{template "matchesList" .MatchesTemplateData.MatchesFixtures}}
         </div>
         <div class="tab-pane fade" id="nav-results" role="tabpanel" aria-labelledby="nav-results-tab" tabindex="0">
+            {{template "matchesList" .MatchesTemplateData.TopLeagueMatchesResults}}
             {{template "matchesList" .MatchesTemplateData.MatchesResults}}
         </div>
     </div>

@@ -3,15 +3,15 @@
 ### v0.1.0
 - [x] cli tool to create json file from API Football api call to limit amount of api calls during development
     - API Football fixtures endpoint
-- [ ] "/" 
+- [x] "/" 
     - [x] returns all matches (both fixtures and results) for current date of access
     - [x] displays 7 day calendar to navigate between dates 
-    - [ ] displays top leagues/cups first
-- [ ] "/matches/date/YYYY-MM-DD"
+    - [x] displays top leagues/cups first
+- [x] "/matches/date/YYYY-MM-DD"
     - [x] if given date == todays date, redirect to "/"
     - [x] returns all matches for given date.
     - [x] displays 7 day calendar to navigate between dates
-    - [ ] displays top leagues/cups first
+    - [x] displays top leagues/cups first
 - [ ] "/matches/id/:id"
     - [ ] returns a single match based on id
     - [ ] if match is upcoming fixture:
