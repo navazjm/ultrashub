@@ -1,22 +1,22 @@
 # UltrasHub - Roadmap 
 
 ### v0.1.0
-- [ ] cli tool to create json file from API Football api call to limit amount of api calls during development
+- [x] cli tool to create json file from API Football api call to limit amount of api calls during development
     - API Football fixtures endpoint
 - [ ] "/" 
-    - returns all matches (both fixtures and results) for current date of access
-     - displays 7 day calendar to navigate between dates 
-     - displays top leagues/cups first
+    - [x] returns all matches (both fixtures and results) for current date of access
+    - [x] displays 7 day calendar to navigate between dates 
+    - [ ] displays top leagues/cups first
 - [ ] "/matches/date/YYYY-MM-DD"
-    - if given date == todays date, redirect to "/"
-    - returns all matches for given date.
-    - displays 7 day calendar to navigate between dates
-    - displays top leagues/cups first
+    - [x] if given date == todays date, redirect to "/"
+    - [x] returns all matches for given date.
+    - [x] displays 7 day calendar to navigate between dates
+    - [ ] displays top leagues/cups first
 - [ ] "/matches/id/:id"
-    - returns a single match based on id
-    - if match is upcoming fixture:
+    - [ ] returns a single match based on id
+    - [ ] if match is upcoming fixture:
         - displays details of upcoming fixture (date, time, etc) and teams head-to-head
-    - if match is finished 
+    - [ ] if match is finished 
         - displays results of match, match events, match stats, team lineups based.
 
 ### v0.2.0 

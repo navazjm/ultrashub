@@ -20,14 +20,18 @@ type DateSelection struct {
 }
 
 type matchesTemplateData struct {
-	DateRanges    map[int]DateSelection
-	LeagueMatches map[string][]apifootball.Match
+	DateRanges      map[int]DateSelection
+	Matches         map[string][]apifootball.Match
+	MatchesTBD      map[string][]apifootball.Match
+	MatchesFixtures map[string][]apifootball.Match
+	MatchesResults  map[string][]apifootball.Match
 }
 
 func newMatchesTemplateData(r *http.Request) *matchesTemplateData {
 	return &matchesTemplateData{}
 }
 
+// displays both upcoming fixtures and results for todays date
 func (app *Application) getMatches(w http.ResponseWriter, r *http.Request) {
 	var apiFootballFixturesResp *apifootball.FixtureResponse
 	var err error
@@ -77,12 +81,28 @@ func (app *Application) getMatches(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	leagueMatches := make(map[string][]apifootball.Match)
+	matches := make(map[string][]apifootball.Match)
+	matchesTBD := make(map[string][]apifootball.Match)
+	matchesFixtures := make(map[string][]apifootball.Match)
+	matchesResults := make(map[string][]apifootball.Match)
 	for _, match := range apiFootballFixturesResp.Response {
 		currentLeagueName := fmt.Sprintf("%s %s # %d", match.League.Country, match.League.Name, match.League.ID)
-		leagueMatches[currentLeagueName] = append(leagueMatches[currentLeagueName], match)
+		matches[currentLeagueName] = append(matches[currentLeagueName], match)
+
+		switch match.Fixture.Status.Short {
+		case "TBD", "PST":
+			matchesTBD[currentLeagueName] = append(matchesTBD[currentLeagueName], match)
+		case "NS", "1H", "HT", "2H", "ET", "BT", "P", "SUSP", "INT", "LIVE":
+			matchesFixtures[currentLeagueName] = append(matchesFixtures[currentLeagueName], match)
+		case "FT", "AET", "PEN", "CANC", "ABD", "AWD", "WO":
+			matchesResults[currentLeagueName] = append(matchesResults[currentLeagueName], match)
+		default:
+		}
 	}
-	matchesTemplateData.LeagueMatches = leagueMatches
+	matchesTemplateData.Matches = matches
+	matchesTemplateData.MatchesTBD = matchesTBD
+	matchesTemplateData.MatchesFixtures = matchesFixtures
+	matchesTemplateData.MatchesResults = matchesResults
 
 	app.Render(w, http.StatusOK, "matches.html", templateData)
 }
@@ -158,7 +178,7 @@ func (app *Application) getMatchesByDate(w http.ResponseWriter, r *http.Request)
 		currentLeagueName := fmt.Sprintf("%s %s # %d", match.League.Country, match.League.Name, match.League.ID)
 		leagueMatches[currentLeagueName] = append(leagueMatches[currentLeagueName], match)
 	}
-	fixturesTemplateData.LeagueMatches = leagueMatches
+	fixturesTemplateData.Matches = leagueMatches
 
 	todaysDate = time.Date(todaysDate.Year(), todaysDate.Month(), todaysDate.Day(), 0, 0, 0, 0, todaysDate.Location())
 	formattedDateParam = time.Date(formattedDateParam.Year(), formattedDateParam.Month(), formattedDateParam.Day(), 0, 0, 0, 0, formattedDateParam.Location())
@@ -168,5 +188,5 @@ func (app *Application) getMatchesByDate(w http.ResponseWriter, r *http.Request)
 		templateData.Title = "Upcoming Fixtures"
 	}
 
-	app.Render(w, http.StatusOK, "matches.html", templateData)
+	app.Render(w, http.StatusOK, "matchesByDate.html", templateData)
 }
