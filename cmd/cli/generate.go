@@ -47,6 +47,16 @@ var generateCmd = &cobra.Command{
 				fmt.Println(err.Error())
 				return
 			}
+		case "h2h":
+			queryParams := url.Values{}
+			queryParams.Add("h2h", "39-40")
+			queryParams.Add("last", "10")
+
+			data, err = handler.GetH2H(queryParams)
+			if err != nil {
+				fmt.Println(err.Error())
+				return
+			}
 		default:
 			fmt.Println("ERROR: unknown endpoint")
 			return
