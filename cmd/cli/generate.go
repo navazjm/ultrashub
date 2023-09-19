@@ -14,7 +14,7 @@ import (
 
 var (
 	ApiKey   string
-	Endpoint string
+	Filename string
 )
 
 var generateCmd = &cobra.Command{
@@ -26,12 +26,21 @@ var generateCmd = &cobra.Command{
 		var err error
 		handler := apifootball.New(ApiKey)
 
-		switch Endpoint {
-		case "fixtures":
+		switch Filename {
+		case "fixturesNow":
 			currentTime := time.Now()
 			formattedDate := currentTime.Format("2006-01-02")
 			queryParams := url.Values{}
 			queryParams.Add("date", formattedDate)
+
+			data, err = handler.GetFixtures(queryParams)
+			if err != nil {
+				fmt.Println(err.Error())
+				return
+			}
+		case "fixtureByID":
+			queryParams := url.Values{}
+			queryParams.Add("id", "1035086")
 
 			data, err = handler.GetFixtures(queryParams)
 			if err != nil {
@@ -44,7 +53,7 @@ var generateCmd = &cobra.Command{
 		}
 
 		dataStr := utils.FormatJSONResponse(data)
-		filePath := "test/data/" + Endpoint + ".json"
+		filePath := "test/data/" + Filename + ".json"
 		jsonData := []byte(dataStr)
 
 		// Open the file for writing (create or overwrite)
@@ -68,8 +77,8 @@ var generateCmd = &cobra.Command{
 func init() {
 	godotenv.Load()
 
-	generateCmd.Flags().StringVarP(&Endpoint, "endpoint", "e", "", "API Football endpoint to fetch data from")
-	generateCmd.MarkFlagRequired("endpoint")
+	generateCmd.Flags().StringVarP(&Filename, "filename", "f", "", "Name of the file to store the api response. Dictates which endpoint and query params will be passed in.")
+	generateCmd.MarkFlagRequired("filename")
 
 	foundApiKey := os.Getenv("API_FOOTBALL_KEY")
 	generateCmd.Flags().StringVarP(&ApiKey, "apikey", "a", foundApiKey, "API Football api key (if in root dir, will use .env)")

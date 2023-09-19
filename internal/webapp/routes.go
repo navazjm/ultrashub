@@ -21,6 +21,7 @@ func (app *Application) Routes() http.Handler {
 
 	router.HandlerFunc(http.MethodGet, "/", app.getMatches)
 	router.HandlerFunc(http.MethodGet, "/matches/date/:date", app.getMatchesByDate)
+	router.HandlerFunc(http.MethodGet, "/matches/id/:id", app.getMatchByID)
 
 	standardMiddlewares := alice.New(app.recoverPanic, app.logRequest, secureHeaders)
 	return standardMiddlewares.Then(router)
