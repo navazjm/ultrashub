@@ -39,6 +39,29 @@ func (app *Application) getFixturesResponse(queryParams url.Values, filename str
 	return apiFootballFixturesResp, nil
 }
 
+func (app *Application) getH2HResponse(queryParams url.Values) (*apifootball.FixturesResponse, error) {
+	var apiFootballFixturesResp *apifootball.FixturesResponse
+	var err error
+
+	if app.Config.Env == "prod" {
+		apiFootballFixturesResp, err = app.APIFootball.GetH2H(queryParams)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		jsonData, err := utils.ReadFile("./test/data/h2h.json")
+		if err != nil {
+			return nil, err
+		}
+		err = json.Unmarshal(jsonData, &apiFootballFixturesResp)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return apiFootballFixturesResp, nil
+}
+
 func (app *Application) getDateRanges(date time.Time) map[int]DateSelection {
 	dateRanges := make(map[int]DateSelection)
 	for i := -3; i <= 3; i++ {

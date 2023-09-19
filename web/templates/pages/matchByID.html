@@ -23,13 +23,14 @@
                 role="tab" aria-controls="nav-stats" aria-selected="false">Stats</button>
             <button class="nav-link" id="nav-lineups-tab" data-bs-toggle="tab" data-bs-target="#nav-lineups"
                 type="button" role="tab" aria-controls="nav-lineups" aria-selected="false">Lineups</button>
-            <button class="nav-link" id="nav-h2h-tab" data-bs-toggle="tab" data-bs-target="#nav-h2h"
-                type="button" role="tab" aria-controls="nav-h2h" aria-selected="false">H2H</button>
+            <button class="nav-link" id="nav-h2h-tab" data-bs-toggle="tab" data-bs-target="#nav-h2h" type="button"
+                role="tab" aria-controls="nav-h2h" aria-selected="false">H2H</button>
             {{end}}
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade{{if eq .MatchesTemplateData.ActiveTab "Events"}} show active {{end}}" id="nav-events" role="tabpanel" aria-labelledby="nav-events-tab" tabindex="0">
+        <div class="tab-pane fade{{if eq .MatchesTemplateData.ActiveTab " Events"}} show active {{end}}" id="nav-events"
+            role="tabpanel" aria-labelledby="nav-events-tab" tabindex="0">
             Hello from events tab
         </div>
         <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab" tabindex="0">
@@ -38,8 +39,51 @@
         <div class="tab-pane fade" id="nav-lineups" role="tabpanel" aria-labelledby="nav-lineups-tab" tabindex="0">
             Hello from lineups tab
         </div>
-        <div class="tab-pane fade{{if eq .MatchesTemplateData.ActiveTab "H2H"}} show active {{end}}" id="nav-h2h" role="tabpanel" aria-labelledby="nav-h2h-tab" tabindex="0">
-            Hello from h2h tab
+        <div class="tab-pane fade{{if eq .MatchesTemplateData.ActiveTab " H2H"}} show active {{end}}" id="nav-h2h"
+            role="tabpanel" aria-labelledby="nav-h2h-tab" tabindex="0">
+            <div class="row g-2 mt-2">
+                {{range .MatchesTemplateData.H2HMatches}}
+                <div class="col-12 col-lg-6">
+                    <div class="card">
+                        <a href="/matches/id/{{.Fixture.ID}}" class="text-body text-decoration-none">
+                            <div class="card-body">
+                                <div class="d-flex flex-row justify-content-between align-items-center">
+                                    <p class="text-secondary">{{formatMatchDate .Fixture.Date}}</p>
+                                    <p class="text-secondary">{{.League.Country}} {{.League.Name}} #{{.League.ID}}</p>
+                                </div>
+                                <div class="d-flex flex-row justify-content-between align-items-center">
+                                    <div class="d-flex flex-row align-items-center gap-2">
+                                        <img src="{{.Teams.Home.Logo}}" width="30px" alt="{{.Teams.Home.Name}} logo">
+                                        <p class="card-text{{if .Teams.Away.Winner}} text-secondary {{end}}">
+                                            {{.Teams.Home.Name}}</p>
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center gap-2">
+                                        <p class="fs-5 m-0{{if .Teams.Away.Winner}} text-secondary {{end}}">
+                                            {{.Goals.Home}}
+                                            {{if eq .Fixture.Status.Short "PEN"}}
+                                            <span>({{.Score.Penalty.Home}})</span>
+                                            {{end}}
+                                        </p>
+                                        <p class="m-0 fs-3 text-secondary">-</p>
+                                        <p class="fs-5 m-0{{if .Teams.Home.Winner}} text-secondary {{end}}">
+                                            {{.Goals.Away}}
+                                            {{if eq .Fixture.Status.Short "PEN"}}
+                                            <span>({{.Score.Penalty.Away}})</span>
+                                            {{end}}
+                                        </p>
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center gap-2">
+                                        <p class="card-text m-0{{if .Teams.Home.Winner}} text-secondary {{end}}">
+                                            {{.Teams.Away.Name}}</p>
+                                        <img src="{{.Teams.Away.Logo}}" width="30px" alt="{{.Teams.Away.Name}} logo">
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {{end}}
+            </div>
         </div>
     </div>
     {{end}}

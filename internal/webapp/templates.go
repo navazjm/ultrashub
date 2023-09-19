@@ -64,11 +64,17 @@ func formatMatchTime(datetime string) string {
 	return formatTime(t)
 }
 
+func formatMatchDate(datetime string) string {
+	t, _ := time.Parse("2006-01-02T15:04:05-07:00", datetime)
+	return formatDate(t)
+}
+
 var templateFuns = template.FuncMap{
 	"formatDate":      formatDate,
 	"formatDateTime":  formatDateTime,
 	"formatTime":      formatTime,
 	"formatMatchTime": formatMatchTime,
+	"formatMatchDate": formatMatchDate,
 }
 
 func newTemplateCache() (map[string]*template.Template, error) {

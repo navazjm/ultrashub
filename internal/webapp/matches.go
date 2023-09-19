@@ -29,6 +29,7 @@ type matchesTemplateData struct {
 	TopLeagueMatchesTBD      map[string][]apifootball.Match
 	TopLeagueMatchesFixtures map[string][]apifootball.Match
 	TopLeagueMatchesResults  map[string][]apifootball.Match
+	H2HMatches               []apifootball.Match
 }
 
 func newMatchesTemplateData(r *http.Request) *matchesTemplateData {
@@ -174,11 +175,9 @@ func (app *Application) getMatchByID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	//TODO: get head to head
-
 	match := apiFootballFixturesResponse.Response[0] // apiFootballFixturesResponse.Reponse is always an array with one object when using id query param
 	title := fmt.Sprintf("%s v %s", match.Teams.Home.Name, match.Teams.Away.Name)
-	activeTab := ""
+	var activeTab string
 	switch match.Fixture.Status.Short {
 	case "TBD", "NS", "PST", "CANC":
 		activeTab = "H2H"
@@ -186,9 +185,19 @@ func (app *Application) getMatchByID(w http.ResponseWriter, r *http.Request) {
 		activeTab = "Events"
 	}
 
+	queryParams = url.Values{}
+	queryParams.Add("h2h", fmt.Sprintf("%d-%d", match.Teams.Home.ID, match.Teams.Away.ID))
+	queryParams.Add("last", "10")
+	apiFootballH2HFixturesResponse, err := app.getH2HResponse(queryParams)
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
+
 	fixturesTemplateData := newMatchesTemplateData(r)
 	fixturesTemplateData.Match = &match
 	fixturesTemplateData.ActiveTab = activeTab
+	fixturesTemplateData.H2HMatches = apiFootballH2HFixturesResponse.Response
 	templateData := app.newTemplateData(r)
 	templateData.Title = title
 	templateData.MatchesTemplateData = fixturesTemplateData

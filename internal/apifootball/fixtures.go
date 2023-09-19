@@ -203,3 +203,37 @@ func (fa *Handler) GetFixtures(queryParams url.Values) (*FixturesResponse, error
 		return nil, err
 	}
 }
+
+// returns all fixtures based on queryParams
+func (fa *Handler) GetH2H(queryParams url.Values) (*FixturesResponse, error) {
+	response, err := fa.fetchData("/fixtures/headtohead", queryParams)
+	if err != nil {
+		return nil, err
+	}
+	defer response.Body.Close()
+
+	switch response.StatusCode {
+	// API-Football only returns status codes of 499 & 500 for bad responses
+	// status code 499 -> Time out error not in http package
+	case http.StatusInternalServerError, 499:
+		var errMsgResp ErrorMessageResponse
+		err = json.NewDecoder(response.Body).Decode(&errMsgResp)
+		if err != nil {
+			return nil, err
+		}
+		err = errors.New("APIFootball: " + errMsgResp.Message)
+		return nil, err
+	case http.StatusNoContent:
+		return nil, BugError
+	case http.StatusOK:
+		var data *FixturesResponse
+		err = json.NewDecoder(response.Body).Decode(&data)
+		if err != nil {
+			return nil, err
+		}
+		return data, nil
+	default:
+		err := errors.New("APIFootball: Unexpected http status code")
+		return nil, err
+	}
+}
