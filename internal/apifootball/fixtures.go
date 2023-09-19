@@ -147,7 +147,7 @@ type MatchLineup struct {
 			Grid     string `json:"grid"`
 		} `json:"player"`
 	} `json:"startXI"`
-	Substitues []struct {
+	Substitutes []struct {
 		Player struct {
 			ID       int    `json:"id"`
 			Name     string `json:"name"`
@@ -155,7 +155,7 @@ type MatchLineup struct {
 			Position string `json:"pos"`
 			Grid     string `json:"grid"`
 		} `json:"player"`
-	} `json:"substitues"`
+	} `json:"substitutes"`
 }
 
 type MatchStat struct {

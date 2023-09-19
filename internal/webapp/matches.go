@@ -17,6 +17,31 @@ type DateSelection struct {
 	HREF    string
 }
 
+type FormationTeamData struct {
+	Players   map[int][]FormationPlayerData
+	Formation string
+	Logo      string
+	Name      string
+}
+
+type FormationPlayerData struct {
+	Name     string
+	Number   int
+	Position string
+	Colors   FormationPlayerColorData
+}
+
+type FormationPlayerColorData struct {
+	Primary string
+	Number  string
+	Border  string
+}
+
+type FormationData struct {
+	Home FormationTeamData
+	Away FormationTeamData
+}
+
 type matchesTemplateData struct {
 	ActiveTab                string
 	DateRanges               map[int]DateSelection
@@ -30,6 +55,7 @@ type matchesTemplateData struct {
 	TopLeagueMatchesFixtures map[string][]apifootball.Match
 	TopLeagueMatchesResults  map[string][]apifootball.Match
 	H2HMatches               []apifootball.Match
+	FormationData            FormationData
 }
 
 func newMatchesTemplateData(r *http.Request) *matchesTemplateData {
@@ -185,6 +211,42 @@ func (app *Application) getMatchByID(w http.ResponseWriter, r *http.Request) {
 		activeTab = "Events"
 	}
 
+	formationData := FormationData{}
+	for i, lineup := range match.Lineups {
+		playersData := make(map[int][]FormationPlayerData)
+		for _, startingPlayer := range lineup.StartXI {
+			playerColor := FormationPlayerColorData{}
+			if startingPlayer.Player.Position == "G" {
+				playerColor.Primary = lineup.Team.Colors.Goalkeeper.Primary
+				playerColor.Number = lineup.Team.Colors.Goalkeeper.Number
+				playerColor.Border = lineup.Team.Colors.Goalkeeper.Border
+			} else {
+				playerColor.Primary = lineup.Team.Colors.Player.Primary
+				playerColor.Number = lineup.Team.Colors.Player.Number
+				playerColor.Border = lineup.Team.Colors.Player.Border
+			}
+			FormationPlayerData := FormationPlayerData{
+				Name:     startingPlayer.Player.Name,
+				Number:   startingPlayer.Player.Number,
+				Position: startingPlayer.Player.Position,
+				Colors:   playerColor,
+			}
+			playerIdx := int(startingPlayer.Player.Grid[0])
+			playersData[playerIdx] = append(playersData[playerIdx], FormationPlayerData)
+		}
+		teamData := FormationTeamData{
+			Players:   playersData,
+			Formation: lineup.Formation,
+			Logo:      lineup.Team.Logo,
+			Name:      lineup.Team.Name,
+		}
+		if i == 0 {
+			formationData.Home = teamData
+		} else {
+			formationData.Away = teamData
+		}
+	}
+
 	queryParams = url.Values{}
 	queryParams.Add("h2h", fmt.Sprintf("%d-%d", match.Teams.Home.ID, match.Teams.Away.ID))
 	queryParams.Add("last", "10")
@@ -198,6 +260,7 @@ func (app *Application) getMatchByID(w http.ResponseWriter, r *http.Request) {
 	fixturesTemplateData.Match = &match
 	fixturesTemplateData.ActiveTab = activeTab
 	fixturesTemplateData.H2HMatches = apiFootballH2HFixturesResponse.Response
+	fixturesTemplateData.FormationData = formationData
 	templateData := app.newTemplateData(r)
 	templateData.Title = title
 	templateData.MatchesTemplateData = fixturesTemplateData
