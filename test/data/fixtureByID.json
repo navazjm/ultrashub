@@ -3,7 +3,7 @@
         {
             "fixture": {
                 "id": 1035086,
-                "referee": "Michael Oliver, England",
+                "referee": "M. Oliver",
                 "timezone": "UTC",
                 "date": "2023-09-16T11:30:00+00:00",
                 "timestamp": 1694863800,
@@ -889,7 +889,7 @@
                 {
                     "team": {
                         "id": 39,
-                        "string": "",
+                        "name": "Wolves",
                         "logo": "https://media-4.api-sports.io/football/teams/39.png"
                     },
                     "statistics": [
@@ -966,7 +966,7 @@
                 {
                     "team": {
                         "id": 40,
-                        "string": "",
+                        "name": "Liverpool",
                         "logo": "https://media-4.api-sports.io/football/teams/40.png"
                     },
                     "statistics": [

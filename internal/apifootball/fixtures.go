@@ -161,7 +161,7 @@ type MatchLineup struct {
 type MatchStat struct {
 	Team struct {
 		ID   int    `json:"id"`
-		Name string `json:"string"`
+		Name string `json:"name"`
 		Logo string `json:"logo"`
 	} `json:"team"`
 	Stats []struct {

@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/julienschmidt/httprouter"
@@ -42,6 +43,11 @@ type FormationData struct {
 	Away FormationTeamData
 }
 
+type StatsTemplateData struct {
+	HomeTeam any
+	AwayTeam any
+}
+
 type matchesTemplateData struct {
 	ActiveTab                string
 	DateRanges               map[int]DateSelection
@@ -56,6 +62,7 @@ type matchesTemplateData struct {
 	TopLeagueMatchesResults  map[string][]apifootball.Match
 	H2HMatches               []apifootball.Match
 	FormationData            FormationData
+	StatsData                map[string]StatsTemplateData
 }
 
 func newMatchesTemplateData(r *http.Request) *matchesTemplateData {
@@ -247,6 +254,27 @@ func (app *Application) getMatchByID(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	statsData := make(map[string]StatsTemplateData)
+	for idx, matchStats := range match.Stats {
+		for _, stats := range matchStats.Stats {
+			statType := strings.Title(strings.ReplaceAll(stats.Type, "_", " "))
+			statValue := stats.Value
+			if statValue == nil {
+				statValue = 0
+			}
+			if idx == 0 {
+				statData := StatsTemplateData{
+					HomeTeam: statValue,
+				}
+				statsData[statType] = statData
+			} else {
+				stat := statsData[statType]
+				stat.AwayTeam = statValue
+				statsData[statType] = stat
+			}
+		}
+	}
+
 	queryParams = url.Values{}
 	queryParams.Add("h2h", fmt.Sprintf("%d-%d", match.Teams.Home.ID, match.Teams.Away.ID))
 	queryParams.Add("last", "10")
@@ -261,6 +289,7 @@ func (app *Application) getMatchByID(w http.ResponseWriter, r *http.Request) {
 	fixturesTemplateData.ActiveTab = activeTab
 	fixturesTemplateData.H2HMatches = apiFootballH2HFixturesResponse.Response
 	fixturesTemplateData.FormationData = formationData
+	fixturesTemplateData.StatsData = statsData
 	templateData := app.newTemplateData(r)
 	templateData.Title = title
 	templateData.MatchesTemplateData = fixturesTemplateData

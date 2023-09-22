@@ -30,13 +30,44 @@
     </nav>
     <div class="tab-content" id="nav-tabContent">
         {{- /* Events */ -}}
-        <div class="tab-pane fade{{if eq .MatchesTemplateData.ActiveTab " Events"}} show active {{end}}" id="nav-events"
+        <div class='tab-pane fade{{if eq .MatchesTemplateData.ActiveTab "Events"}} show active {{end}}' id="nav-events"
             role="tabpanel" aria-labelledby="nav-events-tab" tabindex="0">
             Hello from events tab
         </div>
         {{- /* Stats */ -}}
         <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab" tabindex="0">
-            Hello from stats tab
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        {{with index .MatchesTemplateData.Match.Stats 0}}
+                        <th>
+                            <div class="d-flex flex-row justify-content-center align-items-center text-center gap-2">
+                                <h3 class="m-0 d-none d-md-block">{{.Team.Name}}</h3>
+                                <img src="{{.Team.Logo}}" alt="{{.Team.Name}} logo" width="50px">
+                            </div>
+                        </th>
+                        {{end}}
+                        <th></th>
+                        {{with index .MatchesTemplateData.Match.Stats 1}}
+                        <th>
+                            <div class="d-flex flex-row justify-content-center align-items-center text-center gap-2">
+                                <img src="{{.Team.Logo}}" alt="{{.Team.Name}} logo" width="50px">
+                                <h3 class="m-0 d-none d-md-block">{{.Team.Name}}</h3>
+                            </div>
+                        </th>
+                        {{end}}
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    {{range $type, $stat := .MatchesTemplateData.StatsData}}
+                    <tr>
+                        <td class="text-center">{{$stat.HomeTeam}}</td>
+                        <td class="fs-5 fw-bold text-center">{{$type}}</td>
+                        <td class="text-center">{{$stat.AwayTeam}}</td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
         </div>
         {{- /* Lineups */ -}}
         <div class="tab-pane fade" id="nav-lineups" role="tabpanel" aria-labelledby="nav-lineups-tab" tabindex="0">
