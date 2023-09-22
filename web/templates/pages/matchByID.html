@@ -41,19 +41,25 @@
                     <tr>
                         {{with index .MatchesTemplateData.Match.Stats 0}}
                         <th>
-                            <div class="d-flex flex-row justify-content-center align-items-center text-center gap-2">
-                                <h3 class="m-0 d-none d-md-block">{{.Team.Name}}</h3>
-                                <img src="{{.Team.Logo}}" alt="{{.Team.Name}} logo" width="50px">
-                            </div>
+                            <a href="/clubs/id/{{.Team.ID}}" class="text-body text-decoration-none">
+                                <div
+                                    class="d-flex flex-row justify-content-center align-items-center text-center gap-2">
+                                    <h3 class="m-0 d-none d-md-block">{{.Team.Name}}</h3>
+                                    <img src="{{.Team.Logo}}" alt="{{.Team.Name}} logo" width="50px">
+                                </div>
+                            </a>
                         </th>
                         {{end}}
                         <th></th>
                         {{with index .MatchesTemplateData.Match.Stats 1}}
                         <th>
-                            <div class="d-flex flex-row justify-content-center align-items-center text-center gap-2">
-                                <img src="{{.Team.Logo}}" alt="{{.Team.Name}} logo" width="50px">
-                                <h3 class="m-0 d-none d-md-block">{{.Team.Name}}</h3>
-                            </div>
+                            <a href="/clubs/id/{{.Team.ID}}" class="text-body text-decoration-none">
+                                <div
+                                    class="d-flex flex-row justify-content-center align-items-center text-center gap-2">
+                                    <img src="{{.Team.Logo}}" alt="{{.Team.Name}} logo" width="50px">
+                                    <h3 class="m-0 d-none d-md-block">{{.Team.Name}}</h3>
+                                </div>
+                            </a>
                         </th>
                         {{end}}
                     </tr>
