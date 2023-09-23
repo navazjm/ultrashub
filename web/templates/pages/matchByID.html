@@ -19,10 +19,8 @@
             {{else}}
             <button class="nav-link active" id="nav-events-tab" data-bs-toggle="tab" data-bs-target="#nav-events"
                 type="button" role="tab" aria-controls="nav-events" aria-selected="true">Events</button>
-            {{if gt (len .MatchesTemplateData.Match.Stats) 0}}
             <button class="nav-link" id="nav-stats-tab" data-bs-toggle="tab" data-bs-target="#nav-stats" type="button"
                 role="tab" aria-controls="nav-stats" aria-selected="false">Stats</button>
-            {{end}}
             <button class="nav-link" id="nav-lineups-tab" data-bs-toggle="tab" data-bs-target="#nav-lineups"
                 type="button" role="tab" aria-controls="nav-lineups" aria-selected="false">Lineups</button>
             <button class="nav-link" id="nav-h2h-tab" data-bs-toggle="tab" data-bs-target="#nav-h2h" type="button"
@@ -79,6 +77,10 @@
                     {{end}}
                 </tbody>
             </table>
+            {{else}}
+            <div class="mt-2">
+                <p class="m-0">No match statistics data found for {{.Title}}!</p>
+            </div>
             {{end}}
         </div>
         {{- /* Lineups */ -}}

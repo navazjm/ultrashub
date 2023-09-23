@@ -218,7 +218,7 @@ func (app *Application) getMatchByID(w http.ResponseWriter, r *http.Request) {
 		activeTab = "Events"
 	}
 
-	formationData := &FormationData{}
+	var formationData *FormationData
 	for i, lineup := range match.Lineups {
 		// no formation data present so we skip
 		if lineup.Formation == "" {
