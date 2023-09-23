@@ -219,7 +219,7 @@ func (app *Application) getMatchByID(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var formationData *FormationData
-	if match.Lineups != nil {
+	if match.Lineups != nil && len(match.Lineups) > 0 {
 		formationData = &FormationData{}
 	}
 	for i, lineup := range match.Lineups {
