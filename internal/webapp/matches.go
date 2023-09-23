@@ -267,6 +267,7 @@ func (app *Application) getMatchByID(w http.ResponseWriter, r *http.Request) {
 	statsData := make(map[string]StatsTemplateData)
 	for idx, matchStats := range match.Stats {
 		for _, stats := range matchStats.Stats {
+			// strings.Title is depreciated, need new alternative
 			statType := strings.Title(strings.ReplaceAll(stats.Type, "_", " "))
 			statValue := stats.Value
 			if statValue == nil {
