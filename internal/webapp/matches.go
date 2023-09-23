@@ -61,7 +61,7 @@ type matchesTemplateData struct {
 	TopLeagueMatchesFixtures map[string][]apifootball.Match
 	TopLeagueMatchesResults  map[string][]apifootball.Match
 	H2HMatches               []apifootball.Match
-	FormationData            FormationData
+	FormationData            *FormationData
 	StatsData                map[string]StatsTemplateData
 }
 
@@ -218,8 +218,15 @@ func (app *Application) getMatchByID(w http.ResponseWriter, r *http.Request) {
 		activeTab = "Events"
 	}
 
-	formationData := FormationData{}
+	formationData := &FormationData{}
 	for i, lineup := range match.Lineups {
+		// no formation data present so we skip
+		if lineup.Formation == "" {
+			formationData = nil
+			continue
+		}
+
+		// collect formation data to display formation and starting XI
 		playersData := make(map[int][]FormationPlayerData)
 		for _, startingPlayer := range lineup.StartXI {
 			playerColor := FormationPlayerColorData{}

@@ -19,8 +19,10 @@
             {{else}}
             <button class="nav-link active" id="nav-events-tab" data-bs-toggle="tab" data-bs-target="#nav-events"
                 type="button" role="tab" aria-controls="nav-events" aria-selected="true">Events</button>
+            {{if gt (len .MatchesTemplateData.Match.Stats) 0}}
             <button class="nav-link" id="nav-stats-tab" data-bs-toggle="tab" data-bs-target="#nav-stats" type="button"
                 role="tab" aria-controls="nav-stats" aria-selected="false">Stats</button>
+            {{end}}
             <button class="nav-link" id="nav-lineups-tab" data-bs-toggle="tab" data-bs-target="#nav-lineups"
                 type="button" role="tab" aria-controls="nav-lineups" aria-selected="false">Lineups</button>
             <button class="nav-link" id="nav-h2h-tab" data-bs-toggle="tab" data-bs-target="#nav-h2h" type="button"
@@ -36,6 +38,7 @@
         </div>
         {{- /* Stats */ -}}
         <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab" tabindex="0">
+            {{if gt (len .MatchesTemplateData.Match.Stats) 0}}
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -45,7 +48,8 @@
                                 <div
                                     class="d-flex flex-row justify-content-center align-items-center text-center gap-2">
                                     <h3 class="m-0 d-none d-md-block">{{.Team.Name}}</h3>
-                                    <img src="{{.Team.Logo}}" alt="{{.Team.Name}} logo" width="50px">
+                                    <img src="{{.Team.Logo}}" alt="{{.Team.Name}} logo" width="50px" height="50px"
+                                        class="object-fit-contain">
                                 </div>
                             </a>
                         </th>
@@ -56,7 +60,8 @@
                             <a href="/clubs/id/{{.Team.ID}}" class="text-body text-decoration-none">
                                 <div
                                     class="d-flex flex-row justify-content-center align-items-center text-center gap-2">
-                                    <img src="{{.Team.Logo}}" alt="{{.Team.Name}} logo" width="50px">
+                                    <img src="{{.Team.Logo}}" alt="{{.Team.Name}} logo" width="50px" height="50px"
+                                        class="object-fit-contain">
                                     <h3 class="m-0 d-none d-md-block">{{.Team.Name}}</h3>
                                 </div>
                             </a>
@@ -74,6 +79,7 @@
                     {{end}}
                 </tbody>
             </table>
+            {{end}}
         </div>
         {{- /* Lineups */ -}}
         <div class="tab-pane fade" id="nav-lineups" role="tabpanel" aria-labelledby="nav-lineups-tab" tabindex="0">
@@ -85,7 +91,8 @@
                             {{.Home.Formation}}
                         </div>
                         <div>
-                            <img src="{{.Home.Logo}}" alt="{{.Home.Name}} logo" width="30px">
+                            <img src="{{.Home.Logo}}" alt="{{.Home.Name}} logo" width="30px" height="30px"
+                                class="object-fit-contain">
                         </div>
                         <div></div>
                     </div>
@@ -126,18 +133,20 @@
                             {{.Away.Formation}}
                         </div>
                         <div>
-                            <img src="{{.Away.Logo}}" alt="{{.Away.Name}} logo" width="30px">
+                            <img src="{{.Away.Logo}}" alt="{{.Away.Name}} logo" width="30px" height="30px"
+                                class="object-fit-contain">
                         </div>
                         <div></div>
                     </div>
                 </div>
-                {{end}}
                 <hr class="d-none d-md-block">
+                {{end}}
                 {{range .MatchesTemplateData.Match.Lineups}}
                 <div class="col-12 col-md-6">
                     <div class="mt-2 d-flex flex-row justify-content-between align-items-center">
                         <a href="/clubs/id/{{.Team.ID}}" class="text-body text-decoration-none fs-3">
-                            <img src="{{.Team.Logo}}" alt="{{.Team.Name}} logo" width="50px">
+                            <img src="{{.Team.Logo}}" alt="{{.Team.Name}} logo" width="50px" height="50px"
+                                class="object-fit-contain">
                             {{.Team.Name}}
                         </a>
                     </div>
@@ -192,7 +201,8 @@
                                 </div>
                                 <div class="d-flex flex-row justify-content-between align-items-center">
                                     <div class="d-flex flex-row align-items-center gap-2">
-                                        <img src="{{.Teams.Home.Logo}}" width="30px" alt="{{.Teams.Home.Name}} logo">
+                                        <img src="{{.Teams.Home.Logo}}" width="30px" height="30px"
+                                            alt="{{.Teams.Home.Name}} logo" class="object-fit-contain">
                                         <p class="card-text{{if .Teams.Away.Winner}} text-secondary {{end}}">
                                             {{.Teams.Home.Name}}</p>
                                     </div>
@@ -214,7 +224,8 @@
                                     <div class="d-flex flex-row align-items-center gap-2">
                                         <p class="card-text m-0{{if .Teams.Home.Winner}} text-secondary {{end}}">
                                             {{.Teams.Away.Name}}</p>
-                                        <img src="{{.Teams.Away.Logo}}" width="30px" alt="{{.Teams.Away.Name}} logo">
+                                        <img src="{{.Teams.Away.Logo}}" width="30px" height="30px"
+                                            alt="{{.Teams.Away.Name}} logo" class="object-fit-contain">
                                     </div>
                                 </div>
                             </div>

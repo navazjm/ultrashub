@@ -42,6 +42,9 @@ var generateCmd = &cobra.Command{
 			queryParams := url.Values{}
 			queryParams.Add("id", "1035086")
 
+			// has no formation data or stats data
+			//queryParams.Add("id", "1008484")
+
 			data, err = handler.GetFixtures(queryParams)
 			if err != nil {
 				fmt.Println(err.Error())
