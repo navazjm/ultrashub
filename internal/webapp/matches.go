@@ -219,6 +219,9 @@ func (app *Application) getMatchByID(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var formationData *FormationData
+	if match.Lineups != nil {
+		formationData = &FormationData{}
+	}
 	for i, lineup := range match.Lineups {
 		// no formation data present so we skip
 		if lineup.Formation == "" {
