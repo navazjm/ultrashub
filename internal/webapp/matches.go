@@ -18,6 +18,27 @@ type DateSelection struct {
 	HREF    string
 }
 
+type GoalEvent struct {
+	TimeElapsed int
+	Scorer      string
+	Assister    string
+	Detail      string
+}
+
+type GoalEventsTemplateData struct {
+	HomeTeam struct {
+		Events []GoalEvent
+	}
+	AwayTeam struct {
+		Events []GoalEvent
+	}
+}
+
+type StatsTemplateData struct {
+	HomeTeam any
+	AwayTeam any
+}
+
 type FormationTeamData struct {
 	Players   map[int][]FormationPlayerData
 	Formation string
@@ -43,11 +64,6 @@ type FormationData struct {
 	Away FormationTeamData
 }
 
-type StatsTemplateData struct {
-	HomeTeam any
-	AwayTeam any
-}
-
 type matchesTemplateData struct {
 	ActiveTab                string
 	DateRanges               map[int]DateSelection
@@ -60,9 +76,10 @@ type matchesTemplateData struct {
 	TopLeagueMatchesTBD      map[string][]apifootball.Match
 	TopLeagueMatchesFixtures map[string][]apifootball.Match
 	TopLeagueMatchesResults  map[string][]apifootball.Match
-	H2HMatches               []apifootball.Match
-	FormationData            *FormationData
+	MatchGoalEvents          *GoalEventsTemplateData
 	StatsData                map[string]StatsTemplateData
+	FormationData            *FormationData
+	H2HMatches               []apifootball.Match
 }
 
 func newMatchesTemplateData(r *http.Request) *matchesTemplateData {
@@ -218,6 +235,48 @@ func (app *Application) getMatchByID(w http.ResponseWriter, r *http.Request) {
 		activeTab = "Events"
 	}
 
+	matchGoalEvents := &GoalEventsTemplateData{}
+	if len(match.Events) < 1 {
+		matchGoalEvents = nil
+	}
+	for _, event := range match.Events {
+		if event.Type == "Goal" {
+			goalEvent := GoalEvent{
+				TimeElapsed: event.Time.Elapsed + event.Time.Extra,
+				Scorer:      event.Player.Name,
+				Assister:    event.Assist.Name,
+				Detail:      event.Detail,
+			}
+			if event.Team.ID == match.Teams.Home.ID {
+				matchGoalEvents.HomeTeam.Events = append(matchGoalEvents.HomeTeam.Events, goalEvent)
+			} else {
+				matchGoalEvents.AwayTeam.Events = append(matchGoalEvents.AwayTeam.Events, goalEvent)
+			}
+		}
+	}
+
+	statsData := make(map[string]StatsTemplateData)
+	for idx, matchStats := range match.Stats {
+		for _, stats := range matchStats.Stats {
+			// strings.Title is depreciated, need new alternative
+			statType := strings.Title(strings.ReplaceAll(stats.Type, "_", " "))
+			statValue := stats.Value
+			if statValue == nil {
+				statValue = 0
+			}
+			if idx == 0 {
+				statData := StatsTemplateData{
+					HomeTeam: statValue,
+				}
+				statsData[statType] = statData
+			} else {
+				stat := statsData[statType]
+				stat.AwayTeam = statValue
+				statsData[statType] = stat
+			}
+		}
+	}
+
 	var formationData *FormationData
 	if match.Lineups != nil && len(match.Lineups) > 0 {
 		formationData = &FormationData{}
@@ -264,28 +323,6 @@ func (app *Application) getMatchByID(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	statsData := make(map[string]StatsTemplateData)
-	for idx, matchStats := range match.Stats {
-		for _, stats := range matchStats.Stats {
-			// strings.Title is depreciated, need new alternative
-			statType := strings.Title(strings.ReplaceAll(stats.Type, "_", " "))
-			statValue := stats.Value
-			if statValue == nil {
-				statValue = 0
-			}
-			if idx == 0 {
-				statData := StatsTemplateData{
-					HomeTeam: statValue,
-				}
-				statsData[statType] = statData
-			} else {
-				stat := statsData[statType]
-				stat.AwayTeam = statValue
-				statsData[statType] = stat
-			}
-		}
-	}
-
 	queryParams = url.Values{}
 	queryParams.Add("h2h", fmt.Sprintf("%d-%d", match.Teams.Home.ID, match.Teams.Away.ID))
 	queryParams.Add("last", "10")
@@ -298,9 +335,10 @@ func (app *Application) getMatchByID(w http.ResponseWriter, r *http.Request) {
 	fixturesTemplateData := newMatchesTemplateData(r)
 	fixturesTemplateData.Match = &match
 	fixturesTemplateData.ActiveTab = activeTab
-	fixturesTemplateData.H2HMatches = apiFootballH2HFixturesResponse.Response
-	fixturesTemplateData.FormationData = formationData
+	fixturesTemplateData.MatchGoalEvents = matchGoalEvents
 	fixturesTemplateData.StatsData = statsData
+	fixturesTemplateData.FormationData = formationData
+	fixturesTemplateData.H2HMatches = apiFootballH2HFixturesResponse.Response
 	templateData := app.newTemplateData(r)
 	templateData.Title = title
 	templateData.MatchesTemplateData = fixturesTemplateData

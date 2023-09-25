@@ -2,18 +2,119 @@
 
 {{define "content"}}
 <main class="my-4 container p-sm-0">
-    {{if .MatchesTemplateData.Match}}
-    {{- /* Display match details like teams, teams logo, score, etc */ -}}
-    {{else}}
-    <div>
-        <p class="text-danger">No match details are available. Try again later!</p>
+    {{with .MatchesTemplateData}}
+    {{if .Match}}
+    <div class="card p-0 mb-3">
+        <div class="card-body">
+            <div class="d-flex flex-row align-items-center text-secondary mb-2 gap-4 flex-wrap">
+                {{if .Match.Fixture.Date}}
+                <div class="d-flex flex-row align-items-center gap-2">
+                    {{template "calendarEventSVG" .}}
+                    <small>{{formatMatchDateWithDay .Match.Fixture.Date}}</small>
+                </div>
+                <div class="d-flex flex-row align-items-center gap-2">
+                    {{template "clockSVG" .}}
+                    <small>Kick Off: {{formatMatchTime .Match.Fixture.Date}}</small>
+                </div>
+                {{end}}
+                {{if .Match.Fixture.Venue}}
+                <div class="d-flex flex-row align-items-center gap-2">
+                    {{template "geoAltSVG" .}}
+                    <small>{{.Match.Fixture.Venue.Name}}, {{formatVenueCity .Match.Fixture.Venue.City}}</small>
+                </div>
+                {{end}}
+                {{if .Match.Fixture.Referee}}
+                <div class="d-flex flex-row align-items-center gap-2">
+                    {{template "personSVG" .}}
+                    <small>Ref: {{.Match.Fixture.Referee}}</small>
+                </div>
+                {{end}}
+            </div>
+            <div class="d-flex flex-row justify-content-between align-items-start mb-2 py-3">
+                <div class="d-flex flex-row align-items-center justify-content-between">
+                    <div class="d-flex flex-row align-items-center gap-2">
+                        <img src="{{.Match.Teams.Home.Logo}}" width="30px" height="30px"
+                            alt="{{.Match.Teams.Home.Name}} Logo" loading="lazy" />
+                        <p
+                            class="d-none d-sm-block fs-3 m-0 text-truncate{{if .Match.Teams.Away.Winner}} text-secondary {{end}}">
+                            {{.Match.Teams.Home.Name}}
+                        </p>
+                    </div>
+                </div>
+                <div class="d-flex flex-column align-items-center">
+                    <div class="d-flex flex-row justify-content-center align-items-center gap-2 fw-bold">
+                        {{if eq .Match.Fixture.Status.Short "TBD" "NS" "PST"}}
+                        {{else}}
+                        <p class="fs-2 m-0{{if .Match.Teams.Away.Winner}} text-secondary {{end}}">
+                            {{.Match.Goals.Home}}
+                            {{if eq .Match.Fixture.Status.Short "PEN"}}
+                            <span>({{.Match.Score.Penalty.Home}})</span>
+                            {{end}}
+                        </p>
+                        <p class="fs-2 m-0 text-secondary">-</p>
+                        <p class="fs-2 m-0{{if .Match.Teams.Home.Winner}} text-secondary {{end}}">
+                            {{.Match.Goals.Away}}
+                            {{if eq .Match.Fixture.Status.Short "PEN"}}
+                            <span>({{.Match.Score.Penalty.Away}})</span>
+                            {{end}}
+                        </p>
+                        {{end}}
+                    </div>
+                    <div>
+                        {{template "matchStatus" .Match}}
+                    </div>
+                </div>
+                <div class="d-flex flex-row align-items-center justify-content-between">
+                    <div class="d-flex flex-row align-items-center gap-2">
+                        <p
+                            class="d-none d-sm-block fs-3 m-0 text-truncate{{if .Match.Teams.Home.Winner}} text-secondary {{end}}">
+                            {{.Match.Teams.Away.Name}}
+                        </p>
+                        <img src="{{.Match.Teams.Away.Logo}}" width="30px" height="30px"
+                            alt="{{.Match.Teams.Away.Name}} Logo" loading="lazy" />
+                    </div>
+                </div>
+            </div>
+            {{with .MatchGoalEvents}}
+            <hr>
+            <div class="d-flex flex-row justify-content-between align-items-start">
+                <div class="d-flex flex-column gap-3">
+                    {{range .HomeTeam.Events}}
+                    <div class="d-flex flex-row align-items-start gap-3 flex-wrap">
+                        <div class="d-flex flex-row align-items-center gap-1">
+                            <img src="/static/img/logo.png" alt="soccer ball" width="17" height="17">
+                            <p class="m-0 fw-bold">{{.TimeElapsed}}'</p>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <p class='m-0 fw-bold{{if eq .Detail "Own Goal"}} text-danger{{end}}'>{{.Scorer}}</p>
+                            <small class="text-secondary ">{{.Assister}}</small>
+                        </div>
+                    </div>
+                    {{end}}
+                </div>
+                <div class="d-flex flex-column gap-3">
+                    {{range .AwayTeam.Events}}
+                    <div class="d-flex flex-row align-items-start gap-3">
+                        <div class="d-flex flex-row align-items-center gap-1">
+                            <img src="/static/img/logo.png" alt="soccer ball" width="17" height="17">
+                            <p class="m-0 fw-bold">{{.TimeElapsed}}'</p>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <p class='m-0 fw-bold{{if eq .Detail "Own Goal"}} text-danger{{end}}'>{{.Scorer}}</p>
+                            <small class="text-secondary ">{{.Assister}}</small>
+                        </div>
+                    </div>
+                    {{end}}
+                </div>
+            </div>
+            {{end}}
+        </div>
     </div>
     {{end}}
 
-    {{if .MatchesTemplateData.Match}}
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            {{if eq .MatchesTemplateData.Match.Fixture.Status.Short "TBD" "NS" "PST" "CANC"}}
+            {{if eq .Match.Fixture.Status.Short "TBD" "NS" "PST" "CANC"}}
             <button class="nav-link active" id="nav-h2h-tab" data-bs-toggle="tab" data-bs-target="#nav-h2h"
                 type="button" role="tab" aria-controls="nav-h2h" aria-selected="true">H2H</button>
             {{else}}
@@ -30,17 +131,17 @@
     </nav>
     <div class="tab-content" id="nav-tabContent">
         {{- /* Events */ -}}
-        <div class='tab-pane fade{{if eq .MatchesTemplateData.ActiveTab "Events"}} show active {{end}}' id="nav-events"
-            role="tabpanel" aria-labelledby="nav-events-tab" tabindex="0">
+        <div class='tab-pane fade{{if eq .ActiveTab "Events"}} show active {{end}}' id="nav-events" role="tabpanel"
+            aria-labelledby="nav-events-tab" tabindex="0">
             Hello from events tab
         </div>
         {{- /* Stats */ -}}
         <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab" tabindex="0">
-            {{if gt (len .MatchesTemplateData.Match.Stats) 0}}
+            {{if gt (len .Match.Stats) 0}}
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        {{with index .MatchesTemplateData.Match.Stats 0}}
+                        {{with index .Match.Stats 0}}
                         <th>
                             <a href="/clubs/id/{{.Team.ID}}" class="text-body text-decoration-none">
                                 <div
@@ -53,7 +154,7 @@
                         </th>
                         {{end}}
                         <th></th>
-                        {{with index .MatchesTemplateData.Match.Stats 1}}
+                        {{with index .Match.Stats 1}}
                         <th>
                             <a href="/clubs/id/{{.Team.ID}}" class="text-body text-decoration-none">
                                 <div
@@ -68,7 +169,7 @@
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
-                    {{range $type, $stat := .MatchesTemplateData.StatsData}}
+                    {{range $type, $stat := .StatsData}}
                     <tr>
                         <td class="text-center">{{$stat.HomeTeam}}</td>
                         <td class="fs-5 fw-bold text-center">{{$type}}</td>
@@ -86,7 +187,7 @@
         {{- /* Lineups */ -}}
         <div class="tab-pane fade" id="nav-lineups" role="tabpanel" aria-labelledby="nav-lineups-tab" tabindex="0">
             <div class="row mt-2">
-                {{with .MatchesTemplateData.FormationData}}
+                {{with .FormationData}}
                 <div class="col-md-6 d-none d-md-flex flex-row justify-content-between align-items-center">
                     <div class="d-flex flex-column justify-content-between h-100">
                         <div class="text-secondary">
@@ -143,7 +244,7 @@
                 </div>
                 <hr class="d-none d-md-block">
                 {{end}}
-                {{range .MatchesTemplateData.Match.Lineups}}
+                {{range .Match.Lineups}}
                 <div class="col-12 col-md-6">
                     <div class="mt-2 d-flex flex-row justify-content-between align-items-center">
                         <a href="/clubs/id/{{.Team.ID}}" class="text-body text-decoration-none fs-3">
@@ -189,10 +290,10 @@
             </div>
         </div>
         {{- /* H2H */ -}}
-        <div class='tab-pane fade{{if eq .MatchesTemplateData.ActiveTab "H2H"}} show active {{end}}' id="nav-h2h"
-            role="tabpanel" aria-labelledby="nav-h2h-tab" tabindex="0">
+        <div class='tab-pane fade{{if eq .ActiveTab "H2H"}} show active {{end}}' id="nav-h2h" role="tabpanel"
+            aria-labelledby="nav-h2h-tab" tabindex="0">
             <div class="row g-2 mt-2">
-                {{range .MatchesTemplateData.H2HMatches}}
+                {{range .H2HMatches}}
                 <div class="col-12 col-lg-6">
                     <div class="card">
                         <a href="/matches/id/{{.Fixture.ID}}" class="text-body text-decoration-none">
@@ -241,6 +342,11 @@
                 {{end}}
             </div>
         </div>
+    </div>
+
+    {{else}}
+    <div>
+        <p class="text-danger">No match details are available. Try again later!</p>
     </div>
     {{end}}
 </main>

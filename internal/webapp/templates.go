@@ -7,6 +7,7 @@ import (
 	"io/fs"
 	"net/http"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/navazjm/ultrashub/web"
@@ -59,6 +60,10 @@ func formatTime(t time.Time) string {
 	return t.Format("15:04:05")
 }
 
+func formatDateWithDay(t time.Time) string {
+	return fmt.Sprintf("%s %s", t.Format("Mon"), formatDate(t))
+}
+
 func formatMatchTime(datetime string) string {
 	t, _ := time.Parse("2006-01-02T15:04:05-07:00", datetime)
 	return formatTime(t)
@@ -69,12 +74,27 @@ func formatMatchDate(datetime string) string {
 	return formatDate(t)
 }
 
+func formatMatchDateWithDay(datetime string) string {
+	t, _ := time.Parse("2006-01-02T15:04:05-07:00", datetime)
+	return formatDateWithDay(t)
+}
+
+func formatVenueCity(city string) string {
+	s := strings.Split(city, ",")
+	if len(s) > 0 {
+		return s[0]
+	}
+	return city
+}
+
 var templateFuns = template.FuncMap{
-	"formatDate":      formatDate,
-	"formatDateTime":  formatDateTime,
-	"formatTime":      formatTime,
-	"formatMatchTime": formatMatchTime,
-	"formatMatchDate": formatMatchDate,
+	"formatDate":             formatDate,
+	"formatDateTime":         formatDateTime,
+	"formatTime":             formatTime,
+	"formatMatchTime":        formatMatchTime,
+	"formatMatchDate":        formatMatchDate,
+	"formatVenueCity":        formatVenueCity,
+	"formatMatchDateWithDay": formatMatchDateWithDay,
 }
 
 func newTemplateCache() (map[string]*template.Template, error) {
