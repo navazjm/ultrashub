@@ -1,6 +1,7 @@
 package webapp
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -225,7 +226,14 @@ func (app *Application) getMatchByID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	match := apiFootballFixturesResponse.Response[0] // apiFootballFixturesResponse.Reponse is always an array with one object when using id query param
+	// apiFootballFixturesResponse.Reponse is always an array with one object when using id query param
+	// if len < 1, we ran out of api calls in prod
+	if len(apiFootballFixturesResponse.Response) < 1 {
+		err = errors.New("Ran out of api calls to API Football")
+		app.serverError(w, err)
+		return
+	}
+	match := apiFootballFixturesResponse.Response[0]
 	title := fmt.Sprintf("%s v %s", match.Teams.Home.Name, match.Teams.Away.Name)
 	var activeTab string
 	switch match.Fixture.Status.Short {
