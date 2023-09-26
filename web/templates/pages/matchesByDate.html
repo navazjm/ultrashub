@@ -19,12 +19,16 @@
             </div>
         </div>
     </div>
-    <div class="d-flex flex-row justify-content-between align-items-center flex-wrap">
+    <div class="my-3 d-flex flex-row justify-content-between align-items-center flex-wrap">
         <h3>{{.Title}}</h3>
     </div>
     <div id="leaguesContainer">
+        {{if .MatchesTemplateData.Matches}}
         {{template "matchesList" .MatchesTemplateData.TopLeagueMatches}}
         {{template "matchesList" .MatchesTemplateData.Matches}}
+        {{else}}
+        <p class="text-danger">No games on this date</p>
+        {{end}}
     </div>
 </main>
 {{end}}
