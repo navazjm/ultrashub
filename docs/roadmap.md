@@ -19,14 +19,7 @@
     - [x] if match is finished 
         - displays results of match, match events, match stats, team lineups based.
 
-### v0.2.0 
-- [ ] cli tool -> API Football transfers endpoint 
-- [ ] "/transfers/latest"
-    - show latest transfers for all leagues/teams
-- [ ] "/transfers/news"
-    - show latest transfer news for all leagues/teams
-
-### v0.3.0
+### v0.2.0
 - [ ] cli tool -> API Football leagues endpoint 
 - [ ] cli tool -> API Football teams endpoint
 - [ ] "/leagues" 
@@ -43,7 +36,7 @@
     - "/matches/date/YYYY-MM-DD"
     - "/matches/id/:id"
 
-### v0.4.0
+### v0.3.0
 - [ ] "/users/new" -> create a new user account
 - [ ] "/users/login" -> authenticate user 
 - [ ] "/users/logout" -> delete user session 
