@@ -25,12 +25,6 @@ func New() *Application {
 		errorLog.Fatal(err)
 	}
 
-	db, err := openDB(cfg)
-	if err != nil {
-		errorLog.Fatal(err)
-	}
-	defer db.Close()
-
 	templateCache, err := newTemplateCache()
 	if err != nil {
 		errorLog.Fatal(err)
