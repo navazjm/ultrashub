@@ -32,14 +32,16 @@
             </div>
             <div class="d-flex flex-row justify-content-between align-items-start mb-2 py-3">
                 <div class="d-flex flex-row align-items-center justify-content-between">
-                    <div class="d-flex flex-row align-items-center gap-2">
-                        <img src="{{.Match.Teams.Home.Logo}}" width="30px" height="30px"
-                            alt="{{.Match.Teams.Home.Name}} Logo" loading="lazy" />
-                        <p
-                            class="d-none d-sm-block fs-3 m-0 text-truncate{{if .Match.Teams.Away.Winner}} text-secondary {{end}}">
-                            {{.Match.Teams.Home.Name}}
-                        </p>
-                    </div>
+                    <a href="/clubs/id/{{.Match.Teams.Home.ID}}" class="text-body text-decoration-none fw-bold">
+                        <div class="d-flex flex-row align-items-center gap-2">
+                            <img src="{{.Match.Teams.Home.Logo}}" width="30px" height="30px"
+                                alt="{{.Match.Teams.Home.Name}} Logo" loading="lazy" />
+                            <p
+                                class="d-none d-sm-block fs-3 m-0 text-truncate{{if .Match.Teams.Away.Winner}} text-secondary {{end}}">
+                                {{.Match.Teams.Home.Name}}
+                            </p>
+                        </div>
+                    </a>
                 </div>
                 <div class="d-flex flex-column align-items-center">
                     <div class="d-flex flex-row justify-content-center align-items-center gap-2 fw-bold">
@@ -65,14 +67,16 @@
                     </div>
                 </div>
                 <div class="d-flex flex-row align-items-center justify-content-between">
-                    <div class="d-flex flex-row align-items-center gap-2">
-                        <p
-                            class="d-none d-sm-block fs-3 m-0 text-truncate{{if .Match.Teams.Home.Winner}} text-secondary {{end}}">
-                            {{.Match.Teams.Away.Name}}
-                        </p>
-                        <img src="{{.Match.Teams.Away.Logo}}" width="30px" height="30px"
-                            alt="{{.Match.Teams.Away.Name}} Logo" loading="lazy" />
-                    </div>
+                    <a href="/clubs/id/{{.Match.Teams.Home.ID}}" class="text-body text-decoration-none fw-bold">
+                        <div class="d-flex flex-row align-items-center gap-2">
+                            <p
+                                class="d-none d-sm-block fs-3 m-0 text-truncate{{if .Match.Teams.Home.Winner}} text-secondary {{end}}">
+                                {{.Match.Teams.Away.Name}}
+                            </p>
+                            <img src="{{.Match.Teams.Away.Logo}}" width="30px" height="30px"
+                                alt="{{.Match.Teams.Away.Name}} Logo" loading="lazy" />
+                        </div>
+                    </a>
                 </div>
             </div>
             {{with .MatchGoalEvents}}
@@ -92,7 +96,9 @@
                                 <small class="text-secondary fw-normal">(OG)</small>
                                 {{end}}
                             </p>
-                            <small class="text-secondary ">{{.Assister}}</small>
+                            {{if .Assister}}
+                            <small class="text-secondary">Ast. {{.Assister}}</small>
+                            {{end}}
                         </div>
                     </div>
                     {{end}}
@@ -111,7 +117,9 @@
                                 <small class="text-secondary fw-normal">(OG)</small>
                                 {{end}}
                             </p>
-                            <small class="text-secondary ">{{.Assister}}</small>
+                            {{if .Assister}}
+                            <small class="text-secondary">Ast. {{.Assister}}</small>
+                            {{end}}
                         </div>
                     </div>
                     {{end}}
@@ -194,8 +202,10 @@
                                 </div>
                             </div>
                             <div>
-                                <img src="{{.Team.Logo}}" width="30px" height="30px" alt="{{.Team.Name}} Logo"
-                                    loading="lazy" class="object-fit-contain" />
+                                <a href="/clubs/id/{{.Team.ID}}">
+                                    <img src="{{.Team.Logo}}" width="30px" height="30px" alt="{{.Team.Name}} Logo"
+                                        loading="lazy" class="object-fit-contain" />
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -262,8 +272,10 @@
                             {{.Home.Formation}}
                         </div>
                         <div>
-                            <img src="{{.Home.Logo}}" alt="{{.Home.Name}} logo" width="30px" height="30px"
-                                class="object-fit-contain">
+                            <a href="/clubs/id/{{.Home.ID}}">
+                                <img src="{{.Home.Logo}}" alt="{{.Home.Name}} logo" width="30px" height="30px"
+                                    class="object-fit-contain">
+                            </a>
                         </div>
                         <div></div>
                     </div>
@@ -304,8 +316,10 @@
                             {{.Away.Formation}}
                         </div>
                         <div>
-                            <img src="{{.Away.Logo}}" alt="{{.Away.Name}} logo" width="30px" height="30px"
-                                class="object-fit-contain">
+                            <a href="/clubs/id/{{.Away.ID}}">
+                                <img src="{{.Away.Logo}}" alt="{{.Away.Name}} logo" width="30px" height="30px"
+                                    class="object-fit-contain">
+                            </a>
                         </div>
                         <div></div>
                     </div>

@@ -45,6 +45,7 @@ type FormationTeamData struct {
 	Formation string
 	Logo      string
 	Name      string
+	ID        int
 }
 
 type FormationPlayerData struct {
@@ -323,6 +324,7 @@ func (app *Application) getMatchByID(w http.ResponseWriter, r *http.Request) {
 			Formation: lineup.Formation,
 			Logo:      lineup.Team.Logo,
 			Name:      lineup.Team.Name,
+			ID:        lineup.Team.ID,
 		}
 		if i == 0 {
 			formationData.Home = teamData
