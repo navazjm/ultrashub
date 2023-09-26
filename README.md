@@ -16,49 +16,24 @@
 
 1. [Install Go 1.21](https://go.dev/dl/)
 
-2. [Install PosgreSQL](https://www.postgresql.org/download/)
-
-3. Create database "ultrashub"
-
-```sh 
-psql
-```
-
-```sql
-CREATE DATABASE ultrashub;
-\c ultrashub
-CREATE ROLE <username> WITH LOGIN PASSWORD '<password>';
-CREATE EXTENSION IF NOT EXISTS citext;
-\q
-```
-_Note: Replace &lt;username&gt; and &lt;password&gt; with your unique username and password_
-
-4. [Install golang-migrate/migrate](https://github.com/golang-migrate/migrate)
-
-5. Clone the repo and cd into the root directory of the project
+2. Clone the repo and cd into the root directory of the project
 
 ```sh
 git clone https://github.com/navazjm/ultrashub && cd ultrashub
 ```
 
-6. copy .env.sample to .env \
-   _Note: Update with your unique keys_
+3. copy .env.sample to .env \
+   _Note: Update with your API Football API Key_
 
 ```sh
 cp .env.sample .env
 ```
 
-7. Run db migrations
-
-```sh
-migrate -path=./migrations -database="postgres://<username>:<password>@localhost/ultrashub?sslmode=disable" up
-```
-
-8. Run the dev server \
+4. Run the dev server \
    _Note: Will start the server at port 4000_
 
 ```sh
-go run ./cmd/server
+go run ./cmd/webapp
 ```
 
 ## Contribute
