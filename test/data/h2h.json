@@ -3,9 +3,9 @@
         {
             "fixture": {
                 "id": 1035086,
-                "referee": "M. Oliver",
-                "timezone": "UTC",
-                "date": "2023-09-16T11:30:00+00:00",
+                "referee": "Michael Oliver, England",
+                "timezone": "America/Chicago",
+                "date": "2023-09-16T06:30:00-05:00",
                 "timestamp": 1694863800,
                 "periods": {
                     "first": 1694863800,
@@ -75,8 +75,8 @@
             "fixture": {
                 "id": 868012,
                 "referee": "P. Tierney",
-                "timezone": "UTC",
-                "date": "2023-03-01T20:00:00+00:00",
+                "timezone": "America/Chicago",
+                "date": "2023-03-01T14:00:00-06:00",
                 "timestamp": 1677700800,
                 "periods": {
                     "first": 1677700800,
@@ -146,8 +146,8 @@
             "fixture": {
                 "id": 868165,
                 "referee": "P. Tierney",
-                "timezone": "UTC",
-                "date": "2023-02-04T15:00:00+00:00",
+                "timezone": "America/Chicago",
+                "date": "2023-02-04T09:00:00-06:00",
                 "timestamp": 1675522800,
                 "periods": {
                     "first": 1675522800,
@@ -217,8 +217,8 @@
             "fixture": {
                 "id": 986119,
                 "referee": "A. Marriner",
-                "timezone": "UTC",
-                "date": "2023-01-17T19:45:00+00:00",
+                "timezone": "America/Chicago",
+                "date": "2023-01-17T13:45:00-06:00",
                 "timestamp": 1673984700,
                 "periods": {
                     "first": 1673984700,
@@ -288,8 +288,8 @@
             "fixture": {
                 "id": 976477,
                 "referee": "A. Madley",
-                "timezone": "UTC",
-                "date": "2023-01-07T20:00:00+00:00",
+                "timezone": "America/Chicago",
+                "date": "2023-01-07T14:00:00-06:00",
                 "timestamp": 1673121600,
                 "periods": {
                     "first": 1673121600,
@@ -359,8 +359,8 @@
             "fixture": {
                 "id": 710933,
                 "referee": "A. Taylor",
-                "timezone": "UTC",
-                "date": "2022-05-22T15:00:00+00:00",
+                "timezone": "America/Chicago",
+                "date": "2022-05-22T10:00:00-05:00",
                 "timestamp": 1653231600,
                 "periods": {
                     "first": 1653231600,
@@ -430,8 +430,8 @@
             "fixture": {
                 "id": 710705,
                 "referee": "C. Kavanagh",
-                "timezone": "UTC",
-                "date": "2021-12-04T15:00:00+00:00",
+                "timezone": "America/Chicago",
+                "date": "2021-12-04T09:00:00-06:00",
                 "timestamp": 1638630000,
                 "periods": {
                     "first": 1638630000,
@@ -501,8 +501,8 @@
             "fixture": {
                 "id": 592775,
                 "referee": "C. Pawson",
-                "timezone": "UTC",
-                "date": "2021-03-15T20:00:00+00:00",
+                "timezone": "America/Chicago",
+                "date": "2021-03-15T15:00:00-05:00",
                 "timestamp": 1615838400,
                 "periods": {
                     "first": 1615838400,
@@ -572,8 +572,8 @@
             "fixture": {
                 "id": 592245,
                 "referee": "C. Pawson",
-                "timezone": "UTC",
-                "date": "2020-12-06T19:15:00+00:00",
+                "timezone": "America/Chicago",
+                "date": "2020-12-06T13:15:00-06:00",
                 "timestamp": 1607282100,
                 "periods": {
                     "first": 1607282100,
@@ -643,8 +643,8 @@
             "fixture": {
                 "id": 157250,
                 "referee": "Michael Oliver, England",
-                "timezone": "UTC",
-                "date": "2020-01-23T20:00:00+00:00",
+                "timezone": "America/Chicago",
+                "date": "2020-01-23T14:00:00-06:00",
                 "timestamp": 1579809600,
                 "periods": {
                     "first": 1579809600,

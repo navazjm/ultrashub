@@ -1,6 +1,6 @@
 # UltrasHub - Roadmap 
 
-### v0.1.0
+### v0.1.0 - MVP using templates
 - [x] cli tool to create json file from API Football api call to limit amount of api calls during development
     - API Football fixtures endpoint
 - [x] "/" 
@@ -19,9 +19,16 @@
     - [x] if match is finished 
         - displays results of match, match events, match stats, team lineups based.
 
-### v0.2.0
+### v0.2.0 - Migrate to REST API & SPA
+- Convert webapp to REST API
+- convert web from templates to react app
+
+### v0.3.0 - Introduce leagues and clubs endpoints
 - [ ] cli tool -> API Football leagues endpoint 
 - [ ] cli tool -> API Football teams endpoint
+- [ ] add leagues nav link option
+    - should be a dropdown lists thats lists top leagues/cups
+    - should have an option to view all leagues
 - [ ] "/leagues" 
     - returns list of leagues to navigate to "/leagues/id/:id" 
 - [ ] "/leagues/id/:id" 
@@ -36,7 +43,7 @@
     - "/matches/date/YYYY-MM-DD"
     - "/matches/id/:id"
 
-### v0.3.0
+### v0.4.0 - Introduced User Authentication and Preferences/Settings
 - [ ] "/users/new" -> create a new user account
 - [ ] "/users/login" -> authenticate user 
 - [ ] "/users/logout" -> delete user session 
