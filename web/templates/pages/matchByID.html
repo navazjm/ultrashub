@@ -2,8 +2,8 @@
 
 {{define "content"}}
 <main class="my-4 container p-sm-0">
+    {{if .MatchesTemplateData.Match}}
     {{with .MatchesTemplateData}}
-    {{if .Match}}
     <div class="card p-0 mb-3">
         <div class="card-body">
             <div class="d-flex flex-row align-items-center text-secondary mb-2 gap-4 flex-wrap">
@@ -130,6 +130,7 @@
     </div>
     {{end}}
 
+    {{with .MatchesTemplateData}}
     <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             {{if eq .Match.Fixture.Status.Short "TBD" "NS" "PST" "CANC"}}
@@ -147,8 +148,10 @@
             {{end}}
         </div>
     </nav>
+    {{end}}
     <div class="tab-content" id="nav-tabContent">
         {{- /* Events */ -}}
+        {{with .MatchesTemplateData}}
         <div class='tab-pane fade{{if eq .ActiveTab "Events"}} show active {{end}}' id="nav-events" role="tabpanel"
             aria-labelledby="nav-events-tab" tabindex="0">
             <div class="mt-3">
@@ -213,13 +216,15 @@
                 </div>
             </div>
         </div>
+        {{end}}
+
         {{- /* Stats */ -}}
         <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab" tabindex="0">
-            {{if gt (len .Match.Stats) 0}}
+            {{if gt (len .MatchesTemplateData.Match.Stats) 0}}
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        {{with index .Match.Stats 0}}
+                        {{with index .MatchesTemplateData.Match.Stats 0}}
                         <th>
                             <a href="/clubs/id/{{.Team.ID}}" class="text-body text-decoration-none">
                                 <div
@@ -232,7 +237,7 @@
                         </th>
                         {{end}}
                         <th></th>
-                        {{with index .Match.Stats 1}}
+                        {{with index .MatchesTemplateData.Match.Stats 1}}
                         <th>
                             <a href="/clubs/id/{{.Team.ID}}" class="text-body text-decoration-none">
                                 <div
@@ -247,7 +252,7 @@
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
-                    {{range $type, $stat := .StatsData}}
+                    {{range $type, $stat := .MatchesTemplateData.StatsData}}
                     <tr>
                         <td class="text-center">{{$stat.HomeTeam}}</td>
                         <td class="fs-5 fw-bold text-center">{{$type}}</td>
@@ -265,7 +270,7 @@
         {{- /* Lineups */ -}}
         <div class="tab-pane fade" id="nav-lineups" role="tabpanel" aria-labelledby="nav-lineups-tab" tabindex="0">
             <div class="row mt-2">
-                {{with .FormationData}}
+                {{with .MatchesTemplateData.FormationData}}
                 <div class="col-md-6 d-none d-md-flex flex-row justify-content-between align-items-center">
                     <div class="d-flex flex-column justify-content-between h-100">
                         <div class="text-secondary">
@@ -326,7 +331,7 @@
                 </div>
                 <hr class="d-none d-md-block">
                 {{end}}
-                {{range .Match.Lineups}}
+                {{range .MatchesTemplateData.Match.Lineups}}
                 <div class="col-12 col-md-6">
                     <div class="mt-2 d-flex flex-row justify-content-between align-items-center">
                         <a href="/clubs/id/{{.Team.ID}}" class="text-body text-decoration-none fs-3">
@@ -372,10 +377,10 @@
             </div>
         </div>
         {{- /* H2H */ -}}
-        <div class='tab-pane fade{{if eq .ActiveTab "H2H"}} show active {{end}}' id="nav-h2h" role="tabpanel"
-            aria-labelledby="nav-h2h-tab" tabindex="0">
+        <div class='tab-pane fade{{if eq .MatchesTemplateData.ActiveTab "H2H"}} show active {{end}}' id="nav-h2h"
+            role="tabpanel" aria-labelledby="nav-h2h-tab" tabindex="0">
             <div class="row g-2 mt-2">
-                {{range .H2HMatches}}
+                {{range .MatchesTemplateData.H2HMatches}}
                 <div class="col-12 col-lg-6">
                     <div class="card">
                         <a href="/matches/id/{{.Fixture.ID}}" class="text-body text-decoration-none">
@@ -425,7 +430,6 @@
             </div>
         </div>
     </div>
-
     {{else}}
     <div>
         <p class="text-danger">No match details are available. Try again later!</p>
