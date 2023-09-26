@@ -4,7 +4,7 @@ type ErrorMessageResponse struct {
 	Message string `json:"message"`
 }
 
-type FixtureResponse struct {
+type FixturesResponse struct {
 	Response []Match `json:"response"`
 }
 

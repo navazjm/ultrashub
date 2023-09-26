@@ -1,16 +1,16 @@
 package webapp
 
 import (
-	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 	"time"
 
 	"github.com/julienschmidt/httprouter"
 	"github.com/navazjm/ultrashub/internal/apifootball"
-	"github.com/navazjm/ultrashub/internal/utils"
 )
 
 type DateSelection struct {
@@ -19,8 +19,57 @@ type DateSelection struct {
 	HREF    string
 }
 
+type GoalEvent struct {
+	TimeElapsed int
+	Scorer      string
+	Assister    string
+	Detail      string
+}
+
+type GoalEventsTemplateData struct {
+	HomeTeam struct {
+		Events []GoalEvent
+	}
+	AwayTeam struct {
+		Events []GoalEvent
+	}
+}
+
+type StatsTemplateData struct {
+	HomeTeam any
+	AwayTeam any
+}
+
+type FormationTeamData struct {
+	Players   map[int][]FormationPlayerData
+	Formation string
+	Logo      string
+	Name      string
+	ID        int
+}
+
+type FormationPlayerData struct {
+	Name     string
+	Number   int
+	Position string
+	Colors   FormationPlayerColorData
+}
+
+type FormationPlayerColorData struct {
+	Primary string
+	Number  string
+	Border  string
+}
+
+type FormationData struct {
+	Home FormationTeamData
+	Away FormationTeamData
+}
+
 type matchesTemplateData struct {
+	ActiveTab                string
 	DateRanges               map[int]DateSelection
+	Match                    *apifootball.Match
 	Matches                  map[string][]apifootball.Match
 	MatchesTBD               map[string][]apifootball.Match
 	MatchesFixtures          map[string][]apifootball.Match
@@ -29,6 +78,10 @@ type matchesTemplateData struct {
 	TopLeagueMatchesTBD      map[string][]apifootball.Match
 	TopLeagueMatchesFixtures map[string][]apifootball.Match
 	TopLeagueMatchesResults  map[string][]apifootball.Match
+	MatchGoalEvents          *GoalEventsTemplateData
+	StatsData                map[string]StatsTemplateData
+	FormationData            *FormationData
+	H2HMatches               []apifootball.Match
 }
 
 func newMatchesTemplateData(r *http.Request) *matchesTemplateData {
@@ -44,7 +97,9 @@ func (app *Application) getMatches(w http.ResponseWriter, r *http.Request) {
 	templateData.Title = "Matches"
 	templateData.MatchesTemplateData = matchesTemplateData
 
-	apiFootballFixturesResponse, err := app.getFixtureResponse(todaysDate.Format(app.Config.APIFootball.DateFormat))
+	queryParams := url.Values{}
+	queryParams.Add("date", todaysDate.Format(app.Config.APIFootball.DateFormat))
+	apiFootballFixturesResponse, err := app.getFixturesResponse(queryParams, "fixturesNow")
 	if err != nil {
 		app.serverError(w, err)
 		return
@@ -123,7 +178,9 @@ func (app *Application) getMatchesByDate(w http.ResponseWriter, r *http.Request)
 	templateData := app.newTemplateData(r)
 	templateData.MatchesTemplateData = fixturesTemplateData
 
-	apiFootballFixturesResponse, err := app.getFixtureResponse(dateParam)
+	queryParams := url.Values{}
+	queryParams.Add("date", dateParam)
+	apiFootballFixturesResponse, err := app.getFixturesResponse(queryParams, "fixturesNow")
 	if err != nil {
 		app.serverError(w, err)
 		return
@@ -153,60 +210,148 @@ func (app *Application) getMatchesByDate(w http.ResponseWriter, r *http.Request)
 	app.Render(w, http.StatusOK, "matchesByDate.html", templateData)
 }
 
-// Helper functions
-
-func (app *Application) getFixtureResponse(date string) (*apifootball.FixtureResponse, error) {
-	var apiFootballFixturesResp *apifootball.FixtureResponse
-	var err error
-
-	if app.Config.Env == "prod" {
-		queryParams := url.Values{}
-		queryParams.Add("date", date)
-
-		apiFootballFixturesResp, err = app.APIFootball.GetFixtures(queryParams)
-		if err != nil {
-			return nil, err
-		}
-	} else {
-		jsonData, err := utils.ReadFile("./test/data/fixtures.json")
-		if err != nil {
-			return nil, err
-		}
-		err = json.Unmarshal(jsonData, &apiFootballFixturesResp)
-		if err != nil {
-			return nil, err
-		}
+func (app *Application) getMatchByID(w http.ResponseWriter, r *http.Request) {
+	params := httprouter.ParamsFromContext(r.Context())
+	idStr := params.ByName("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil || id < 1 {
+		app.notFound(w)
+		return
 	}
 
-	return apiFootballFixturesResp, nil
-}
-
-func (app *Application) getDateRanges(date time.Time) map[int]DateSelection {
-	dateRanges := make(map[int]DateSelection)
-	for i := -3; i <= 3; i++ {
-		newDate := date.AddDate(0, 0, i)
-		weekday := newDate.Weekday().String()
-		weekday = strings.ToUpper(weekday[:3])
-		href := fmt.Sprintf("/matches/date/%s", newDate.Format(app.Config.APIFootball.DateFormat))
-		if newDate.Format(app.Config.APIFootball.DateFormat) == date.Format(app.Config.APIFootball.DateFormat) {
-			href = "/"
-		}
-
-		newDateSelection := DateSelection{
-			Weekday: weekday,
-			Date:    newDate.Format("01/02"),
-			HREF:    href,
-		}
-		dateRanges[i] = newDateSelection
+	queryParams := url.Values{}
+	queryParams.Add("id", idStr)
+	apiFootballFixturesResponse, err := app.getFixturesResponse(queryParams, "fixtureByID")
+	if err != nil {
+		app.serverError(w, err)
+		return
 	}
-	return dateRanges
-}
 
-func isTopLeague(leagueID int) bool {
-	switch leagueID {
-	case 2, 3, 39, 45, 48, 61, 78, 135, 140, 253, 848:
-		return true
+	// apiFootballFixturesResponse.Reponse is always an array with one object when using id query param
+	// if len < 1, we ran out of api calls in prod
+	if len(apiFootballFixturesResponse.Response) < 1 {
+		err = errors.New("Ran out of api calls to API Football")
+		app.serverError(w, err)
+		return
+	}
+	match := apiFootballFixturesResponse.Response[0]
+	title := fmt.Sprintf("%s v %s", match.Teams.Home.Name, match.Teams.Away.Name)
+	var activeTab string
+	switch match.Fixture.Status.Short {
+	case "TBD", "NS", "PST", "CANC":
+		activeTab = "H2H"
 	default:
-		return false
+		activeTab = "Events"
 	}
+
+	matchGoalEvents := &GoalEventsTemplateData{}
+	if len(match.Events) < 1 {
+		matchGoalEvents = nil
+	}
+	for _, event := range match.Events {
+		if event.Type == "Goal" {
+			goalEvent := GoalEvent{
+				TimeElapsed: event.Time.Elapsed + event.Time.Extra,
+				Scorer:      event.Player.Name,
+				Assister:    event.Assist.Name,
+				Detail:      event.Detail,
+			}
+			if event.Team.ID == match.Teams.Home.ID {
+				matchGoalEvents.HomeTeam.Events = append(matchGoalEvents.HomeTeam.Events, goalEvent)
+			} else {
+				matchGoalEvents.AwayTeam.Events = append(matchGoalEvents.AwayTeam.Events, goalEvent)
+			}
+		}
+	}
+
+	statsData := make(map[string]StatsTemplateData)
+	for idx, matchStats := range match.Stats {
+		for _, stats := range matchStats.Stats {
+			// strings.Title is depreciated, need new alternative
+			statType := strings.Title(strings.ReplaceAll(stats.Type, "_", " "))
+			statValue := stats.Value
+			if statValue == nil {
+				statValue = 0
+			}
+			if idx == 0 {
+				statData := StatsTemplateData{
+					HomeTeam: statValue,
+				}
+				statsData[statType] = statData
+			} else {
+				stat := statsData[statType]
+				stat.AwayTeam = statValue
+				statsData[statType] = stat
+			}
+		}
+	}
+
+	var formationData *FormationData
+	if match.Lineups != nil && len(match.Lineups) > 0 {
+		formationData = &FormationData{}
+	}
+	for i, lineup := range match.Lineups {
+		// no formation data present so we skip
+		if lineup.Formation == "" {
+			formationData = nil
+			continue
+		}
+
+		// collect formation data to display formation and starting XI
+		playersData := make(map[int][]FormationPlayerData)
+		for _, startingPlayer := range lineup.StartXI {
+			playerColor := FormationPlayerColorData{}
+			if startingPlayer.Player.Position == "G" {
+				playerColor.Primary = lineup.Team.Colors.Goalkeeper.Primary
+				playerColor.Number = lineup.Team.Colors.Goalkeeper.Number
+				playerColor.Border = lineup.Team.Colors.Goalkeeper.Border
+			} else {
+				playerColor.Primary = lineup.Team.Colors.Player.Primary
+				playerColor.Number = lineup.Team.Colors.Player.Number
+				playerColor.Border = lineup.Team.Colors.Player.Border
+			}
+			FormationPlayerData := FormationPlayerData{
+				Name:     startingPlayer.Player.Name,
+				Number:   startingPlayer.Player.Number,
+				Position: startingPlayer.Player.Position,
+				Colors:   playerColor,
+			}
+			playerIdx := int(startingPlayer.Player.Grid[0])
+			playersData[playerIdx] = append(playersData[playerIdx], FormationPlayerData)
+		}
+		teamData := FormationTeamData{
+			Players:   playersData,
+			Formation: lineup.Formation,
+			Logo:      lineup.Team.Logo,
+			Name:      lineup.Team.Name,
+			ID:        lineup.Team.ID,
+		}
+		if i == 0 {
+			formationData.Home = teamData
+		} else {
+			formationData.Away = teamData
+		}
+	}
+
+	queryParams = url.Values{}
+	queryParams.Add("h2h", fmt.Sprintf("%d-%d", match.Teams.Home.ID, match.Teams.Away.ID))
+	queryParams.Add("last", "10")
+	apiFootballH2HFixturesResponse, err := app.getH2HResponse(queryParams)
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
+
+	fixturesTemplateData := newMatchesTemplateData(r)
+	fixturesTemplateData.Match = &match
+	fixturesTemplateData.ActiveTab = activeTab
+	fixturesTemplateData.MatchGoalEvents = matchGoalEvents
+	fixturesTemplateData.StatsData = statsData
+	fixturesTemplateData.FormationData = formationData
+	fixturesTemplateData.H2HMatches = apiFootballH2HFixturesResponse.Response
+	templateData := app.newTemplateData(r)
+	templateData.Title = title
+	templateData.MatchesTemplateData = fixturesTemplateData
+
+	app.Render(w, http.StatusOK, "matchByID.html", templateData)
 }

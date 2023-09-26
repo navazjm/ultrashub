@@ -12,11 +12,11 @@
     - [x] returns all matches for given date.
     - [x] displays 7 day calendar to navigate between dates
     - [x] displays top leagues/cups first
-- [ ] "/matches/id/:id"
-    - [ ] returns a single match based on id
-    - [ ] if match is upcoming fixture:
+- [x] "/matches/id/:id"
+    - [x] returns a single match based on id
+    - [x] if match is upcoming fixture:
         - displays details of upcoming fixture (date, time, etc) and teams head-to-head
-    - [ ] if match is finished 
+    - [x] if match is finished 
         - displays results of match, match events, match stats, team lineups based.
 
 ### v0.2.0 
