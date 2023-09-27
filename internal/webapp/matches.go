@@ -99,6 +99,7 @@ func (app *Application) getMatches(w http.ResponseWriter, r *http.Request) {
 
 	queryParams := url.Values{}
 	queryParams.Add("date", todaysDate.Format(app.Config.APIFootball.DateFormat))
+	queryParams.Add("timezone", "America/Chicago")
 	apiFootballFixturesResponse, err := app.getFixturesResponse(queryParams, "fixturesNow")
 	if err != nil {
 		app.serverError(w, err)
@@ -180,6 +181,7 @@ func (app *Application) getMatchesByDate(w http.ResponseWriter, r *http.Request)
 
 	queryParams := url.Values{}
 	queryParams.Add("date", dateParam)
+	queryParams.Add("timezone", "America/Chicago")
 	apiFootballFixturesResponse, err := app.getFixturesResponse(queryParams, "fixturesNow")
 	if err != nil {
 		app.serverError(w, err)
@@ -221,6 +223,7 @@ func (app *Application) getMatchByID(w http.ResponseWriter, r *http.Request) {
 
 	queryParams := url.Values{}
 	queryParams.Add("id", idStr)
+	queryParams.Add("timezone", "America/Chicago")
 	apiFootballFixturesResponse, err := app.getFixturesResponse(queryParams, "fixtureByID")
 	if err != nil {
 		app.serverError(w, err)
@@ -336,6 +339,7 @@ func (app *Application) getMatchByID(w http.ResponseWriter, r *http.Request) {
 	queryParams = url.Values{}
 	queryParams.Add("h2h", fmt.Sprintf("%d-%d", match.Teams.Home.ID, match.Teams.Away.ID))
 	queryParams.Add("last", "10")
+	queryParams.Add("timezone", "America/Chicago")
 	apiFootballH2HFixturesResponse, err := app.getH2HResponse(queryParams)
 	if err != nil {
 		app.serverError(w, err)
