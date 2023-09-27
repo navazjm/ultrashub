@@ -26,12 +26,15 @@ var generateCmd = &cobra.Command{
 		var err error
 		handler := apifootball.New(ApiKey)
 
+		timezone := "America/Chicago"
+
 		switch Filename {
 		case "fixturesNow":
 			currentTime := time.Now()
 			formattedDate := currentTime.Format("2006-01-02")
 			queryParams := url.Values{}
 			queryParams.Add("date", formattedDate)
+			queryParams.Add("timezone", timezone)
 
 			data, err = handler.GetFixtures(queryParams)
 			if err != nil {
@@ -41,6 +44,7 @@ var generateCmd = &cobra.Command{
 		case "fixtureByID":
 			queryParams := url.Values{}
 			queryParams.Add("id", "1035086")
+			queryParams.Add("timezone", timezone)
 
 			// has no formation data or stats data
 			// queryParams.Add("id", "1008484")
@@ -54,6 +58,7 @@ var generateCmd = &cobra.Command{
 			queryParams := url.Values{}
 			queryParams.Add("h2h", "39-40")
 			queryParams.Add("last", "10")
+			queryParams.Add("timezone", timezone)
 
 			data, err = handler.GetH2H(queryParams)
 			if err != nil {

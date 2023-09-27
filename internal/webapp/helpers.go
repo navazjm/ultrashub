@@ -20,17 +20,17 @@ func (app *Application) getFixturesResponse(queryParams url.Values, filename str
 	var apiFootballFixturesResp *apifootball.FixturesResponse
 	var err error
 
-	if app.Config.Env == "prod" {
-		apiFootballFixturesResp, err = app.APIFootball.GetFixtures(queryParams)
-		if err != nil {
-			return nil, err
-		}
-	} else {
+	if app.Config.Env == "dev" {
 		jsonData, err := utils.ReadFile(fmt.Sprintf("./test/data/%s.json", filename))
 		if err != nil {
 			return nil, err
 		}
 		err = json.Unmarshal(jsonData, &apiFootballFixturesResp)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		apiFootballFixturesResp, err = app.APIFootball.GetFixtures(queryParams)
 		if err != nil {
 			return nil, err
 		}
@@ -43,17 +43,17 @@ func (app *Application) getH2HResponse(queryParams url.Values) (*apifootball.Fix
 	var apiFootballFixturesResp *apifootball.FixturesResponse
 	var err error
 
-	if app.Config.Env == "prod" {
-		apiFootballFixturesResp, err = app.APIFootball.GetH2H(queryParams)
-		if err != nil {
-			return nil, err
-		}
-	} else {
+	if app.Config.Env == "dev" {
 		jsonData, err := utils.ReadFile("./test/data/h2h.json")
 		if err != nil {
 			return nil, err
 		}
 		err = json.Unmarshal(jsonData, &apiFootballFixturesResp)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		apiFootballFixturesResp, err = app.APIFootball.GetH2H(queryParams)
 		if err != nil {
 			return nil, err
 		}

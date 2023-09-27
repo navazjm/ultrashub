@@ -32,16 +32,14 @@
             </div>
             <div class="d-flex flex-row justify-content-between align-items-start mb-2 py-3">
                 <div class="d-flex flex-row align-items-center justify-content-between">
-                    <a href="/clubs/id/{{.Match.Teams.Home.ID}}" class="text-body text-decoration-none fw-bold">
-                        <div class="d-flex flex-row align-items-center gap-2">
-                            <img src="{{.Match.Teams.Home.Logo}}" width="30px" height="30px"
-                                alt="{{.Match.Teams.Home.Name}} Logo" loading="lazy" />
-                            <p
-                                class="d-none d-sm-block fs-3 m-0 text-truncate{{if .Match.Teams.Away.Winner}} text-secondary {{end}}">
-                                {{.Match.Teams.Home.Name}}
-                            </p>
-                        </div>
-                    </a>
+                    <div class="d-flex flex-row align-items-center gap-2">
+                        <img src="{{.Match.Teams.Home.Logo}}" width="30px" height="30px"
+                            alt="{{.Match.Teams.Home.Name}} Logo" loading="lazy" />
+                        <p
+                            class="d-none d-sm-block fw-bold fs-3 m-0 text-truncate{{if .Match.Teams.Away.Winner}} text-secondary {{end}}">
+                            {{.Match.Teams.Home.Name}}
+                        </p>
+                    </div>
                 </div>
                 <div class="d-flex flex-column align-items-center">
                     <div class="d-flex flex-row justify-content-center align-items-center gap-2 fw-bold">
@@ -63,20 +61,21 @@
                         {{end}}
                     </div>
                     <div>
+                        {{if eq .Match.Fixture.Status.Short "TBD" "NS" "PST"}}
+                        {{else}}
                         {{template "matchStatus" .Match}}
+                        {{end}}
                     </div>
                 </div>
                 <div class="d-flex flex-row align-items-center justify-content-between">
-                    <a href="/clubs/id/{{.Match.Teams.Home.ID}}" class="text-body text-decoration-none fw-bold">
-                        <div class="d-flex flex-row align-items-center gap-2">
-                            <p
-                                class="d-none d-sm-block fs-3 m-0 text-truncate{{if .Match.Teams.Home.Winner}} text-secondary {{end}}">
-                                {{.Match.Teams.Away.Name}}
-                            </p>
-                            <img src="{{.Match.Teams.Away.Logo}}" width="30px" height="30px"
-                                alt="{{.Match.Teams.Away.Name}} Logo" loading="lazy" />
-                        </div>
-                    </a>
+                    <div class="d-flex flex-row align-items-center gap-2">
+                        <p
+                            class="d-none d-sm-block fw-bold fs-3 m-0 text-truncate{{if .Match.Teams.Home.Winner}} text-secondary {{end}}">
+                            {{.Match.Teams.Away.Name}}
+                        </p>
+                        <img src="{{.Match.Teams.Away.Logo}}" width="30px" height="30px"
+                            alt="{{.Match.Teams.Away.Name}} Logo" loading="lazy" />
+                    </div>
                 </div>
             </div>
             {{with .MatchGoalEvents}}
@@ -205,10 +204,8 @@
                                 </div>
                             </div>
                             <div>
-                                <a href="/clubs/id/{{.Team.ID}}">
-                                    <img src="{{.Team.Logo}}" width="30px" height="30px" alt="{{.Team.Name}} Logo"
-                                        loading="lazy" class="object-fit-contain" />
-                                </a>
+                                <img src="{{.Team.Logo}}" width="30px" height="30px" alt="{{.Team.Name}} Logo"
+                                    loading="lazy" class="object-fit-contain" />
                             </div>
                         </div>
                     </div>
@@ -226,27 +223,21 @@
                     <tr>
                         {{with index .MatchesTemplateData.Match.Stats 0}}
                         <th>
-                            <a href="/clubs/id/{{.Team.ID}}" class="text-body text-decoration-none">
-                                <div
-                                    class="d-flex flex-row justify-content-center align-items-center text-center gap-2">
-                                    <h3 class="m-0 d-none d-md-block">{{.Team.Name}}</h3>
-                                    <img src="{{.Team.Logo}}" alt="{{.Team.Name}} logo" width="50px" height="50px"
-                                        class="object-fit-contain">
-                                </div>
-                            </a>
+                            <div class="d-flex flex-row justify-content-center align-items-center text-center gap-2">
+                                <h3 class="m-0 d-none d-md-block">{{.Team.Name}}</h3>
+                                <img src="{{.Team.Logo}}" alt="{{.Team.Name}} logo" width="50px" height="50px"
+                                    class="object-fit-contain">
+                            </div>
                         </th>
                         {{end}}
                         <th></th>
                         {{with index .MatchesTemplateData.Match.Stats 1}}
                         <th>
-                            <a href="/clubs/id/{{.Team.ID}}" class="text-body text-decoration-none">
-                                <div
-                                    class="d-flex flex-row justify-content-center align-items-center text-center gap-2">
-                                    <img src="{{.Team.Logo}}" alt="{{.Team.Name}} logo" width="50px" height="50px"
-                                        class="object-fit-contain">
-                                    <h3 class="m-0 d-none d-md-block">{{.Team.Name}}</h3>
-                                </div>
-                            </a>
+                            <div class="d-flex flex-row justify-content-center align-items-center text-center gap-2">
+                                <img src="{{.Team.Logo}}" alt="{{.Team.Name}} logo" width="50px" height="50px"
+                                    class="object-fit-contain">
+                                <h3 class="m-0 d-none d-md-block">{{.Team.Name}}</h3>
+                            </div>
                         </th>
                         {{end}}
                     </tr>
@@ -277,10 +268,8 @@
                             {{.Home.Formation}}
                         </div>
                         <div>
-                            <a href="/clubs/id/{{.Home.ID}}">
-                                <img src="{{.Home.Logo}}" alt="{{.Home.Name}} logo" width="30px" height="30px"
-                                    class="object-fit-contain">
-                            </a>
+                            <img src="{{.Home.Logo}}" alt="{{.Home.Name}} logo" width="30px" height="30px"
+                                class="object-fit-contain">
                         </div>
                         <div></div>
                     </div>
@@ -321,10 +310,8 @@
                             {{.Away.Formation}}
                         </div>
                         <div>
-                            <a href="/clubs/id/{{.Away.ID}}">
-                                <img src="{{.Away.Logo}}" alt="{{.Away.Name}} logo" width="30px" height="30px"
-                                    class="object-fit-contain">
-                            </a>
+                            <img src="{{.Away.Logo}}" alt="{{.Away.Name}} logo" width="30px" height="30px"
+                                class="object-fit-contain">
                         </div>
                         <div></div>
                     </div>
@@ -333,12 +320,10 @@
                 {{end}}
                 {{range .MatchesTemplateData.Match.Lineups}}
                 <div class="col-12 col-md-6">
-                    <div class="mt-2 d-flex flex-row justify-content-between align-items-center">
-                        <a href="/clubs/id/{{.Team.ID}}" class="text-body text-decoration-none fs-3">
-                            <img src="{{.Team.Logo}}" alt="{{.Team.Name}} logo" width="50px" height="50px"
-                                class="object-fit-contain">
-                            {{.Team.Name}}
-                        </a>
+                    <div class="mt-2 d-flex flex-row align-items-center gap-2">
+                        <img src="{{.Team.Logo}}" alt="{{.Team.Name}} logo" width="50px" height="50px"
+                            class="object-fit-contain">
+                        <p class="m-0 fs-3 fw-bold">{{.Team.Name}}</p>
                     </div>
                     <hr>
                     <div class="mt-2">
