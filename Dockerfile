@@ -1,5 +1,5 @@
 # Use an official Golang runtime as a parent image
-FROM golang:1.21 as build
+FROM golang:1.21-alpine as build
 
 # Set the working directory to /app
 WORKDIR /app
@@ -8,17 +8,16 @@ WORKDIR /app
 COPY . .
 
 # Build the application
-RUN GOARCH=amd64 go build -o webapp ./cmd/webapp
+RUN go build -o bin/webapp ./cmd/webapp
 
 # Use a lightweight base image for the final runtime
 FROM alpine
-RUN apk --no-cache add ca-certificates
 
 # Set the working directory to /app
 WORKDIR /root/
 
 # Copy the binary from the build stage to the current directory in the final image
-COPY --from=build /app/webapp /usr/local/bin/
+COPY --from=build /app/bin/webapp /usr/local/bin/
 RUN chmod +x /usr/local/bin/webapp
 
 # Expose port 8080
