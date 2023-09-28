@@ -1,7 +1,6 @@
 package webapp
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"os"
