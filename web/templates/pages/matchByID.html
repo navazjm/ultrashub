@@ -17,7 +17,7 @@
                     <small>Kick Off: {{formatMatchTime .Match.Fixture.Date}}</small>
                 </div>
                 {{end}}
-                {{if .Match.Fixture.Venue}}
+                {{if .Match.Fixture.Venue.Name}}
                 <div class="d-flex flex-row align-items-center gap-2">
                     {{template "geoAltSVG" .}}
                     <small>{{.Match.Fixture.Venue.Name}}, {{formatVenueCity .Match.Fixture.Venue.City}}</small>
