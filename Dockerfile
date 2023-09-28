@@ -11,7 +11,7 @@ COPY . .
 RUN GOARCH=amd64 go build -o webapp ./cmd/webapp
 
 # Use a lightweight base image for the final runtime
-FROM alpine:3.14
+FROM alpine
 RUN apk --no-cache add ca-certificates
 
 # Set the working directory to /app
