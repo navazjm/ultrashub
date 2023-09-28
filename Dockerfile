@@ -33,4 +33,4 @@ EXPOSE 8080
 ENV API_FOOTBALL_KEY=$API_FOOTBALL_KEY
 
 # Command to run the executable
-CMD ["./webapp"]
+CMD ["webapp"]
