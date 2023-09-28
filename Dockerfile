@@ -4,14 +4,8 @@ FROM golang:1.21 as build
 # Set the working directory to /app
 WORKDIR /app
 
-# Copy the Go module files and download dependencies
-COPY go.mod go.sum ./
-RUN go mod download
-
 # Copy the current directory contents into the container at /app
 COPY . .
-
-ARG API_FOOTBALL_KEY
 
 # Build the application
 RUN GOARCH=amd64 go build -o bin/webapp ./cmd/webapp
