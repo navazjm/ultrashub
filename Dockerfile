@@ -24,8 +24,6 @@ ENV API_FOOTBALL_KEY=$API_FOOTBALL_KEY
 # Set the working directory to /app
 WORKDIR /app
 
-COPY .env .
-
 # Copy the binary from the build stage to the current directory in the final image
 COPY --from=build /app/webapp .
 RUN chmod +x ./webapp
@@ -37,4 +35,4 @@ EXPOSE 8080
 # ENV VARIABLE_NAME=value
 
 # Command to run the executable
-CMD ["/bin/sh", "-c", "source .env && ./webapp"]
+CMD ["./webapp"]
