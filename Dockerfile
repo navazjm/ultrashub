@@ -19,6 +19,7 @@ WORKDIR /root/
 
 # Copy the binary from the build stage to the current directory in the final image
 COPY --from=build /app/webapp /usr/local/bin/
+RUN chmod +x /usr/local/bin/webapp
 
 # Expose port 8080
 EXPOSE 8080
