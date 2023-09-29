@@ -1,7 +1,6 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-    <img src="" alt="Logo" width="100">
     <h3 align="center">⚽️ UltrasHub</h3>
     <p align="center">
         Home of the best content for Football Ultras!
