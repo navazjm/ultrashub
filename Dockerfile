@@ -26,5 +26,7 @@ EXPOSE 8080
 # Define environment variables if needed
 ENV API_FOOTBALL_KEY=$API_FOOTBALL_KEY
 
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 # Command to run the executable
 CMD ["webapp"]
