@@ -1,6 +1,12 @@
 # UltrasHub - Roadmap 
 
-### v0.1.0 - MVP using templates
+| | Legend |
+| --- | --- |
+| :sparkles: | Released |
+| :construction: | Work in Progress |
+| :x: | Not implemented |
+
+### :sparkles: v0.1.0 - MVP using templates
 - [x] cli tool to create json file from API Football api call to limit amount of api calls during development
     - API Football fixtures endpoint
 - [x] "/" 
@@ -19,11 +25,18 @@
     - [x] if match is finished 
         - displays results of match, match events, match stats, team lineups based.
 
-### v0.2.0 - Migrate to REST API & SPA
-- Convert webapp to REST API
-- convert web from templates to react app
+### :construction: v0.1.1 - Bug Fixes
+- [ ] correct current date for "/"
+    - at 9pm EST on 10/07, loads current date as 10/08 
+- [ ] text turnacate for long team names throughout the app
+- [ ] remove team names in H2H for "/matches/id/:id" on small devices
+- [ ] remove league IDs
+- [ ] add empty message for tabs in "/"
+- [ ] see why matches on saturday 10/07 are displaying substitutions wrong
+    - player off and player in are swapped.
+    - only for 10/07. any date before 10/07 works as intended
 
-### v0.3.0 - Introduce leagues and clubs endpoints
+### :x: v0.2.0 - Introduce leagues and clubs endpoints
 - [ ] cli tool -> API Football leagues endpoint 
 - [ ] cli tool -> API Football teams endpoint
 - [ ] add leagues nav link option
@@ -43,7 +56,11 @@
     - "/matches/date/YYYY-MM-DD"
     - "/matches/id/:id"
 
-### v0.4.0 - Introduced User Authentication and Preferences/Settings
+### :x: v0.3.0 - Migrate to REST API & SPA
+- Convert webapp to REST API
+- convert web from templates to react app
+
+### :x: v0.4.0 - Introduced User Authentication and Preferences/Settings
 - [ ] "/users/new" -> create a new user account
 - [ ] "/users/login" -> authenticate user 
 - [ ] "/users/logout" -> delete user session 
