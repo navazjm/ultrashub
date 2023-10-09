@@ -43,7 +43,7 @@
                 </div>
                 <div class="d-flex flex-column align-items-center">
                     <div class="d-flex flex-row justify-content-center align-items-center gap-2 fw-bold">
-                        {{if eq .Match.Fixture.Status.Short "TBD" "NS" "PST"}}
+                        {{if eq .Match.Fixture.Status.Short "TBD" "NS"}}
                         {{else}}
                         <p class="fs-2 m-0{{if .Match.Teams.Away.Winner}} text-secondary {{end}}">
                             {{.Match.Goals.Home}}
@@ -61,7 +61,7 @@
                         {{end}}
                     </div>
                     <div>
-                        {{if eq .Match.Fixture.Status.Short "TBD" "NS" "PST"}}
+                        {{if eq .Match.Fixture.Status.Short "TBD" "NS"}}
                         {{else}}
                         {{template "matchStatus" .Match}}
                         {{end}}
