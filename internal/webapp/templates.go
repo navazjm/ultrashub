@@ -10,6 +10,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/navazjm/ultrashub/internal/apifootball"
 	"github.com/navazjm/ultrashub/web"
 )
 
@@ -87,6 +88,10 @@ func formatVenueCity(city string) string {
 	return city
 }
 
+func matchesHasData(m1 map[string][]apifootball.Match, m2 map[string][]apifootball.Match) bool {
+	return len(m1) > 0 || len(m2) > 0
+}
+
 var templateFuns = template.FuncMap{
 	"formatDate":             formatDate,
 	"formatDateTime":         formatDateTime,
@@ -95,6 +100,7 @@ var templateFuns = template.FuncMap{
 	"formatMatchDate":        formatMatchDate,
 	"formatVenueCity":        formatVenueCity,
 	"formatMatchDateWithDay": formatMatchDateWithDay,
+	"matchesHasData":         matchesHasData,
 }
 
 func newTemplateCache() (map[string]*template.Template, error) {

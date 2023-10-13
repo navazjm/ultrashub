@@ -27,12 +27,18 @@
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-all"
                 type="button" role="tab" aria-controls="nav-all" aria-selected="true">All</button>
+            {{if matchesHasData .MatchesTemplateData.TopLeagueMatchesTBD .MatchesTemplateData.MatchesTBD}}
             <button class="nav-link" id="nav-tbd-tab" data-bs-toggle="tab" data-bs-target="#nav-tbd" type="button"
                 role="tab" aria-controls="nav-tbd" aria-selected="false">TBD</button>
+            {{end}}
+            {{if matchesHasData .MatchesTemplateData.TopLeagueMatchesFixtures .MatchesTemplateData.MatchesFixtures}}
             <button class="nav-link" id="nav-fixtures-tab" data-bs-toggle="tab" data-bs-target="#nav-fixtures"
                 type="button" role="tab" aria-controls="nav-fixtures" aria-selected="false">Fixtures</button>
+            {{end}}
+            {{if matchesHasData .MatchesTemplateData.TopLeagueMatchesResults .MatchesTemplateData.MatchesResults}}
             <button class="nav-link" id="nav-results-tab" data-bs-toggle="tab" data-bs-target="#nav-results"
                 type="button" role="tab" aria-controls="nav-results" aria-selected="false">Results</button>
+            {{end}}
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
@@ -40,18 +46,24 @@
             {{template "matchesList" .MatchesTemplateData.TopLeagueMatches}}
             {{template "matchesList" .MatchesTemplateData.Matches}}
         </div>
+        {{if matchesHasData .MatchesTemplateData.TopLeagueMatchesTBD .MatchesTemplateData.MatchesTBD}}
         <div class="tab-pane fade" id="nav-tbd" role="tabpanel" aria-labelledby="nav-tbd-tab" tabindex="0">
             {{template "matchesList" .MatchesTemplateData.TopLeagueMatchesTBD}}
             {{template "matchesList" .MatchesTemplateData.MatchesTBD}}
         </div>
+        {{end}}
+        {{if matchesHasData .MatchesTemplateData.TopLeagueMatchesFixtures .MatchesTemplateData.MatchesFixtures}}
         <div class="tab-pane fade" id="nav-fixtures" role="tabpanel" aria-labelledby="nav-fixtures-tab" tabindex="0">
             {{template "matchesList" .MatchesTemplateData.TopLeagueMatchesFixtures}}
             {{template "matchesList" .MatchesTemplateData.MatchesFixtures}}
         </div>
+        {{end}}
+        {{if matchesHasData .MatchesTemplateData.TopLeagueMatchesResults .MatchesTemplateData.MatchesResults}}
         <div class="tab-pane fade" id="nav-results" role="tabpanel" aria-labelledby="nav-results-tab" tabindex="0">
             {{template "matchesList" .MatchesTemplateData.TopLeagueMatchesResults}}
             {{template "matchesList" .MatchesTemplateData.MatchesResults}}
         </div>
+        {{end}}
     </div>
 
     {{else}}
