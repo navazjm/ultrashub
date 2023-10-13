@@ -115,7 +115,7 @@ func (app *Application) getMatches(w http.ResponseWriter, r *http.Request) {
 	topLeagueMatchesFixtures := make(map[string][]apifootball.Match)
 	topLeagueMatchesResults := make(map[string][]apifootball.Match)
 	for _, match := range apiFootballFixturesResponse.Response {
-		currentLeagueName := fmt.Sprintf("%s %s # %d", match.League.Country, match.League.Name, match.League.ID)
+		currentLeagueName := fmt.Sprintf("%s %s", match.League.Country, match.League.Name)
 		if isTopLeague(match.League.ID) {
 			topLeagueMatches[currentLeagueName] = append(topLeagueMatches[currentLeagueName], match)
 
@@ -191,7 +191,7 @@ func (app *Application) getMatchesByDate(w http.ResponseWriter, r *http.Request)
 	matches := make(map[string][]apifootball.Match)
 	topLeagueMatches := make(map[string][]apifootball.Match)
 	for _, match := range apiFootballFixturesResponse.Response {
-		currentLeagueName := fmt.Sprintf("%s %s # %d", match.League.Country, match.League.Name, match.League.ID)
+		currentLeagueName := fmt.Sprintf("%s %s", match.League.Country, match.League.Name)
 		if isTopLeague(match.League.ID) {
 			topLeagueMatches[currentLeagueName] = append(topLeagueMatches[currentLeagueName], match)
 		} else {
