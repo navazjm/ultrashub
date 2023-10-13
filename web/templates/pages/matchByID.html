@@ -171,6 +171,8 @@
                                     <img src="/static/img/logo.png" alt="soccer ball" width="17" height="17">
                                     {{else if eq .Type "subst"}}
                                     {{template "arrowLeftRightSVG" .}}
+                                    {{else if eq .Type "Var"}}
+                                    {{template "cameraVideoFillSVG" .}}
                                     {{end}}
                                     {{if .Time.Extra}}
                                     <p class="fw-bold m-0">{{.Time.Elapsed}} +{{.Time.Extra}}'</p>
@@ -200,6 +202,9 @@
                                         {{template "arrowRightSVG" .}}
                                         <small>Player on <span class="fs-6 fw-bold">{{.Assist.Name}}</span></small>
                                     </div>
+                                    {{else if eq .Type "Var"}}
+                                    <p class="text-uppercase fw-bold m-0">{{.Type}}</p>
+                                    <small class="text-secondary m-0">{{.Player.Name}} - {{.Detail}}</small>
                                     {{end}}
                                 </div>
                             </div>
