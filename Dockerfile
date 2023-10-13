@@ -25,6 +25,9 @@ EXPOSE 8080
 
 # Define environment variables if needed
 ENV API_FOOTBALL_KEY=$API_FOOTBALL_KEY
+ENV TZ=$TZ
+RUN apk update && apk add tzdata \
+     && cp -r -f /usr/share/zoneinfo/$TZ /etc/localtime
 
 # Command to run the executable
 CMD ["webapp"]
