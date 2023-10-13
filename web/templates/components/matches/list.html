@@ -12,7 +12,7 @@
                             {{template "matchStatus" .}}
                         </div>
                         <div class="d-flex flex-row align-items-center justify-content-between">
-                            <div class="d-flex flex-row align-items-center gap-2">
+                            <div class="d-flex flex-row align-items-center gap-2 text-truncate">
                                 <img src="{{.Teams.Home.Logo}}" width="30px" height="30px"
                                     alt="{{.Teams.Home.Name}} Logo" loading="lazy" />
                                 <p class="d-block m-0 text-truncate{{if .Teams.Away.Winner}} text-secondary {{end}}">
@@ -30,7 +30,7 @@
                             {{end}}
                         </div>
                         <div class="d-flex flex-row align-items-center justify-content-between">
-                            <div class="d-flex flex-row align-items-center gap-2">
+                            <div class="d-flex flex-row align-items-center gap-2 text-truncate">
                                 <img src="{{.Teams.Away.Logo}}" width="30px" height="30px"
                                     alt="{{.Teams.Away.Name}} Logo" loading="lazy" />
                                 <p class="d-block m-0 text-truncate{{if .Teams.Home.Winner}} text-secondary {{end}}">
