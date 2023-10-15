@@ -25,18 +25,18 @@
     - [x] if match is finished 
         - displays results of match, match events, match stats, team lineups based.
 
-### :construction: v0.1.1 - Bug Fixes
-- [ ] correct current date for "/"
+### :sparkles: v0.1.1 - Bug Fixes
+- [x] correct current date for "/"
     - at 9pm EST on 10/07, loads current date as 10/08 
-- [ ] text turnacate for long team names throughout the app
-- [ ] remove team names in H2H for "/matches/id/:id" on small devices
-- [ ] remove league IDs
-- [ ] add empty message for tabs in "/"
-- [ ] see why matches on saturday 10/07 are displaying substitutions wrong
+- [x] text turnacate for long team names throughout the app
+- [x] remove team names in H2H for "/matches/id/:id" on small devices
+- [x] remove league IDs
+- [x] add empty message for tabs in "/"
+- [x] see why matches on saturday 10/07 are displaying substitutions wrong
     - player off and player in are swapped.
     - only for 10/07. any date before 10/07 works as intended
 
-### :x: v0.2.0 - Introduce leagues and clubs endpoints
+### :construction: v0.2.0 - Introduce leagues and clubs endpoints
 - [ ] cli tool -> API Football leagues endpoint 
 - [ ] cli tool -> API Football teams endpoint
 - [ ] add leagues nav link option
