@@ -16,6 +16,7 @@ type Config struct {
 		MaxIdleConns int
 		MaxIdleTime  time.Duration
 	}
+	APIFootballKey string
 	// only need cors for local development
 	Cors struct {
 		TrustedOrigins []string
@@ -32,6 +33,7 @@ func NewConfig() *Config {
 	flag.IntVar(&cfg.DB.MaxOpenConns, "db-max-open-conns", 25, "PostgreSQL max open connections")
 	flag.IntVar(&cfg.DB.MaxIdleConns, "db-max-idle-conns", 25, "PostgreSQL max idle connections")
 	flag.DurationVar(&cfg.DB.MaxIdleTime, "db-max-idle-time", 15*time.Minute, "PostgreSQL max connection idle time")
+	flag.StringVar(&cfg.APIFootballKey, "af-key", os.Getenv("API_FOOTBALL_KEY"), "API Key for API-Football")
 	flag.Parse()
 
 	if cfg.Env == "dev" {

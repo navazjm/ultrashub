@@ -10,6 +10,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/navazjm/ultrashub/internal/apifootball"
 	"github.com/navazjm/ultrashub/internal/server"
 )
 
@@ -23,6 +24,9 @@ func main() {
 	}
 	defer db.Close()
 	uhServer.Logger.Info("database connection pool established")
+
+	afSerivce := apifootball.NewService(uhServer.Logger, uhServer.Config.APIFootballKey)
+	uhServer.APIFootballService = afSerivce
 
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", uhServer.Config.Port),

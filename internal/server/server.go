@@ -5,11 +5,14 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+
+	"github.com/navazjm/ultrashub/internal/apifootball"
 )
 
 type Server struct {
 	Config      *Config
 	Logger      *slog.Logger
+	APIFootballService *apifootball.Service
 }
 
 func New() *Server {

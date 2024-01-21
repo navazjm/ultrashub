@@ -20,6 +20,7 @@ func (srv *Server) Routes() http.Handler {
 	})
 	
 	router.HandlerFunc(http.MethodGet, "/api/healthcheck", srv.healthcheckHandler)
+	router.HandlerFunc(http.MethodGet, "/api/apifootball/*path", srv.APIFootballService.ProxyHandler)
 
 	return srv.logRequest(srv.recoverPanic(srv.enableCORS(srv.rateLimit(router))))
 }
