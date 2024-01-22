@@ -22,7 +22,7 @@ func (srv *Server) recoverPanic(next http.Handler) http.Handler {
 		defer func() {
 			if err := recover(); err != nil {
 				w.Header().Set("Connection", "close")
-				utils.ServerErrorResponse(srv.Logger, w, r, fmt.Errorf("%s", err))
+				utils.ServerErrorResponse(w, r, srv.Logger, fmt.Errorf("%s", err))
 			}
 		}()
 
@@ -66,7 +66,7 @@ func (srv *Server) rateLimit(next http.Handler) http.Handler {
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if !limiter.Allow() {
-			utils.RateLimitExceededResponse(srv.Logger, w, r)
+			utils.RateLimitExceededResponse(w, r, srv.Logger)
 			return
 		}
 

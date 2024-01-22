@@ -17,6 +17,6 @@ func (srv *Server) healthcheckHandler(w http.ResponseWriter, r *http.Request) {
 
 	err := utils.WriteJSON(w, http.StatusOK, env, nil)
 	if err != nil {
-		utils.ServerErrorResponse(srv.Logger, w, r, err)
+		utils.ServerErrorResponse(w, r, srv.Logger, err)
 	}
 }

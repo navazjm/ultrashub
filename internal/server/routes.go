@@ -12,11 +12,11 @@ func (srv *Server) Routes() http.Handler {
 	router := httprouter.New()
 
 	router.NotFound = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		utils.NotFoundResponse(srv.Logger, w, r)
+		utils.NotFoundResponse(w, r, srv.Logger)
 	})
 
 	router.MethodNotAllowed = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		utils.MethodNotAllowedResponse(srv.Logger, w, r)
+		utils.MethodNotAllowedResponse(w, r, srv.Logger)
 	})
 	
 	router.HandlerFunc(http.MethodGet, "/api/healthcheck", srv.healthcheckHandler)

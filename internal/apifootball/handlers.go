@@ -22,7 +22,7 @@ func (afs *Service) ProxyHandler(w http.ResponseWriter, r *http.Request) {
 	queryParams := r.URL.Query()
 	apiURL, err := url.Parse(afs.ApiBaseURL)
 	if err != nil {
-		utils.ServerErrorResponse(afs.Logger, w, r, err)
+		utils.ServerErrorResponse(w, r, afs.Logger, err)
 		return
 	}
 	apiURL.Path = path
@@ -32,7 +32,7 @@ func (afs *Service) ProxyHandler(w http.ResponseWriter, r *http.Request) {
 
 	req, err := http.NewRequest("GET", apiURL.String(), nil)
 	if err != nil {
-		utils.BadRequestResponse(afs.Logger, w, r, err)
+		utils.BadRequestResponse(w, r, afs.Logger, err)
 		return
 	}
 
@@ -41,7 +41,7 @@ func (afs *Service) ProxyHandler(w http.ResponseWriter, r *http.Request) {
 
 	response, err := client.Do(req)
 	if err != nil {
-		utils.ErrorResponse(afs.Logger, w, r, http.StatusBadRequest, fmt.Sprintf("Error fetching data from API Football: %s", err))
+		utils.ErrorResponse(w, r, afs.Logger, http.StatusBadRequest, fmt.Sprintf("Error fetching data from API Football: %s", err))
 		return
 	}
 	defer response.Body.Close()
@@ -53,27 +53,27 @@ func (afs *Service) ProxyHandler(w http.ResponseWriter, r *http.Request) {
 		var errMsgResp ErrorMessageResponse
 		err = json.NewDecoder(response.Body).Decode(&errMsgResp)
 		if err != nil {
-			utils.BadRequestResponse(afs.Logger, w, r, err)
+			utils.BadRequestResponse(w, r, afs.Logger, err)
 			return
 		}
 		err = errors.New("APIFootball: " + errMsgResp.Message)
-		utils.BadRequestResponse(afs.Logger, w, r, err)
+		utils.BadRequestResponse(w, r, afs.Logger, err)
 	case http.StatusNoContent:
 		err = errors.New("API Football: report bug")
-		utils.BadRequestResponse(afs.Logger, w, r, err)
+		utils.BadRequestResponse(w, r, afs.Logger, err)
 	case http.StatusOK:
 		var responseData utils.Envelope
 		err = json.NewDecoder(response.Body).Decode(&responseData)
 		if err != nil {
-			utils.ServerErrorResponse(afs.Logger, w, r, err)
+			utils.ServerErrorResponse(w, r, afs.Logger, err)
 			return
 		}
 		err = utils.WriteJSON(w, http.StatusOK, responseData, nil)
 		if err != nil {
-			utils.ServerErrorResponse(afs.Logger, w, r, err)
+			utils.ServerErrorResponse(w, r, afs.Logger, err)
 		}
 	default:
 		err := errors.New("APIFootball: Unexpected http status code")
-		utils.ServerErrorResponse(afs.Logger, w, r, err)
+		utils.ServerErrorResponse(w, r, afs.Logger, err)
 	}
 }

@@ -13,7 +13,7 @@ var (
 	ErrDuplicateEmail = errors.New("duplicate email")
 )
 
-func LogError(logger *slog.Logger, r *http.Request, err error) {
+func LogError(r *http.Request, logger *slog.Logger, err error) {
 	var (
 		method = r.Method
 		uri    = r.URL.RequestURI()
@@ -22,64 +22,64 @@ func LogError(logger *slog.Logger, r *http.Request, err error) {
 	logger.Error(err.Error(), "method", method, "uri", uri)
 }
 
-func ErrorResponse(logger *slog.Logger, w http.ResponseWriter, r *http.Request, status int, message any) {
+func ErrorResponse(w http.ResponseWriter, r *http.Request, logger *slog.Logger, status int, message any) {
 	env := Envelope{"error": message}
 
 	err := WriteJSON(w, status, env, nil)
 	if err != nil {
-		LogError(logger, r, err)
+		LogError(r, logger, err)
 		w.WriteHeader(500)
 	}
 }
 
-func ServerErrorResponse(logger *slog.Logger, w http.ResponseWriter, r *http.Request, err error) {
-	LogError(logger, r, err)
+func ServerErrorResponse(w http.ResponseWriter, r *http.Request, logger *slog.Logger, err error) {
+	LogError(r, logger, err)
 
 	message := "the server encountered a problem and could not process your request"
-	ErrorResponse(logger, w, r, http.StatusInternalServerError, message)
+	ErrorResponse(w, r,logger, http.StatusInternalServerError, message)
 }
 
-func NotFoundResponse(logger *slog.Logger, w http.ResponseWriter, r *http.Request) {
+func NotFoundResponse(w http.ResponseWriter, r *http.Request, logger *slog.Logger) {
 	message := "the requested resource could not be found"
-	ErrorResponse(logger, w, r, http.StatusNotFound, message)
+	ErrorResponse(w, r, logger, http.StatusNotFound, message)
 }
 
-func MethodNotAllowedResponse(logger *slog.Logger, w http.ResponseWriter, r *http.Request) {
+func MethodNotAllowedResponse(w http.ResponseWriter, r *http.Request, logger *slog.Logger) {
 	message := fmt.Sprintf("the %s method is not supported for this resource", r.Method)
-	ErrorResponse(logger, w, r, http.StatusMethodNotAllowed, message)
+	ErrorResponse(w, r, logger, http.StatusMethodNotAllowed, message)
 }
 
-func BadRequestResponse(logger *slog.Logger, w http.ResponseWriter, r *http.Request, err error) {
-	ErrorResponse(logger, w, r, http.StatusBadRequest, err.Error())
+func BadRequestResponse(w http.ResponseWriter, r *http.Request, logger *slog.Logger, err error) {
+	ErrorResponse(w, r, logger, http.StatusBadRequest, err.Error())
 }
 
-func FailedValidationResponse(logger *slog.Logger, w http.ResponseWriter, r *http.Request, errors map[string]string) {
-	ErrorResponse(logger, w, r, http.StatusUnprocessableEntity, errors)
+func FailedValidationResponse(w http.ResponseWriter, r *http.Request, logger *slog.Logger, errors map[string]string) {
+	ErrorResponse(w, r, logger, http.StatusUnprocessableEntity, errors)
 }
 
-func EditConflictResponse(logger *slog.Logger, w http.ResponseWriter, r *http.Request) {
+func EditConflictResponse(w http.ResponseWriter, r *http.Request, logger *slog.Logger) {
 	message := "unable to update the record due to an edit conflict, please try again"
-	ErrorResponse(logger, w, r, http.StatusConflict, message)
+	ErrorResponse(w, r, logger, http.StatusConflict, message)
 }
 
-func RateLimitExceededResponse(logger *slog.Logger, w http.ResponseWriter, r *http.Request) {
+func RateLimitExceededResponse(w http.ResponseWriter, r *http.Request, logger *slog.Logger) {
 	message := "rate limit exceeded"
-	ErrorResponse(logger, w, r, http.StatusTooManyRequests, message)
+	ErrorResponse(w, r, logger, http.StatusTooManyRequests, message)
 }
 
-func InvalidCredentialsResponse(logger *slog.Logger, w http.ResponseWriter, r *http.Request) {
+func InvalidCredentialsResponse(w http.ResponseWriter, r *http.Request, logger *slog.Logger) {
 	message := "invalid authentication credentials"
-	ErrorResponse(logger, w, r, http.StatusUnauthorized, message)
+	ErrorResponse(w, r, logger, http.StatusUnauthorized, message)
 }
 
-func InvalidAuthenticationTokenResponse(logger *slog.Logger, w http.ResponseWriter, r *http.Request) {
+func InvalidAuthenticationTokenResponse(w http.ResponseWriter, r *http.Request, logger *slog.Logger) {
 	w.Header().Set("WWW-Authenticate", "Bearer")
 
 	message := "invalid or missing authentication token"
-	ErrorResponse(logger, w, r, http.StatusUnauthorized, message)
+	ErrorResponse(w, r, logger, http.StatusUnauthorized, message)
 }
 
-func AuthenticationRequiredResponse(logger *slog.Logger, w http.ResponseWriter, r *http.Request) {
+func AuthenticationRequiredResponse(w http.ResponseWriter, r *http.Request, logger *slog.Logger) {
 	message := "you must be authenticated to access this resource"
-	ErrorResponse(logger, w, r, http.StatusUnauthorized, message)
+	ErrorResponse(w, r, logger, http.StatusUnauthorized, message)
 }
