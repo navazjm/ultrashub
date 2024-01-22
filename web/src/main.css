@@ -3,7 +3,54 @@
 @tailwind utilities;
 
 @layer base {
+    /*Custom Purple theme from https://zippystarter.com/tools/shadcn-ui-theme-generator*/
     :root {
+        --background: 287 0% 95%;
+        --foreground: 287 0% 0%;
+        --card: 287 0% 90%;
+        --card-foreground: 287 0% 10%;
+        --popover: 287 0% 95%;
+        --popover-foreground: 287 95% 0%;
+        --primary: 287 34% 38%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 287 10% 70%;
+        --secondary-foreground: 0 0% 0%;
+        --muted: 249 10% 85%;
+        --muted-foreground: 287 0% 35%;
+        --accent: 249 10% 80%;
+        --accent-foreground: 287 0% 10%;
+        --destructive: 0 50% 30%;
+        --destructive-foreground: 287 0% 90%;
+        --border: 287 20% 50%;
+        --input: 287 20% 18%;
+        --ring: 287 34% 38%;
+        --radius: 0.5rem;
+    }
+    .dark {
+        --background: 287 10% 5%;
+        --foreground: 287 0% 90%;
+        --card: 287 0% 0%;
+        --card-foreground: 287 0% 90%;
+        --popover: 287 10% 5%;
+        --popover-foreground: 287 0% 90%;
+        --primary: 287 34% 38%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 287 10% 10%;
+        --secondary-foreground: 0 0% 100%;
+        --muted: 249 10% 15%;
+        --muted-foreground: 287 0% 60%;
+        --accent: 249 10% 15%;
+        --accent-foreground: 287 0% 90%;
+        --destructive: 0 50% 30%;
+        --destructive-foreground: 287 0% 90%;
+        --border: 287 20% 18%;
+        --input: 287 20% 18%;
+        --ring: 287 34% 38%;
+        --radius: 0.5rem;
+    }
+
+    /* Default Zinc Theme */
+    /* :root {
         --background: 0 0% 100%;
         --foreground: 240 10% 3.9%;
 
@@ -63,7 +110,7 @@
         --border: 240 3.7% 15.9%;
         --input: 240 3.7% 15.9%;
         --ring: 240 4.9% 83.9%;
-    }
+    } */
 }
 
 @layer base {
