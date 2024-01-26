@@ -11,7 +11,7 @@ export const NavbarComponent = () => {
                 <NavigationMenu className="w-10/12 max-w-10/12 min-w-10/12 m-auto justify-between py-1">
                     <NavLink to="/" className="flex gap-x-2 content-center">
                         <img src={ultrashubLogo} width="30px" />
-                        <h3 className="text-2xl font-bold">UltrasHub</h3>
+                        <h3 className="text-2xl font-black">UltrasHub</h3>
                     </NavLink>
                     <NavigationMenuList>
                         <NavigationMenuItem>
