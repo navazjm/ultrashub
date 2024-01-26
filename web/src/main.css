@@ -117,6 +117,9 @@
     * {
         @apply border-border;
     }
+    html {
+        font-family: "Montserrat", "Proxima Nova", system-ui, sans-serif;
+    }
     body {
         @apply bg-background text-foreground;
     }
