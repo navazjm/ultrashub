@@ -6,24 +6,28 @@ import { ThemeToggleProvider } from "@/layouts/navbar/theme-toggle/theme-toggle.
 import { HomePage } from "@/pages/home";
 import { NotFoundPage } from "@/pages/not-found";
 import "./main.css";
+import { TooltipProvider } from "./components/ui/tooltip";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
         <ThemeToggleProvider defaultTheme="dark" storageKey="vite-ui-theme">
-            <BrowserRouter>
-                <Routes>
-                    <Route
-                        element={
-                            <Layout>
-                                <Outlet />
-                            </Layout>
-                        }
-                    >
-                        <Route path="/" element={<HomePage />} />
-                        <Route element={<NotFoundPage />} path="*" />
-                    </Route>
-                </Routes>
-            </BrowserRouter>
+            <TooltipProvider>
+                <BrowserRouter>
+                    <Routes>
+                        <Route
+                            element={
+                                <Layout>
+                                    <Outlet />
+                                </Layout>
+                            }
+                        >
+                            <Route path="/" element={<HomePage />} />
+                            <Route path="/matches/:date?" element={<HomePage />} />
+                            <Route element={<NotFoundPage />} path="*" />
+                        </Route>
+                    </Routes>
+                </BrowserRouter>
+            </TooltipProvider>
         </ThemeToggleProvider>
     </React.StrictMode>,
 );
