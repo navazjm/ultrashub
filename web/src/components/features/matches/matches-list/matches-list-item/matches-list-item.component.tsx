@@ -8,6 +8,7 @@ interface IMatchesListItemProps extends IProps {
 }
 export const MatchesListItemComponent = (props: IMatchesListItemProps) => {
     let displayMatchStatus: string = "";
+    let matchInProgress = false;
     switch (props.match.fixture.status.short) {
         // use short
         case "TBD":
@@ -18,6 +19,9 @@ export const MatchesListItemComponent = (props: IMatchesListItemProps) => {
             break;
         // use long
         case "P":
+            matchInProgress = true;
+            displayMatchStatus = props.match.fixture.status.long;
+            break;
         case "SUSP":
         case "INT":
         case "CANC":
@@ -33,6 +37,7 @@ export const MatchesListItemComponent = (props: IMatchesListItemProps) => {
         case "ET":
         case "BT":
             displayMatchStatus = `${props.match.fixture.status.elapsed}'`;
+            matchInProgress = true;
             break;
         // display kickoff time
         case "NS":
@@ -58,7 +63,7 @@ export const MatchesListItemComponent = (props: IMatchesListItemProps) => {
             <CardContent className="p-0 flex flex-col gap-2">
                 <div
                     className={`flex justify-between content-center 
-                            ${props.showScores && props.match.teams.away.winner && "opacity-40"}`}
+                            ${props.showScores && !matchInProgress && props.match.teams.away.winner && "opacity-40"}`}
                 >
                     <div className="flex content-center">
                         <img src={props.match.teams.home.logo} alt="" loading="lazy" className="w-[30px] mr-2" />
@@ -74,7 +79,7 @@ export const MatchesListItemComponent = (props: IMatchesListItemProps) => {
                     )}
                 </div>
                 <div
-                    className={`flex justify-between content-center ${props.showScores && props.match.teams.home.winner && "opacity-40"}`}
+                    className={`flex justify-between content-center ${props.showScores && !matchInProgress && props.match.teams.home.winner && "opacity-40"}`}
                 >
                     <div className="flex content-center">
                         <img src={props.match.teams.away.logo} alt="" loading="lazy" className="w-[30px] mr-2" />
