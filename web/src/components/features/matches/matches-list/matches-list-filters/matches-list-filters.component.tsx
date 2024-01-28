@@ -8,7 +8,6 @@ import { IProps } from "@/components/types";
 import { Calendar } from "@/components/ui/calendar";
 import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -34,6 +33,7 @@ interface IMatchesListFiltersProps extends IProps {
 export const MatchesListFiltersComponent = (props: IMatchesListFiltersProps) => {
     const navigate = useNavigate();
     const [isCompetitionSelectPopoverOpen, setIsCompetitionSelectPopoverOpen] = useState<boolean>(false);
+    const [isTeamSelectPopoverOpen, setIsTeamSelectPopoverOpen] = useState<boolean>(false);
     const [isDatePickerPopoverOpen, setIsDatePickerPopoverOpen] = useState<boolean>(false);
 
     const onSelectDatePicker = (date: Date | undefined) => {
@@ -55,11 +55,14 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersProps) => 
         props.setSelectedCompetition(competition);
     };
 
-    const onSelectTeamChange = (value: string) => {
-        const foundTeam = props.teams.find((comp) => comp.name === value);
-        // Not possible for user to select an undefined team. if foundTeam is undefined it is a programming error
-        if (!foundTeam) return;
-        props.setSelectedTeam(foundTeam);
+    const onSelectTeamChange = (value: string, team: ITeam) => {
+        setIsTeamSelectPopoverOpen(false);
+        // if users selects the team that is already selected, deselect it
+        if (value.toLocaleUpperCase() === props.selectedTeam.name.toLocaleUpperCase()) {
+            props.setSelectedTeam(props.teams[0]);
+            return;
+        }
+        props.setSelectedTeam(team);
     };
 
     const onClickResetFilters = () => {
@@ -71,7 +74,7 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersProps) => 
         }
         // only need to directly reset team selection when no competition is selected
         if (props.selectedTeam.id !== 0) {
-            onSelectTeamChange(ALL_TEAMS);
+            onSelectTeamChange(ALL_TEAMS, props.teams[0]);
             return;
         }
     };
@@ -146,33 +149,58 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersProps) => 
                     <Label htmlFor="selectTeam" className="font-extralight">
                         Filter by Team
                     </Label>
-                    <Select
-                        value={props.selectedTeam?.name}
-                        onValueChange={(value) => onSelectTeamChange(value)}
-                        disabled={props.isLoading}
-                    >
-                        <SelectTrigger className="w-[180px] h-[30px] text-[1.1rem] p-1 truncate">
-                            <SelectValue placeholder={ALL_TEAMS} />
-                        </SelectTrigger>
-                        <SelectContent id="selectTeam">
-                            <SelectGroup>
-                                {props.teams.map((team) => (
-                                    <SelectItem value={team.name} key={team.id}>
-                                        <div className="h-full text-[1.1rem] flex content-center gap-2">
-                                            {team.logo && (
-                                                <img
-                                                    src={team.logo}
-                                                    className="w-[20px] object-scale-down"
-                                                    loading="lazy"
+                    <Popover open={isTeamSelectPopoverOpen} onOpenChange={setIsTeamSelectPopoverOpen}>
+                        <PopoverTrigger asChild>
+                            <Button
+                                variant="outline"
+                                role="combobox"
+                                className="justify-between w-[180px] h-[30px] p-1 "
+                                disabled={props.isLoading}
+                            >
+                                <div className="w-80 truncate flex content-center justify-start gap-1">
+                                    {props.selectedTeam.logo && (
+                                        <img
+                                            src={props.selectedTeam.logo}
+                                            className="w-[20px] object-scale-down"
+                                            loading="lazy"
+                                        />
+                                    )}
+                                    {props.selectedTeam.name}
+                                </div>
+                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[300px] p-0">
+                            <Command>
+                                <CommandInput placeholder="Select Team" />
+                                <CommandEmpty>No team found.</CommandEmpty>
+                                <CommandList>
+                                    <CommandGroup>
+                                        {props.teams.map((team) => (
+                                            <CommandItem
+                                                key={team.id}
+                                                value={team.name}
+                                                onSelect={(currentValue) => onSelectTeamChange(currentValue, team)}
+                                                className="h-full flex content-center gap-2"
+                                            >
+                                                <Check
+                                                    className={cn("h-4", props.selectedTeam.id !== team.id && "hidden")}
                                                 />
-                                            )}
-                                            {team.name}
-                                        </div>
-                                    </SelectItem>
-                                ))}
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
+                                                {team.logo && (
+                                                    <img
+                                                        src={team.logo}
+                                                        className="w-[20px] object-scale-down"
+                                                        loading="lazy"
+                                                    />
+                                                )}
+                                                {team.name}
+                                            </CommandItem>
+                                        ))}
+                                    </CommandGroup>
+                                </CommandList>
+                            </Command>
+                        </PopoverContent>
+                    </Popover>
                 </section>
                 {!props.defaultShowScores && (
                     <>
