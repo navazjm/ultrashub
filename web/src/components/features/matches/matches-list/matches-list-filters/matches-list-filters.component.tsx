@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { RotateCcw } from "lucide-react";
-import { Calendar as CalendarIcon } from "lucide-react";
-import { IProps } from "@/components/types";
+import { Check, ChevronsUpDown, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { Command, CommandList, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
+import { IProps } from "@/components/types";
 import { Calendar } from "@/components/ui/calendar";
 import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -13,6 +14,7 @@ import { Switch } from "@/components/ui/switch";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { ALL_COMPS, ALL_TEAMS, ICompetition, ITeam } from "../../matches.types";
 import { apiFootballDateFormat } from "@/components/utils";
+import { cn } from "@/lib/utils";
 import "./matches-list-filters.component.css";
 
 interface IMatchesListFiltersProps extends IProps {
@@ -31,6 +33,7 @@ interface IMatchesListFiltersProps extends IProps {
 
 export const MatchesListFiltersComponent = (props: IMatchesListFiltersProps) => {
     const navigate = useNavigate();
+    const [isCompetitionSelectPopoverOpen, setIsCompetitionSelectPopoverOpen] = useState<boolean>(false);
     const [isDatePickerPopoverOpen, setIsDatePickerPopoverOpen] = useState<boolean>(false);
 
     const onSelectDatePicker = (date: Date | undefined) => {
@@ -42,11 +45,14 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersProps) => 
         setIsDatePickerPopoverOpen(false);
     };
 
-    const onSelectCompetitionChange = (value: string) => {
-        const foundComp = props.competitions.find((comp) => comp.displayName === value);
-        // Not possible for user to select an undefined competition. if foundComp is undefined it is a programming error
-        if (!foundComp) return;
-        props.setSelectedCompetition(foundComp);
+    const onSelectCompetitionChange = (value: string, competition: ICompetition) => {
+        setIsCompetitionSelectPopoverOpen(false);
+        // if users selects the competition that is already selected, deselect it
+        if (value.toLocaleUpperCase() === props.selectedCompetition.displayName.toLocaleUpperCase()) {
+            props.setSelectedCompetition(props.competitions[0]);
+            return;
+        }
+        props.setSelectedCompetition(competition);
     };
 
     const onSelectTeamChange = (value: string) => {
@@ -60,7 +66,7 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersProps) => 
         props.setShowScores(props.defaultShowScores);
         // by resetting competition selection, we also reset filtered teams selection back to ALL_TEAMS
         if (props.selectedCompetition.id !== 0) {
-            onSelectCompetitionChange(ALL_COMPS);
+            onSelectCompetitionChange(ALL_COMPS, props.competitions[0]);
             return;
         }
         // only need to directly reset team selection when no competition is selected
@@ -77,33 +83,63 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersProps) => 
                     <Label htmlFor="selectCompetition" className="font-extralight">
                         Filter by Competition
                     </Label>
-                    <Select
-                        value={props.selectedCompetition?.displayName}
-                        onValueChange={(value) => onSelectCompetitionChange(value)}
-                        disabled={props.isLoading}
-                    >
-                        <SelectTrigger className="w-[180px] h-[30px] text-[1.1rem] p-1 truncate">
-                            <SelectValue placeholder={ALL_COMPS} />
-                        </SelectTrigger>
-                        <SelectContent id="selectCompetition">
-                            <SelectGroup>
-                                {props.competitions.map((comp) => (
-                                    <SelectItem value={comp.displayName} key={comp.id}>
-                                        <div className="h-full text-[1.1rem] flex content-center gap-2">
-                                            {comp.logo && (
-                                                <img
-                                                    src={comp.logo}
-                                                    className="w-[20px] object-scale-down"
-                                                    loading="lazy"
+                    <Popover open={isCompetitionSelectPopoverOpen} onOpenChange={setIsCompetitionSelectPopoverOpen}>
+                        <PopoverTrigger asChild>
+                            <Button
+                                variant="outline"
+                                role="combobox"
+                                className="justify-between w-[180px] h-[30px] p-1 "
+                                disabled={props.isLoading}
+                            >
+                                <div className="w-80 truncate flex content-center justify-start gap-1">
+                                    {props.selectedCompetition.logo && (
+                                        <img
+                                            src={props.selectedCompetition.logo}
+                                            className="w-[20px] object-scale-down"
+                                            loading="lazy"
+                                        />
+                                    )}
+                                    {props.selectedCompetition.displayName}
+                                </div>
+                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[300px] p-0">
+                            <Command>
+                                <CommandInput placeholder="Select Competition" />
+                                <CommandEmpty>No competition found.</CommandEmpty>
+                                <CommandList>
+                                    <CommandGroup>
+                                        {props.competitions.map((comp) => (
+                                            <CommandItem
+                                                key={comp.id}
+                                                value={comp.displayName}
+                                                onSelect={(currentValue) =>
+                                                    onSelectCompetitionChange(currentValue, comp)
+                                                }
+                                                className="h-full flex content-center gap-2"
+                                            >
+                                                <Check
+                                                    className={cn(
+                                                        "h-4",
+                                                        props.selectedCompetition.id !== comp.id && "hidden",
+                                                    )}
                                                 />
-                                            )}
-                                            {comp.displayName}
-                                        </div>
-                                    </SelectItem>
-                                ))}
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
+                                                {comp.logo && (
+                                                    <img
+                                                        src={comp.logo}
+                                                        className="w-[20px] object-scale-down"
+                                                        loading="lazy"
+                                                    />
+                                                )}
+                                                {comp.displayName}
+                                            </CommandItem>
+                                        ))}
+                                    </CommandGroup>
+                                </CommandList>
+                            </Command>
+                        </PopoverContent>
+                    </Popover>
                 </section>
                 <Separator orientation="vertical" className="hidden sm:block sm:h-[60px]" />
                 <section className="flex flex-col content-center gap-2">
