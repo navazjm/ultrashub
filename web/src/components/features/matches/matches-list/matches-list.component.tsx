@@ -249,7 +249,7 @@ export const MatchesListComponent = (props: IMatchesListProps) => {
                 </Accordion>
             </section>
             {/** display normal filters toolbar for larger devices */}
-            <section className="hidden sm:block">
+            <section className="hidden sm:block sticky top-12 bg-background z-40">
                 <Separator className="my-5" />
                 <MatchesListFiltersComponent
                     date={selectedDate}
