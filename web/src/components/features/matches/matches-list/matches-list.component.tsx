@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
 import { IProps } from "@/components/types";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Separator } from "@/components/ui/separator";
 import axios from "@/lib/axios";
 import { ALL_COMPS, ALL_TEAMS, ICompetition, IMatchesByCompetitionID, ITeam, MatchResponse } from "../matches.types";
@@ -222,21 +223,50 @@ export const MatchesListComponent = (props: IMatchesListProps) => {
     return (
         <section className="flex flex-col">
             <h3 className="text-2xl font-bold">{title}</h3>
-            <Separator className="my-3 sm:my-5" />
-            <MatchesListFiltersComponent
-                date={selectedDate}
-                competitions={allCompetitions}
-                selectedCompetition={selectedCompetition}
-                setSelectedCompetition={setSelectedCompetition}
-                teams={filteredTeams}
-                selectedTeam={selectedTeam}
-                setSelectedTeam={setSelectedTeam}
-                defaultShowScores={defaultShowScores}
-                showScores={showScores}
-                setShowScores={setShowScores}
-                isLoading={isLoading}
-            />
-            <Separator className="my-3 sm:my-5" />
+
+            {/** display filters in accordion component if on mobile devices */}
+            <section className="sm:hidden mb-2 pb-3 sticky top-12 bg-background z-40">
+                <Separator className="mt-3" />
+                <Accordion type="single" collapsible className="">
+                    <AccordionItem value="filter">
+                        <AccordionTrigger className="py-2">Filter Matches</AccordionTrigger>
+                        <AccordionContent>
+                            <MatchesListFiltersComponent
+                                date={selectedDate}
+                                competitions={allCompetitions}
+                                selectedCompetition={selectedCompetition}
+                                setSelectedCompetition={setSelectedCompetition}
+                                teams={filteredTeams}
+                                selectedTeam={selectedTeam}
+                                setSelectedTeam={setSelectedTeam}
+                                defaultShowScores={defaultShowScores}
+                                showScores={showScores}
+                                setShowScores={setShowScores}
+                                isLoading={isLoading}
+                            />
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
+            </section>
+            {/** display normal filters toolbar for larger devices */}
+            <section className="hidden sm:block">
+                <Separator className="my-5" />
+                <MatchesListFiltersComponent
+                    date={selectedDate}
+                    competitions={allCompetitions}
+                    selectedCompetition={selectedCompetition}
+                    setSelectedCompetition={setSelectedCompetition}
+                    teams={filteredTeams}
+                    selectedTeam={selectedTeam}
+                    setSelectedTeam={setSelectedTeam}
+                    defaultShowScores={defaultShowScores}
+                    showScores={showScores}
+                    setShowScores={setShowScores}
+                    isLoading={isLoading}
+                />
+                <Separator className="my-5" />
+            </section>
+
             {isLoading ? (
                 <Spinner />
             ) : (

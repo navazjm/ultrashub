@@ -80,7 +80,7 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersProps) => 
     };
 
     return (
-        <section className="flex flex-row justify-between items-center h-full sm:h-[40px] gap-2">
+        <section className="flex flex-col sm:flex-row sm:justify-between sm:items-center h-full sm:h-[40px] gap-2">
             <section className="flex flex-col sm:flex-row sm:items-center gap-2">
                 <section className="flex flex-col content-center gap-2">
                     <Label htmlFor="selectCompetition" className="font-extralight">
@@ -91,7 +91,7 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersProps) => 
                             <Button
                                 variant="outline"
                                 role="combobox"
-                                className="justify-between w-[180px] h-[30px] p-1 "
+                                className="justify-between w-full sm:w-[180px] h-[30px] p-1 "
                                 disabled={props.isLoading}
                             >
                                 <div className="w-80 truncate flex content-center justify-start gap-1">
@@ -154,7 +154,7 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersProps) => 
                             <Button
                                 variant="outline"
                                 role="combobox"
-                                className="justify-between w-[180px] h-[30px] p-1 "
+                                className="justify-between w-full sm:w-[180px] h-[30px] p-1 "
                                 disabled={props.isLoading}
                             >
                                 <div className="w-80 truncate flex content-center justify-start gap-1">
@@ -236,9 +236,6 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersProps) => 
                         </TooltipContent>
                     </Tooltip>
                 </section>
-            </section>
-            <section className="h-[150px] sm:hidden">
-                <Separator orientation="vertical" />
             </section>
             <section className="flex flex-col sm:flex-row sm:items-center gap-2">
                 <section className="block sm:hidden">
