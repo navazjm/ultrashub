@@ -73,7 +73,7 @@ export const MatchesListItemComponent = (props: IMatchesListItemProps) => {
                         <div>
                             {props.match.goals.home}
                             {props.match.fixture.status.short === "PEN" && (
-                                <span>({props.match.score.penalty.home})</span>
+                                <span className="ml-1">({props.match.score.penalty.home})</span>
                             )}
                         </div>
                     )}
@@ -89,7 +89,7 @@ export const MatchesListItemComponent = (props: IMatchesListItemProps) => {
                         <div>
                             {props.match.goals.away}
                             {props.match.fixture.status.short === "PEN" && (
-                                <span>({props.match.score.penalty.away})</span>
+                                <span className="ml-1">({props.match.score.penalty.away})</span>
                             )}
                         </div>
                     )}
