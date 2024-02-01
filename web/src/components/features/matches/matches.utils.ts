@@ -1,4 +1,5 @@
-import { IMatchesByCompetitionID, Match } from "./matches.types";
+import { Match } from "@/components/common/api-football-response";
+import { IMatchesByCompetitionID } from "./matches.types";
 
 export const findMatchByTeamID = (allMatches: IMatchesByCompetitionID, teamID: number): Match | undefined => {
     for (const leagueID of Object.keys(allMatches)) {

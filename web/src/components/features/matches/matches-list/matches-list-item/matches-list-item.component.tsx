@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { IProps } from "@/components/types";
-import { Match } from "../../matches.types";
+import { IProps } from "@/components/common/types";
+import { Match } from "@/components/common/api-football-response";
 
 interface IMatchesListItemProps extends IProps {
     match: Match;

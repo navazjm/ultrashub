@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
-import { IProps } from "@/components/types";
+import { MatchResponse } from "@/components/common/api-football-response";
+import { IProps } from "@/components/common/types";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Separator } from "@/components/ui/separator";
 import axios from "@/lib/axios";
-import { ALL_COMPS, ALL_TEAMS, ICompetition, IMatchesByCompetitionID, ITeam, MatchResponse } from "../matches.types";
+import { ALL_COMPS, ALL_TEAMS, ICompetition, IMatchesByCompetitionID, ITeam } from "../matches.types";
 import { MatchesListFiltersComponent } from "./matches-list-filters/matches-list-filters.component";
 import { MatchesListItemComponent } from "./matches-list-item/matches-list-item.component";
-import { apiFootballDateFormat } from "@/components/utils";
+import { apiFootballDateFormat } from "@/components/common/date";
 import VirtualScroller from "virtual-scroller/react";
 import { useToast } from "@/components/ui/use-toast";
 import { Spinner } from "@/components/ui/spinner";

@@ -4,7 +4,7 @@ import { Check, ChevronsUpDown, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { Command, CommandList, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
-import { IProps } from "@/components/types";
+import { IProps } from "@/components/common/types";
 import { Calendar } from "@/components/ui/calendar";
 import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -12,7 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { ALL_COMPS, ALL_TEAMS, ICompetition, ITeam } from "../../matches.types";
-import { apiFootballDateFormat } from "@/components/utils";
+import { apiFootballDateFormat } from "@/components/common/date";
 import { cn } from "@/lib/shadcn";
 import "./matches-list-filters.component.css";
 
