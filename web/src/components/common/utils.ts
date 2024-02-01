@@ -43,10 +43,17 @@ export const getDisplayMatchStatus = (fixture: MatchFixture): string => {
 };
 
 /**
- *
  * @param status - Match.fixture.status.short
  * @returns true if match status means the match is in progress
  */
 export const isMatchInProgress = (status: string): boolean => {
     return status === "1H" || status === "2H" || status === "ET" || status === "BT" || status === "P";
+};
+
+/**
+ * @param status - Match.fixture.status.short
+ * @returns true if match status means the match is has started
+ */
+export const hasMatchStarted = (status: string): boolean => {
+    return status !== "TBD" && status !== "NS" && status !== "PST" && status !== "CANC";
 };
