@@ -14,7 +14,7 @@ export const BackNavigationComponent = (props: IBackNavigationComponentProps) =>
     return (
         <section className="h-[40px] flex flex-row items-center gap-2">
             <Tooltip>
-                <TooltipTrigger>
+                <TooltipTrigger asChild>
                     <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
                         <ArrowLeftToLine />
                     </Button>
