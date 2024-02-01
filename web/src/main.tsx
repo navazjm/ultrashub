@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes, Outlet } from "react-router-dom";
-import { Layout } from "@/layouts/layout.component";
 import { ThemeToggleProvider } from "@/layouts/navbar/theme-toggle/theme-toggle.provider";
-import { HomePage } from "@/pages/home";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { Layout } from "@/layouts/layout.component";
+import { MatchesPage } from "@/pages/matches";
 import { NotFoundPage } from "@/pages/not-found";
 import "./main.css";
-import { TooltipProvider } from "./components/ui/tooltip";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
@@ -21,8 +21,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                                 </Layout>
                             }
                         >
-                            <Route path="/" element={<HomePage />} />
-                            <Route path="/matches/:date?" element={<HomePage />} />
+                            <Route path="/" element={<MatchesPage />} />
+                            <Route path="/matches/:date?" element={<MatchesPage />} />
                             <Route element={<NotFoundPage />} path="*" />
                         </Route>
                     </Routes>
