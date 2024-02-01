@@ -13,7 +13,7 @@ import { Switch } from "@/components/ui/switch";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { ALL_COMPS, ALL_TEAMS, ICompetition, ITeam } from "../../matches.types";
 import { apiFootballDateFormat } from "@/components/utils";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/shadcn";
 import "./matches-list-filters.component.css";
 
 interface IMatchesListFiltersProps extends IProps {
