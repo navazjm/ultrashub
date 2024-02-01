@@ -2,59 +2,15 @@ import { NavLink } from "react-router-dom";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { IProps } from "@/components/common/types";
 import { Match } from "@/components/common/api-football-response";
+import { getDisplayMatchStatus, isMatchInProgress } from "@/components/common/utils";
 
 interface IMatchesListItemProps extends IProps {
     match: Match;
     showScores: boolean;
 }
 export const MatchesListItemComponent = (props: IMatchesListItemProps) => {
-    let displayMatchStatus: string = "";
-    let matchInProgress = false;
-    switch (props.match.fixture.status.short) {
-        // use short
-        case "TBD":
-        case "HT":
-        case "FT":
-        case "LIVE":
-            displayMatchStatus = props.match.fixture.status.short;
-            break;
-        // use long
-        case "P":
-            matchInProgress = true;
-            displayMatchStatus = props.match.fixture.status.long;
-            break;
-        case "SUSP":
-        case "INT":
-        case "CANC":
-        case "ABD":
-        case "AWD":
-        case "WO":
-        case "PST":
-            displayMatchStatus = props.match.fixture.status.long;
-            break;
-        // display current match minutes
-        case "1H":
-        case "2H":
-        case "ET":
-        case "BT":
-            displayMatchStatus = `${props.match.fixture.status.elapsed}'`;
-            matchInProgress = true;
-            break;
-        // display kickoff time
-        case "NS":
-            const date = new Date(props.match.fixture.date);
-            displayMatchStatus = `${date.toLocaleTimeString()}`;
-            break;
-        // custom
-        case "AET":
-            displayMatchStatus = "FT (ET)";
-            break;
-        case "PEN":
-            displayMatchStatus = "FT (PEN)";
-            break;
-        default:
-            displayMatchStatus = "Uknown Status";
-    }
+    let displayMatchStatus: string = getDisplayMatchStatus(props.match.fixture);
+    let matchInProgress: boolean = isMatchInProgress(props.match.fixture.status.short);
 
     return (
         <NavLink to={`/match/${props.match.fixture.id}`}>
