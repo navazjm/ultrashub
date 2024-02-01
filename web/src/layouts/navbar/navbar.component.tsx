@@ -6,7 +6,7 @@ import "./navbar.component.css";
 
 export const NavbarComponent = () => {
     return (
-        <div className="w-full max-w-full min-w-full shadow-xl sticky top-0 bg-background z-50">
+        <div className="w-full max-w-full min-w-full shadow-xl sticky top-0 bg-background z-10">
             <NavigationMenu className="w-10/12 max-w-10/12 min-w-10/12 m-auto justify-between py-1">
                 <NavLink to="/" className="flex gap-x-2 content-center">
                     <img src={ultrashubLogo} width="30px" />
