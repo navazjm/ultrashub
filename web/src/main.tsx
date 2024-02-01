@@ -5,6 +5,7 @@ import { ThemeToggleProvider } from "@/layouts/navbar/theme-toggle/theme-toggle.
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Layout } from "@/layouts/layout.component";
 import { MatchesPage } from "@/pages/matches";
+import { MatchPage } from "@/pages/match";
 import { NotFoundPage } from "@/pages/not-found";
 import "./main.css";
 
@@ -23,6 +24,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                         >
                             <Route path="/" element={<MatchesPage />} />
                             <Route path="/matches/:date?" element={<MatchesPage />} />
+                            <Route path="/match/:id" element={<MatchPage />} />
                             <Route element={<NotFoundPage />} path="*" />
                         </Route>
                     </Routes>
