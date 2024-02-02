@@ -14,7 +14,6 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { ALL_COMPS, ALL_TEAMS, ICompetition, ITeam } from "../../matches.types";
 import { apiFootballDateFormat } from "@/components/common/date";
 import { cn } from "@/lib/shadcn";
-import "./matches-list-filters.component.css";
 
 interface IMatchesListFiltersProps extends IProps {
     date: Date;

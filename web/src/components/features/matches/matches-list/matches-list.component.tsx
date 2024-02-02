@@ -13,7 +13,6 @@ import VirtualScroller from "virtual-scroller/react";
 import { useToast } from "@/components/ui/use-toast";
 import { Spinner } from "@/components/ui/spinner";
 import { findMatchByTeamID } from "../matches.utils";
-import "./matches-list.component.css";
 
 interface IMatchesListProps extends IProps {
     date: string | undefined;
