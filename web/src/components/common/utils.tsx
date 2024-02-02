@@ -63,12 +63,12 @@ export const hasMatchStarted = (status: string): boolean => {
  * @param event - MatchEvent
  * @returns svg icon based on MatchEvent.type
  */
-export const getEventTypeIcon = (event: MatchEvent) => {
+export const getEventTypeIcon = (event: MatchEvent, size: number = 24) => {
     switch (event.type.toLocaleLowerCase()) {
         case "goal":
             return (
                 <>
-                    <img src={SoccerBall} className="w-[24px]" />
+                    <img src={SoccerBall} width={size} />
                 </>
             );
         case "card":
@@ -78,8 +78,8 @@ export const getEventTypeIcon = (event: MatchEvent) => {
             return (
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
+                    width={size}
+                    height={size}
                     viewBox="0 0 24 24"
                     fill={`${cardColor}`}
                     stroke={`${cardColor}`}
@@ -95,8 +95,8 @@ export const getEventTypeIcon = (event: MatchEvent) => {
             return (
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
+                    width={size}
+                    height={size}
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -115,8 +115,8 @@ export const getEventTypeIcon = (event: MatchEvent) => {
             return (
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
+                    width={size}
+                    height={size}
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
