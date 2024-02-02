@@ -51,6 +51,7 @@ export const MatchComponent = (props: IMatchComponentProps) => {
                     <TabsTrigger value="events">Events</TabsTrigger>
                     <TabsTrigger value="stats">Stats</TabsTrigger>
                     <TabsTrigger value="lineups">Lineups</TabsTrigger>
+                    <TabsTrigger value="h2h">Head-to-Head</TabsTrigger>
                 </TabsList>
                 <TabsContent value="events" className="w-full m-0">
                     <MatchEventsComponent events={match.events} matchDate={matchDate} />
@@ -60,6 +61,9 @@ export const MatchComponent = (props: IMatchComponentProps) => {
                 </TabsContent>
                 <TabsContent value="lineups" className="w-full m-0">
                     <MatchLineupsComponent lineups={match.lineups} />
+                </TabsContent>
+                <TabsContent value="h2h" className="w-full m-0">
+                    <MatchH2HComponent />
                 </TabsContent>
             </Tabs>
         </>
