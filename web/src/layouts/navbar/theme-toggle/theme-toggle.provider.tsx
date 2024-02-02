@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 type Theme = "dark" | "light" | "system";
 
@@ -18,7 +18,7 @@ const initialState: ThemeToggleProviderState = {
     setTheme: () => null,
 };
 
-const ThemeToggleProviderContext = createContext<ThemeToggleProviderState>(initialState);
+export const ThemeToggleProviderContext = createContext<ThemeToggleProviderState>(initialState);
 
 export const ThemeToggleProvider = ({
     children,
@@ -56,12 +56,4 @@ export const ThemeToggleProvider = ({
             {children}
         </ThemeToggleProviderContext.Provider>
     );
-};
-
-export const useTheme = () => {
-    const context = useContext(ThemeToggleProviderContext);
-
-    if (context === undefined) throw new Error("useTheme must be used within a ThemeProvider");
-
-    return context;
 };
