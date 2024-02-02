@@ -1,5 +1,5 @@
 import { Toaster } from "@/components/ui/toaster";
-import { IProps } from "@/components/types";
+import { IProps } from "@/components/common/types";
 import { NavbarComponent } from "./navbar/navbar.component";
 import "./layout.component.css";
 
