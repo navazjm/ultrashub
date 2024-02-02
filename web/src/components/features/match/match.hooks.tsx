@@ -16,7 +16,7 @@ export const useMatch = (matchID: string) => {
                     },
                 });
                 if (resp.status !== 200) {
-                    throw new Error("error");
+                    throw new Error();
                 }
                 const match = resp.data.response[0];
 
@@ -31,6 +31,10 @@ export const useMatch = (matchID: string) => {
                  * due to get a second yellow card
                  */
                 match.events = match.events.filter((event, idx) => {
+                    // first event in match.events is the last event of the match, not possible to be a second yellow.
+                    // Red card event will always occur before a second yellow card event
+                    if (idx === 0) return event;
+
                     // current event is yellow card
                     // previous event is red card
                     // current event player name equals previous event player name
@@ -51,7 +55,7 @@ export const useMatch = (matchID: string) => {
 
                 setMatch(match);
                 setStatus("success");
-            } catch {
+            } catch (err) {
                 setStatus("error");
             }
         };
