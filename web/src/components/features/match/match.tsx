@@ -30,11 +30,11 @@ export const MatchComponent = (props: IMatchComponentProps) => {
         return (
             <>
                 <MatchQuickInfoComponent match={match} hasStarted={matchHasStarted} />
-                <Tabs defaultValue="h2h" className="w-full my-3">
-                    <TabsList>
+                <Tabs defaultValue="h2h" className="my-3 flex flex-col items-center justify-center">
+                    <TabsList className="w-full">
                         <TabsTrigger value="h2h">Head-to-Head</TabsTrigger>
                     </TabsList>
-                    <TabsContent value="h2h">
+                    <TabsContent value="h2h" className="w-full m-0">
                         <MatchH2HComponent />
                     </TabsContent>
                 </Tabs>
@@ -46,24 +46,20 @@ export const MatchComponent = (props: IMatchComponentProps) => {
     return (
         <>
             <MatchQuickInfoComponent match={match} hasStarted={matchHasStarted} />
-            <Tabs defaultValue="events" className="w-full my-3">
-                <TabsList>
+            <Tabs defaultValue="events" className="my-3 flex flex-col items-center justify-center">
+                <TabsList className="w-full">
                     <TabsTrigger value="events">Events</TabsTrigger>
                     <TabsTrigger value="stats">Stats</TabsTrigger>
                     <TabsTrigger value="lineups">Lineups</TabsTrigger>
-                    <TabsTrigger value="h2h">H2H</TabsTrigger>
                 </TabsList>
-                <TabsContent value="events">
+                <TabsContent value="events" className="w-full m-0">
                     <MatchEventsComponent events={match.events} matchDate={matchDate} />
                 </TabsContent>
-                <TabsContent value="stats">
+                <TabsContent value="stats" className="w-full m-0">
                     <MatchStatsComponent stats={match.statistics} />
                 </TabsContent>
-                <TabsContent value="lineups">
+                <TabsContent value="lineups" className="w-full m-0">
                     <MatchLineupsComponent lineups={match.lineups} />
-                </TabsContent>
-                <TabsContent value="h2h">
-                    <MatchH2HComponent />
                 </TabsContent>
             </Tabs>
         </>
