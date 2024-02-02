@@ -1,5 +1,5 @@
 import { MatchEvent } from "@/components/common/api-football-response";
-import { MatchEventsItemComponent } from "./match-events-item/match-events-item.component";
+import { MatchEventsItemComponent } from "./match-events-item/match-events-item";
 
 interface IMatchEventsComponentProps {
     events: MatchEvent[];

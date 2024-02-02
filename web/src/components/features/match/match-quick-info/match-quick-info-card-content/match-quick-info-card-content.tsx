@@ -1,7 +1,7 @@
 import { getDisplayMatchStatus, isMatchInProgress } from "@/components/common/utils";
 import { getDayOfTheWeek } from "@/components/common/date";
 import { Separator } from "@/components/ui/separator";
-import { MatchQuickInfoEventsComponent } from "../match-quick-info-events/match-quick-info-events.component";
+import { MatchQuickInfoEventsComponent } from "../match-quick-info-events/match-quick-info-events";
 import { Match } from "@/components/common/api-football-response";
 
 interface IMatchQuickInfoCardContentComponentProps {

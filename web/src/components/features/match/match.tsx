@@ -1,13 +1,13 @@
 import { IProps } from "@/components/common/types";
 import { Spinner } from "@/components/ui/spinner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MatchQuickInfoComponent } from "./match-quick-info/match-quick-info.component";
+import { MatchQuickInfoComponent } from "./match-quick-info/match-quick-info";
 import { useMatch } from "./match.hooks";
 import { hasMatchStarted } from "@/components/common/utils";
-import { MatchH2HComponent } from "./match-h2h/match-h2h.component";
-import { MatchEventsComponent } from "./match-events/match-events.component";
-import { MatchStatsComponent } from "./match-stats/match-stats.component";
-import { MatchLineupsComponent } from "./match-lineups/match-lineups.component";
+import { MatchH2HComponent } from "./match-h2h/match-h2h";
+import { MatchEventsComponent } from "./match-events/match-events";
+import { MatchStatsComponent } from "./match-stats/match-stats";
+import { MatchLineupsComponent } from "./match-lineups/match-lineups";
 
 interface IMatchComponentProps extends IProps {
     id: string;

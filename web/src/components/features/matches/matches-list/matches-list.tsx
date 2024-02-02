@@ -6,8 +6,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Separator } from "@/components/ui/separator";
 import axios from "@/lib/axios";
 import { ALL_COMPS, ALL_TEAMS, ICompetition, IMatchesByCompetitionID, ITeam } from "../matches.types";
-import { MatchesListFiltersComponent } from "./matches-list-filters/matches-list-filters.component";
-import { MatchesListItemComponent } from "./matches-list-item/matches-list-item.component";
+import { MatchesListFiltersComponent } from "./matches-list-filters/matches-list-filters";
+import { MatchesListItemComponent } from "./matches-list-item/matches-list-item";
 import { apiFootballDateFormat } from "@/components/common/date";
 import VirtualScroller from "virtual-scroller/react";
 import { useToast } from "@/components/ui/use-toast";
