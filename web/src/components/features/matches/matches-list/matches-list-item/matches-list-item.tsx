@@ -2,15 +2,15 @@ import { NavLink } from "react-router-dom";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { IProps } from "@/components/common/types";
 import { Match } from "@/components/common/api-football-response";
-import { getDisplayMatchStatus, isMatchInProgress } from "@/components/common/utils";
+import { MatchToolbox } from "@/components/common/toolbox/match";
 
 interface IMatchesListItemProps extends IProps {
     match: Match;
     showScores: boolean;
 }
 export const MatchesListItemComponent = (props: IMatchesListItemProps) => {
-    let displayMatchStatus: string = getDisplayMatchStatus(props.match.fixture);
-    let matchInProgress: boolean = isMatchInProgress(props.match.fixture.status.short);
+    let displayMatchStatus: string = MatchToolbox.getDisplayMatchStatus(props.match.fixture);
+    let matchInProgress: boolean = MatchToolbox.isMatchInProgress(props.match.fixture.status.short);
 
     return (
         <NavLink to={`/match/${props.match.fixture.id}`} className="w-full sm:w-[300px] ">

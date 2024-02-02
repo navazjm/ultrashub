@@ -1,5 +1,5 @@
 import { MatchFixture } from "@/components/common/api-football-response";
-import { getDayOfTheWeek } from "@/components/common/date";
+import { DateToolbox } from "@/components/common/toolbox/date";
 import { Calendar, Clock, MapPin, User } from "lucide-react";
 
 interface IMatchQuickInfoFixtureDetailsComponentProps {
@@ -10,7 +10,7 @@ interface IMatchQuickInfoFixtureDetailsComponentProps {
 export const MatchQuickInfoFixtureDetailsComponent = (props: IMatchQuickInfoFixtureDetailsComponentProps) => {
     const hasMatchDate = !!props.fixture.date;
     const matchDate = new Date(props.fixture.date);
-    const matchDay = getDayOfTheWeek(matchDate.getDay()).slice(0, 3);
+    const matchDay = DateToolbox.getDayOfTheWeek(matchDate.getDay()).slice(0, 3);
 
     const hasMatchLocation = !!props.fixture.venue.name && !!props.fixture.venue.city;
     const matchLocation = `${props.fixture.venue.name}, ${props.fixture.venue.city}`;

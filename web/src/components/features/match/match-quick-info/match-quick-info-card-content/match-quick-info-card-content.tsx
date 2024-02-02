@@ -1,8 +1,8 @@
-import { getDisplayMatchStatus, isMatchInProgress } from "@/components/common/utils";
-import { getDayOfTheWeek } from "@/components/common/date";
 import { Separator } from "@/components/ui/separator";
 import { MatchQuickInfoEventsComponent } from "../match-quick-info-events/match-quick-info-events";
 import { Match } from "@/components/common/api-football-response";
+import { DateToolbox } from "@/components/common/toolbox/date";
+import { MatchToolbox } from "@/components/common/toolbox/match";
 
 interface IMatchQuickInfoCardContentComponentProps {
     match: Match;
@@ -38,8 +38,8 @@ const MatchQuickInfoCenterContent = (props: IMatchQuickInfoCardContentComponentP
     if (props.hasStarted) {
         const homeTeamScore: number = !!props.match.goals.home ? props.match.goals.home : 0;
         const awayTeamScore: number = !!props.match.goals.away ? props.match.goals.away : 0;
-        const displayMatchStatus: string = getDisplayMatchStatus(props.match.fixture);
-        const matchInProgress: boolean = isMatchInProgress(props.match.fixture.status.short);
+        const displayMatchStatus: string = MatchToolbox.getDisplayMatchStatus(props.match.fixture);
+        const matchInProgress: boolean = MatchToolbox.isMatchInProgress(props.match.fixture.status.short);
 
         return (
             <section className="flex flex-col items-center gap-2">
@@ -66,7 +66,7 @@ const MatchQuickInfoCenterContent = (props: IMatchQuickInfoCardContentComponentP
     }
 
     const matchDate = new Date(props.match.fixture.date);
-    const matchDay = getDayOfTheWeek(matchDate.getDay());
+    const matchDay = DateToolbox.getDayOfTheWeek(matchDate.getDay());
     return (
         <section className="flex flex-col items-center gap-2 font-bold">
             <div className="text-lg sm:text-2xl">

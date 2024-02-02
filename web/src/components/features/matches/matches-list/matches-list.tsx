@@ -8,11 +8,11 @@ import axios from "@/lib/axios";
 import { ALL_COMPS, ALL_TEAMS, ICompetition, IMatchesByCompetitionID, ITeam } from "../matches.types";
 import { MatchesListFiltersComponent } from "./matches-list-filters/matches-list-filters";
 import { MatchesListItemComponent } from "./matches-list-item/matches-list-item";
-import { apiFootballDateFormat } from "@/components/common/date";
 import VirtualScroller from "virtual-scroller/react";
 import { useToast } from "@/components/ui/use-toast";
 import { Spinner } from "@/components/ui/spinner";
 import { findMatchByTeamID } from "../matches.utils";
+import { DateToolbox } from "@/components/common/toolbox/date";
 
 interface IMatchesListProps extends IProps {
     date: string | undefined;
@@ -20,7 +20,7 @@ interface IMatchesListProps extends IProps {
 
 export const MatchesListComponent = (props: IMatchesListProps) => {
     const currentDate: Date = new Date();
-    const currentDateString: string = apiFootballDateFormat(currentDate);
+    const currentDateString: string = DateToolbox.apiFootballDateFormat(currentDate);
     const selectedDateString: string = props.date ? props.date : currentDateString;
     const selectedDate: Date = new Date(selectedDateString.replaceAll("-", "/"));
     const defaultShowScores = selectedDateString !== currentDateString;

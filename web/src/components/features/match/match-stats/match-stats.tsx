@@ -1,5 +1,5 @@
 import { MatchStat } from "@/components/common/api-football-response";
-import { PascalCase } from "@/components/common/strings";
+import { StringsToolbox } from "@/components/common/toolbox/strings";
 import { Separator } from "@/components/ui/separator";
 
 interface IMatchStatsComponentProps {
@@ -54,7 +54,7 @@ export const MatchStatsComponent = (props: IMatchStatsComponentProps) => {
                         <section className="flex justify-between items-center">
                             <section className="flex-1 flex justify-center text-center">{stat.homeTeamValue}</section>
                             <section className="w-[175px] text-center text-lg font-bold">
-                                {PascalCase(stat.type)}
+                                {StringsToolbox.PascalCase(stat.type)}
                             </section>
                             <section className="flex-1 flex justify-center text-center">{stat.awayTeamValue}</section>
                         </section>

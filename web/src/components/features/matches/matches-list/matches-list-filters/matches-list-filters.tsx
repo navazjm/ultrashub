@@ -12,8 +12,8 @@ import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { ALL_COMPS, ALL_TEAMS, ICompetition, ITeam } from "../../matches.types";
-import { apiFootballDateFormat } from "@/components/common/date";
 import { cn } from "@/lib/shadcn";
+import { DateToolbox } from "@/components/common/toolbox/date";
 
 interface IMatchesListFiltersProps extends IProps {
     date: Date;
@@ -39,7 +39,7 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersProps) => 
         // date is undefined when user reselect the date that is already selected
         if (!date) return;
 
-        const dateStr = apiFootballDateFormat(date);
+        const dateStr = DateToolbox.apiFootballDateFormat(date);
         navigate(`/matches/${dateStr}`);
         setIsDatePickerPopoverOpen(false);
     };

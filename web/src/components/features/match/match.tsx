@@ -3,11 +3,11 @@ import { Spinner } from "@/components/ui/spinner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MatchQuickInfoComponent } from "./match-quick-info/match-quick-info";
 import { useMatch } from "./match.hooks";
-import { hasMatchStarted } from "@/components/common/utils";
 import { MatchH2HComponent } from "./match-h2h/match-h2h";
 import { MatchEventsComponent } from "./match-events/match-events";
 import { MatchStatsComponent } from "./match-stats/match-stats";
 import { MatchLineupsComponent } from "./match-lineups/match-lineups";
+import { MatchToolbox } from "@/components/common/toolbox/match";
 
 interface IMatchComponentProps extends IProps {
     id: string;
@@ -25,7 +25,7 @@ export const MatchComponent = (props: IMatchComponentProps) => {
         return <h3>Uh oh! Error</h3>;
     }
 
-    const matchHasStarted = hasMatchStarted(match.fixture.status.short);
+    const matchHasStarted = MatchToolbox.hasMatchStarted(match.fixture.status.short);
     if (!matchHasStarted) {
         return (
             <>

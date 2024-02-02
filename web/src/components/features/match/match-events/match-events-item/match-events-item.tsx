@@ -1,5 +1,5 @@
 import { MatchEvent, MatchEventType } from "@/components/common/api-football-response";
-import { getEventTypeIcon } from "@/components/common/utils";
+import { MatchToolbox } from "@/components/common/toolbox/match";
 import { Card, CardContent } from "@/components/ui/card";
 
 interface IMatchEventsItemComponentProps {
@@ -8,7 +8,7 @@ interface IMatchEventsItemComponentProps {
 }
 
 export const MatchEventsItemComponent = (props: IMatchEventsItemComponentProps) => {
-    const eventIcon = getEventTypeIcon(props.event);
+    const eventIcon = MatchToolbox.getEventTypeIcon(props.event);
     const extraTime = !!props.event.time.extra ? props.event.time.extra : null;
     let elapsedTime = `${props.event.time.elapsed}'`;
     if (extraTime) {
