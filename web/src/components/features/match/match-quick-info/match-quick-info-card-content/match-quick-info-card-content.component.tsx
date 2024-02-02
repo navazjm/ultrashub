@@ -69,7 +69,7 @@ const MatchQuickInfoCenterContent = (props: IMatchQuickInfoCardContentComponentP
     const matchDay = getDayOfTheWeek(matchDate.getDay());
     return (
         <section className="flex flex-col items-center gap-2 font-bold">
-            <div className="text-2xl ">
+            <div className="text-lg sm:text-2xl">
                 {matchDay} {matchDate.toLocaleDateString()}
             </div>
             <div>Kick Off @{matchDate.toLocaleTimeString()}</div>
