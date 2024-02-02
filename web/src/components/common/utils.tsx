@@ -73,8 +73,9 @@ export const getEventTypeIcon = (event: MatchEvent) => {
                 </>
             );
         case "card":
-            // event.detail is either "yellow card" or "red card"
-            const cardColor = event.detail.toLocaleLowerCase().split(" ")[0];
+            // event.detail can be "yellow card", "second yellow card", or "red card"
+            // event.detail.toLocaleLowerCase().split(" ")[0] can be "yellow", "second", "red"
+            const cardColor = event.detail.toLocaleLowerCase().split(" ")[0] === "yellow" ? "yellow" : "red";
             return (
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

@@ -45,13 +45,14 @@ const MatchEventsItemDetailsComponent = (props: IMatchEventsItemDetailsComponent
     switch (eventType) {
         case "card":
             const cardType = props.event.detail;
+            const displayCardType = cardType.toLocaleLowerCase() === "yellow card" ? "Yellow Card" : "Red Card";
             let cardComment = `${props.event.player.name} is shown a ${cardType.toLocaleLowerCase()}`;
             if (props.event.comments) {
                 cardComment += ` for ${props.event.comments.toLocaleLowerCase()}`;
             }
             return (
                 <>
-                    <section className="text-xl">{cardType}</section>
+                    <section className="text-xl">{displayCardType}</section>
                     <section className="text-sm font-light">{cardComment}</section>
                 </>
             );
