@@ -7,7 +7,7 @@ interface IMatchStatsComponentProps {
 export const MatchStatsComponent = (props: IMatchStatsComponentProps) => {
     return (
         <>
-            <div>Hello from Match Stats component, events count: {props.stats.length}</div>
+            <div>Hello from Match Stats component, stats count: {props.stats.length}</div>
         </>
     );
 };
