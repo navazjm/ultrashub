@@ -26,50 +26,43 @@ export const MatchComponent = (props: IMatchComponentProps) => {
     }
 
     const matchHasStarted = hasMatchStarted(match.fixture.status.short);
-    const matchDate = new Date(match?.fixture.date);
+    if (!matchHasStarted) {
+        return (
+            <Tabs defaultValue="h2h" className="w-full my-3">
+                <TabsList>
+                    <TabsTrigger value="h2h">H2H</TabsTrigger>
+                </TabsList>
+                <TabsContent value="h2h">
+                    <MatchH2HComponent />
+                </TabsContent>
+            </Tabs>
+        );
+    }
 
+    const matchDate = new Date(match?.fixture.date);
     return (
         <>
             <MatchQuickInfoComponent match={match} hasStarted={matchHasStarted} />
-            {matchHasStarted && (
-                <Tabs defaultValue="events" className="w-full my-3">
-                    <TabsList>
-                        <TabsTrigger value="events">Events</TabsTrigger>
-                        <TabsTrigger value="lineups">Lineups</TabsTrigger>
-                        <TabsTrigger value="stats">Stats</TabsTrigger>
-                        <TabsTrigger value="h2h">H2H</TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="events">
-                        <MatchEventsComponent events={match.events} matchDate={matchDate} />
-                    </TabsContent>
-                    <TabsContent value="lineups">
-                        <MatchLineupsComponent lineups={match.lineups} />
-                    </TabsContent>
-                    <TabsContent value="stats">
-                        <MatchStatsComponent stats={match.statistics} />
-                    </TabsContent>
-                    <TabsContent value="h2h">
-                        <MatchH2HComponent />
-                    </TabsContent>
-                </Tabs>
-            )}
-            {!matchHasStarted && (
-                <Tabs defaultValue="h2h" className="w-full my-3">
-                    <TabsList>
-                        <TabsTrigger value="h2h">H2H</TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="h2h">
-                        <MatchH2HComponent />
-                    </TabsContent>
-                </Tabs>
-            )}
-
-            {/** Match Tabs */}
-            {/** Match Events */}
-            {/** Match Stats */}
-            {/** Match Lineups */}
-            {/** Match H2H */}
-            {/** End Match Tabs */}
+            <Tabs defaultValue="events" className="w-full my-3">
+                <TabsList>
+                    <TabsTrigger value="events">Events</TabsTrigger>
+                    <TabsTrigger value="stats">Stats</TabsTrigger>
+                    <TabsTrigger value="lineups">Lineups</TabsTrigger>
+                    <TabsTrigger value="h2h">H2H</TabsTrigger>
+                </TabsList>
+                <TabsContent value="events">
+                    <MatchEventsComponent events={match.events} matchDate={matchDate} />
+                </TabsContent>
+                <TabsContent value="stats">
+                    <MatchStatsComponent stats={match.statistics} />
+                </TabsContent>
+                <TabsContent value="lineups">
+                    <MatchLineupsComponent lineups={match.lineups} />
+                </TabsContent>
+                <TabsContent value="h2h">
+                    <MatchH2HComponent />
+                </TabsContent>
+            </Tabs>
         </>
     );
 };
