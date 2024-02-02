@@ -28,7 +28,7 @@ export const MatchEventsItemComponent = (props: IMatchEventsItemComponentProps) 
                     </section>
                 </section>
                 <section>
-                    <img src={props.event.team.logo} alt="" loading="lazy" className="w-[30px]" />
+                    <img src={props.event.team.logo} alt="" loading="lazy" className="w-[30px] object-scale-down" />
                 </section>
             </CardContent>
         </Card>

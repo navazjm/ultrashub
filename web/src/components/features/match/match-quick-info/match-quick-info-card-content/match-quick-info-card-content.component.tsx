@@ -14,7 +14,7 @@ export const MatchQuickInfoCardContentComponent = (props: IMatchQuickInfoCardCon
         <>
             <section className="flex justify-between items-center">
                 <section className="flex-1 flex items-center gap-2">
-                    <img src={props.match.teams.home.logo} className="w-[40px]" />
+                    <img src={props.match.teams.home.logo} className="w-[40px] object-scale-down" />
                     <h3 className="text-xl font-bold hidden sm:block">{props.match.teams.home.name}</h3>
                 </section>
 
@@ -24,7 +24,7 @@ export const MatchQuickInfoCardContentComponent = (props: IMatchQuickInfoCardCon
 
                 <section className="flex-1 flex items-center justify-end gap-2">
                     <h3 className="text-xl font-bold hidden sm:block">{props.match.teams.away.name}</h3>
-                    <img src={props.match.teams.away.logo} className="w-[40px]" />
+                    <img src={props.match.teams.away.logo} className="w-[40px] object-scale-down" />
                 </section>
             </section>
             {props.hasStarted && <MatchQuickInfoEventsComponent match={props.match} />}

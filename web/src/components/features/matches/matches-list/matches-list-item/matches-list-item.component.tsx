@@ -24,7 +24,12 @@ export const MatchesListItemComponent = (props: IMatchesListItemProps) => {
                             ${props.showScores && !matchInProgress && props.match.teams.away.winner && "opacity-40"}`}
                     >
                         <div className="flex content-center">
-                            <img src={props.match.teams.home.logo} alt="" loading="lazy" className="w-[30px] mr-2" />
+                            <img
+                                src={props.match.teams.home.logo}
+                                alt=""
+                                loading="lazy"
+                                className="w-[30px] h-[30px] mr-2 object-scale-down"
+                            />
                             <p>{props.match.teams.home.name}</p>
                         </div>
                         {props.showScores && (
@@ -40,7 +45,12 @@ export const MatchesListItemComponent = (props: IMatchesListItemProps) => {
                         className={`flex justify-between content-center ${props.showScores && !matchInProgress && props.match.teams.home.winner && "opacity-40"}`}
                     >
                         <div className="flex content-center">
-                            <img src={props.match.teams.away.logo} alt="" loading="lazy" className="w-[30px] mr-2" />
+                            <img
+                                src={props.match.teams.away.logo}
+                                alt=""
+                                loading="lazy"
+                                className="w-[30px] h-[30px] mr-2 object-scale-down"
+                            />
                             <p>{props.match.teams.away.name}</p>
                         </div>
                         {props.showScores && (
