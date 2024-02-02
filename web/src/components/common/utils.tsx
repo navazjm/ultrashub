@@ -61,6 +61,7 @@ export const hasMatchStarted = (status: string): boolean => {
 
 /**
  * @param event - MatchEvent
+ * @param size - icon size
  * @returns svg icon based on MatchEvent.type
  */
 export const getEventTypeIcon = (event: MatchEvent, size: number = 24) => {
