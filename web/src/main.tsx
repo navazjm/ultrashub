@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes, Outlet } from "react-router-dom";
 import { ThemeToggleProvider } from "@/layouts/navbar/theme-toggle/theme-toggle.provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Layout } from "@/layouts/layout.component";
+import { Layout } from "@/layouts/layout";
 import { MatchesPage } from "@/pages/matches";
 import { MatchPage } from "@/pages/match";
 import { NotFoundPage } from "@/pages/not-found";

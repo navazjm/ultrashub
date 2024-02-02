@@ -1,5 +1,5 @@
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from "@/components/ui/navigation-menu";
-import { ThemeToggleComponent } from "./theme-toggle/theme-toggle.component";
+import { ThemeToggleComponent } from "./theme-toggle/theme-toggle";
 import ultrashubLogo from "@/assets/img/logo.png";
 
 export const NavbarComponent = () => {
