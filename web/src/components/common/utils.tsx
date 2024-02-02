@@ -64,7 +64,6 @@ export const hasMatchStarted = (status: string): boolean => {
  * @returns svg icon based on MatchEvent.type
  */
 export const getEventTypeIcon = (event: MatchEvent) => {
-    console.log(event);
     switch (event.type.toLocaleLowerCase()) {
         case "goal":
             return (
