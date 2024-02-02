@@ -28,14 +28,17 @@ export const MatchComponent = (props: IMatchComponentProps) => {
     const matchHasStarted = hasMatchStarted(match.fixture.status.short);
     if (!matchHasStarted) {
         return (
-            <Tabs defaultValue="h2h" className="w-full my-3">
-                <TabsList>
-                    <TabsTrigger value="h2h">H2H</TabsTrigger>
-                </TabsList>
-                <TabsContent value="h2h">
-                    <MatchH2HComponent />
-                </TabsContent>
-            </Tabs>
+            <>
+                <MatchQuickInfoComponent match={match} hasStarted={matchHasStarted} />
+                <Tabs defaultValue="h2h" className="w-full my-3">
+                    <TabsList>
+                        <TabsTrigger value="h2h">Head-to-Head</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="h2h">
+                        <MatchH2HComponent />
+                    </TabsContent>
+                </Tabs>
+            </>
         );
     }
 
