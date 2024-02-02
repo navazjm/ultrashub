@@ -26,12 +26,13 @@ export const MatchComponent = (props: IMatchComponentProps) => {
     }
 
     const matchHasStarted = hasMatchStarted(match.fixture.status.short);
+    const matchDate = new Date(match?.fixture.date);
 
     return (
         <>
             <MatchQuickInfoComponent match={match} hasStarted={matchHasStarted} />
             {matchHasStarted && (
-                <Tabs defaultValue="events" className="w-[400px] my-3">
+                <Tabs defaultValue="events" className="w-full my-3">
                     <TabsList>
                         <TabsTrigger value="events">Events</TabsTrigger>
                         <TabsTrigger value="stats">Stats</TabsTrigger>
@@ -39,7 +40,7 @@ export const MatchComponent = (props: IMatchComponentProps) => {
                         <TabsTrigger value="h2h">H2H</TabsTrigger>
                     </TabsList>
                     <TabsContent value="events">
-                        <MatchEventsComponent events={match.events} />
+                        <MatchEventsComponent events={match.events} matchDate={matchDate} />
                     </TabsContent>
                     <TabsContent value="stats">
                         <MatchStatsComponent stats={match.statistics} />
@@ -53,7 +54,7 @@ export const MatchComponent = (props: IMatchComponentProps) => {
                 </Tabs>
             )}
             {!matchHasStarted && (
-                <Tabs defaultValue="h2h" className="w-[400px] my-3">
+                <Tabs defaultValue="h2h" className="w-full my-3">
                     <TabsList>
                         <TabsTrigger value="h2h">H2H</TabsTrigger>
                     </TabsList>

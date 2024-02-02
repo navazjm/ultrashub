@@ -1,3 +1,5 @@
+export type MatchEventType = "goal" | "card" | "subst" | "var";
+
 /**
  ** The following interfaces need to match API Football request responses
  * ! Do NOT modify unless API Football has been updated. Need to match word casing !

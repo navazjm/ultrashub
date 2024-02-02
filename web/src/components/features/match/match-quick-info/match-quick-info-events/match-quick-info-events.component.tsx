@@ -5,6 +5,8 @@ interface IMatchQuickInfoEventsComponentProps {
     match: Match;
 }
 
+// TODO: Use match-events item to render important match events (goals, red cards)
+
 export const MatchQuickInfoEventsComponent = (props: IMatchQuickInfoEventsComponentProps) => {
     return (
         <section className="hidden sm:block">
