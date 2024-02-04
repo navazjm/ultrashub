@@ -7,7 +7,6 @@ interface IMatchLineupsComponentProps {
 }
 
 export const MatchLineupsComponent = (props: IMatchLineupsComponentProps) => {
-    console.log(props.lineups);
     return (
         <>
             <MatchLineupsFormationsComponent lineups={props.lineups} />

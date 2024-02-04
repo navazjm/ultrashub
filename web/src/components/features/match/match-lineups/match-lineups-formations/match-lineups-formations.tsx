@@ -43,8 +43,6 @@ const MatchLineupsFormationsItemComponent = (props: IMatchLineupsFormationsItemC
         columns.push(players);
     }
 
-    console.log(columns);
-
     return (
         <section className={`flex items-center justify-between ${props.reverse && "flex-row-reverse"}`}>
             <section className="flex flex-col justify-between h-full">
@@ -87,7 +85,6 @@ interface IMatchLineupsFormationsItemPlayerComponentProps {
 }
 
 const MatchLineupsFormationsItemPlayerComponent = (props: IMatchLineupsFormationsItemPlayerComponentProps) => {
-    console.log(props.colors);
     return (
         <Tooltip>
             <TooltipTrigger>
