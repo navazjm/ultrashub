@@ -126,46 +126,18 @@ export interface MatchEvent {
 }
 
 export interface MatchLineup {
-    team: {
-        id: number;
-        name: string;
-        logo: string;
-        colors: {
-            player: {
-                primary: string;
-                number: string;
-                border: string;
-            };
-            goalkeeper: {
-                primary: string;
-                number: string;
-                border: string;
-            };
-        };
-    };
-    Coach: {
+    team: MatchLineupTeam;
+    coach: {
         id: number;
         name: string;
         photo: string;
     };
     formation: string;
     startXI: {
-        player: {
-            id: number;
-            name: string;
-            number: number;
-            pos: string;
-            grid: string;
-        };
+        player: MatchLineupPlayer;
     }[];
     substitutes: {
-        player: {
-            id: number;
-            name: string;
-            number: number;
-            pos: string;
-            grid: string;
-        };
+        player: MatchLineupPlayer;
     }[];
 }
 
@@ -179,4 +151,30 @@ export interface MatchStat {
         type: string;
         value: any;
     }[];
+}
+
+export interface MatchLineupTeam {
+    id: number;
+    name: string;
+    logo: string;
+    colors: MatchLineupTeamColors;
+}
+
+export interface MatchLineupTeamColors {
+    player: MatchLineupTeamColor;
+    goalkeeper: MatchLineupTeamColor;
+}
+
+export interface MatchLineupTeamColor {
+    primary: string;
+    number: string;
+    border: string;
+}
+
+export interface MatchLineupPlayer {
+    id: number;
+    name: string;
+    number: number;
+    pos: string;
+    grid: string;
 }
