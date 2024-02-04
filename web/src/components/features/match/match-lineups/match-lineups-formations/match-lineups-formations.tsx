@@ -31,8 +31,10 @@ const MatchLineupsFormationsItemComponent = (props: IMatchLineupsFormationsItemC
     // last player in start XI will give the number of columns needed from grid property
     const lastPlayerIdx = props.lineup.startXI.length - 1;
     const numColumns = +props.lineup.startXI[lastPlayerIdx].player.grid.split(":")[0];
-
-    const columns: MatchLineupPlayer[][] = [];
+    const playerPositionColumns: MatchLineupPlayer[][] = [];
+    // split each player into their appropriate columns to display them in their respective position
+    // i.e., 4-3-3 => playerPositionColumns = [[g1],[d1,d2,d3,d4],[m1,m2,m3], [f1,f2,f3]]
+    // i.e., 4-3-2-1 => playerPositionColumns = [[g1],[d1,d2,d3,d4],[m1,m2,m3], [m1,m2], [f1]]
     for (let i = 0; i < numColumns; i++) {
         const players: MatchLineupPlayer[] = [];
         props.lineup.startXI.forEach((obj) => {
@@ -40,7 +42,7 @@ const MatchLineupsFormationsItemComponent = (props: IMatchLineupsFormationsItemC
                 players.push(obj.player);
             }
         });
-        columns.push(players);
+        playerPositionColumns.push(players);
     }
 
     return (
@@ -59,7 +61,7 @@ const MatchLineupsFormationsItemComponent = (props: IMatchLineupsFormationsItemC
             </section>
             <section className={`flex items-center gap-3 ${props.reverse && "flex-row-reverse"} p-5`}>
                 {/** we reverse the reverse for players to be on the correct side */}
-                {columns.map((col, idx) => (
+                {playerPositionColumns.map((col, idx) => (
                     <section key={idx} className={`flex gap-3 ${props.reverse ? "flex-col" : "flex-col-reverse"}`}>
                         {col.map((player) => (
                             <MatchLineupsFormationsItemPlayerComponent
