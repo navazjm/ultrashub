@@ -136,4 +136,52 @@ export class MatchToolbox {
                 return <></>;
         }
     }
+
+    /**
+     * @param size - icon size (default 24px)
+     * @returns svg icon denoting a player was substituted
+     */
+    public static displayPlayerOffIcon(size: number = 24): JSX.Element {
+        return (
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={size}
+                height={size}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-move-left mr-2 sm:mr-0"
+            >
+                <path d="M6 8L2 12L6 16" stroke="red" />
+                <path d="M2 12H22" stroke="red" />
+            </svg>
+        );
+    }
+
+    /**
+     * @param size - icon size (default 24px)
+     * @returns svg icon denoting a player came on as a substitute
+     */
+    public static displayPlayerOnIcon(size: number = 24): JSX.Element {
+        return (
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={size}
+                height={size}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-move-right mr-2 sm:mr-0"
+            >
+                <path d="M18 8L22 12L18 16" stroke="green" />
+                <path d="M2 12H22" stroke="green" />
+            </svg>
+        );
+    }
 }

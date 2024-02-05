@@ -1,5 +1,7 @@
-import { MatchLineup } from "@/components/common/api-football-response";
+import { MatchEvent, MatchEventType, MatchLineup, MatchLineupPlayer } from "@/components/common/api-football-response";
+import { MatchToolbox } from "@/components/common/toolbox/match";
 import { Separator } from "@/components/ui/separator";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface IMatchLineupsSquadsComponentProps {
     lineups: MatchLineup[];
@@ -20,6 +22,7 @@ export const MatchLineupsSquadsComponent = (props: IMatchLineupsSquadsComponentP
 interface IMatchLineupsSquadsItemComponentProps {
     lineup: MatchLineup;
 }
+
 export const MatchLineupsSquadsItemComponent = (props: IMatchLineupsSquadsItemComponentProps) => {
     return (
         <section>
@@ -36,9 +39,8 @@ export const MatchLineupsSquadsItemComponent = (props: IMatchLineupsSquadsItemCo
             <section>
                 <h5 className="text-xl mb-5">Starting XI</h5>
                 {props.lineup.startXI.map((obj) => (
-                    <section key={obj.player.id} className="flex items-center">
-                        <section className="w-[30px] mr-3">{obj.player.number}</section>
-                        <section>{obj.player.name}</section>
+                    <section key={obj.player.id} className="flex items-center gap-3">
+                        <MatchLineupsSquadsItemPlayerComponent player={obj.player} isSubst={false} />
                     </section>
                 ))}
             </section>
@@ -46,9 +48,8 @@ export const MatchLineupsSquadsItemComponent = (props: IMatchLineupsSquadsItemCo
             <section>
                 <h5 className="text-xl mb-5">Substitutes</h5>
                 {props.lineup.substitutes.map((obj) => (
-                    <section key={obj.player.id} className="flex items-center">
-                        <section className="w-[30px] mr-3">{obj.player.number}</section>
-                        <section>{obj.player.name}</section>
+                    <section key={obj.player.id} className="flex items-center gap-3">
+                        <MatchLineupsSquadsItemPlayerComponent player={obj.player} isSubst={true} />
                     </section>
                 ))}
             </section>
@@ -59,4 +60,55 @@ export const MatchLineupsSquadsItemComponent = (props: IMatchLineupsSquadsItemCo
             <Separator className="my-5" />
         </section>
     );
+};
+
+interface IMatchLineupsSquadsItemPlayerComponentProps {
+    player: MatchLineupPlayer;
+    isSubst: boolean; // is player in startXI or a substitute
+}
+
+const MatchLineupsSquadsItemPlayerComponent = (props: IMatchLineupsSquadsItemPlayerComponentProps) => {
+    return (
+        <>
+            <section className="w-[30px]">{props.player.number}</section>
+            <section>{props.player.name}</section>
+            <section className="flex flex-row-reverse items-center gap-1">
+                {props.player.events &&
+                    props.player.events.map((evt) => (
+                        <Tooltip>
+                            <TooltipTrigger>
+                                <MatchLineupsSquadsItemPlayerEventIconComponent evt={evt} isSubst={props.isSubst} />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>
+                                    {`${evt.time.elapsed + evt.time.extra}'`}
+                                    {evt.detail.toLocaleLowerCase() === "own goal" && " (OG)"}
+                                </p>
+                            </TooltipContent>
+                        </Tooltip>
+                    ))}
+            </section>
+        </>
+    );
+};
+
+interface IMatchLineupsSquadsItemPlayerEventIconComponentProps {
+    evt: MatchEvent;
+    isSubst: boolean; // is player in startXI or a substitute
+}
+
+const MatchLineupsSquadsItemPlayerEventIconComponent = (
+    props: IMatchLineupsSquadsItemPlayerEventIconComponentProps,
+) => {
+    const evtType = props.evt.type.toLocaleLowerCase() as MatchEventType;
+
+    if (evtType === "subst" && props.isSubst) {
+        return <>{MatchToolbox.displayPlayerOnIcon(16)}</>;
+    }
+
+    if (evtType === "subst" && !props.isSubst) {
+        return <>{MatchToolbox.displayPlayerOffIcon(16)}</>;
+    }
+
+    return <>{MatchToolbox.getEventTypeIcon(props.evt, 16)}</>;
 };

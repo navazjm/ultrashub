@@ -70,6 +70,26 @@ export const useMatch = (matchID: string) => {
                     });
                 }
 
+                // give each player their respective events to be displayed in lineups tab
+                match.lineups.forEach((lineup) => {
+                    lineup.startXI.forEach((obj, idx) => {
+                        const events = match.events.filter((evt) => {
+                            return evt.player.id === obj.player.id;
+                        });
+                        lineup.startXI[idx].player.events = events;
+                    });
+                    lineup.substitutes.forEach((obj, idx) => {
+                        const events = match.events.filter((evt) => {
+                            const evtType = evt.type.toLocaleLowerCase() as MatchEventType;
+                            if (evtType === "subst") {
+                                return evt.assist.id === obj.player.id;
+                            }
+                            return evt.player.id === obj.player.id;
+                        });
+                        lineup.substitutes[idx].player.events = events;
+                    });
+                });
+
                 setMatch(match);
                 setStatus("success");
             } catch (err) {

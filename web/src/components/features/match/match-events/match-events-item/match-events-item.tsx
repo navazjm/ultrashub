@@ -93,40 +93,12 @@ const MatchEventsItemDetailsComponent = (props: IMatchEventsItemDetailsComponent
                     <section className="text-xl">Substitution</section>
                     <section className="text-xs flex items-center gap-2">
                         <section className="flex items-center">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="12"
-                                height="12"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="lucide lucide-move-left mr-2 sm:mr-0"
-                            >
-                                <path d="M6 8L2 12L6 16" stroke="red" />
-                                <path d="M2 12H22" stroke="red" />
-                            </svg>
+                            {MatchToolbox.displayPlayerOffIcon(12)}
                             <span className="font-light mx-2 hidden sm:inline">Player off</span>
                             {playerOff}
                         </section>
                         <section className="flex items-center">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="12"
-                                height="12"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="lucide lucide-move-right mr-2 sm:mr-0"
-                            >
-                                <path d="M18 8L22 12L18 16" stroke="green" />
-                                <path d="M2 12H22" stroke="green" />
-                            </svg>
+                            {MatchToolbox.displayPlayerOnIcon(12)}
                             <span className="font-light mx-2 hidden sm:inline">Player on</span>
                             {playerOn}
                         </section>

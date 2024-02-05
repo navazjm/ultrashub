@@ -177,4 +177,5 @@ export interface MatchLineupPlayer {
     number: number;
     pos: string;
     grid: string;
+    events?: MatchEvent[];
 }
