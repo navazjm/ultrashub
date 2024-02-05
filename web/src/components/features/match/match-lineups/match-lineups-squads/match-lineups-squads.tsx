@@ -74,8 +74,8 @@ const MatchLineupsSquadsItemPlayerComponent = (props: IMatchLineupsSquadsItemPla
             <section>{props.player.name}</section>
             <section className="flex flex-row-reverse items-center gap-1">
                 {props.player.events &&
-                    props.player.events.map((evt) => (
-                        <Tooltip>
+                    props.player.events.map((evt, idx) => (
+                        <Tooltip key={idx}>
                             <TooltipTrigger>
                                 <MatchLineupsSquadsItemPlayerEventIconComponent evt={evt} isSubst={props.isSubst} />
                             </TooltipTrigger>
