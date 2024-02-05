@@ -40,8 +40,9 @@
 
 ### :construction: v0.2.0 - Migrate to REST API & SPA
 
-- Convert webapp to REST API
-- convert web from templates to react app
+- [x] Convert webapp to REST API
+- [ ] convert web from templates to react app
+- [x] introduced player events in "/match/:id" lineups tab
 
 ### :x: v0.3.0 - Introduce leagues and clubs endpoints
 
