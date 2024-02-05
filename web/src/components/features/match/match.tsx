@@ -43,7 +43,6 @@ export const MatchComponent = (props: IMatchComponentProps) => {
     }
 
     const matchDate = new Date(match?.fixture.date);
-    console.log(match);
     return (
         <>
             <MatchQuickInfoComponent match={match} hasStarted={matchHasStarted} />
