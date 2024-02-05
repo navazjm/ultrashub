@@ -35,7 +35,7 @@ export const MatchComponent = (props: IMatchComponentProps) => {
                         <TabsTrigger value="h2h">Head-to-Head</TabsTrigger>
                     </TabsList>
                     <TabsContent value="h2h" className="w-full m-0">
-                        <MatchH2HComponent />
+                        <MatchH2HComponent homeTeam={match.teams.home} awayTeam={match.teams.away} />
                     </TabsContent>
                 </Tabs>
             </>
@@ -75,7 +75,7 @@ export const MatchComponent = (props: IMatchComponentProps) => {
                     )}
                 </TabsContent>
                 <TabsContent value="h2h" className="w-full m-0">
-                    <MatchH2HComponent />
+                    <MatchH2HComponent homeTeam={match.teams.home} awayTeam={match.teams.away} />
                 </TabsContent>
             </Tabs>
         </>

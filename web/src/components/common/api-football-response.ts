@@ -58,18 +58,15 @@ export interface MatchLeague {
 }
 
 export interface MatchTeams {
-    home: {
-        id: number;
-        name: string;
-        logo: string;
-        winner: boolean;
-    };
-    away: {
-        id: number;
-        name: string;
-        logo: string;
-        winner: boolean;
-    };
+    home: MatchTeam;
+    away: MatchTeam;
+}
+
+export interface MatchTeam {
+    id: number;
+    name: string;
+    logo: string;
+    winner: boolean;
 }
 
 export interface MatchGoals {
