@@ -77,10 +77,14 @@ const MatchEventsItemDetailsComponent = (props: IMatchEventsItemDetailsComponent
                 <>
                     <section className="text-xl">{goalTitle}</section>
                     <section className="text-sm font-light">
-                        <span>{goalMessage}</span>
-                        <span className="font-bold">{scorer}</span>
-                        <span>. {assistMessage} </span>
-                        <span className="font-bold">{props.event.assist.name}</span>
+                        {scorer && (
+                            <>
+                                <span>{goalMessage}</span>
+                                <span className="font-bold">{scorer}</span>
+                                <span>. {assistMessage} </span>
+                                <span className="font-bold">{props.event.assist.name}</span>
+                            </>
+                        )}
                     </section>
                 </>
             );

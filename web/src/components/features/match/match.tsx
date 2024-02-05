@@ -43,6 +43,7 @@ export const MatchComponent = (props: IMatchComponentProps) => {
     }
 
     const matchDate = new Date(match?.fixture.date);
+    console.log(match);
     return (
         <>
             <MatchQuickInfoComponent match={match} hasStarted={matchHasStarted} />
@@ -54,13 +55,25 @@ export const MatchComponent = (props: IMatchComponentProps) => {
                     <TabsTrigger value="h2h">Head-to-Head</TabsTrigger>
                 </TabsList>
                 <TabsContent value="events" className="w-full m-0">
-                    <MatchEventsComponent events={match.events} matchDate={matchDate} />
+                    {match.events.length > 0 ? (
+                        <MatchEventsComponent events={match.events} matchDate={matchDate} />
+                    ) : (
+                        <p className="text-center my-2">No match events found. Try again later.</p>
+                    )}
                 </TabsContent>
                 <TabsContent value="stats" className="w-full m-0">
-                    <MatchStatsComponent stats={match.statistics} />
+                    {match.statistics.length > 0 ? (
+                        <MatchStatsComponent stats={match.statistics} />
+                    ) : (
+                        <p className="text-center my-2">No match stats found. Try again later.</p>
+                    )}
                 </TabsContent>
                 <TabsContent value="lineups" className="w-full m-0">
-                    <MatchLineupsComponent lineups={match.lineups} />
+                    {match.lineups.length > 0 ? (
+                        <MatchLineupsComponent lineups={match.lineups} />
+                    ) : (
+                        <p className="text-center my-2">No match lineups found. Try again later.</p>
+                    )}
                 </TabsContent>
                 <TabsContent value="h2h" className="w-full m-0">
                     <MatchH2HComponent />
