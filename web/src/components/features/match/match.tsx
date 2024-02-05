@@ -8,6 +8,7 @@ import { MatchEventsComponent } from "./match-events/match-events";
 import { MatchStatsComponent } from "./match-stats/match-stats";
 import { MatchLineupsComponent } from "./match-lineups/match-lineups";
 import { MatchToolbox } from "@/components/common/toolbox/match";
+import { ErrorComponent } from "@/components/common/error/error";
 
 interface IMatchComponentProps extends IProps {
     id: string;
@@ -20,9 +21,8 @@ export const MatchComponent = (props: IMatchComponentProps) => {
         return <Spinner />;
     }
 
-    // TODO: better error component
     if (isError || !match) {
-        return <h3>Uh oh! Error</h3>;
+        return <ErrorComponent />;
     }
 
     const matchHasStarted = MatchToolbox.hasMatchStarted(match.fixture.status.short);
