@@ -85,12 +85,8 @@ const MatchEventsItemDetailsComponent = (props: IMatchEventsItemDetailsComponent
                 </>
             );
         case "subst":
-            const currentDate = new Date().toDateString();
-            const matchDate = props.matchDate.toDateString();
-            // weird issue with API Football. On match day the player that came off is assigned to assist.name
-            // but if not match day, the player that came off is player.name
-            const playerOff = currentDate === matchDate ? props.event.assist.name : props.event.player.name;
-            const playerOn = currentDate === matchDate ? props.event.player.name : props.event.assist.name;
+            const playerOff = props.event.player.name;
+            const playerOn = props.event.assist.name;
 
             return (
                 <>

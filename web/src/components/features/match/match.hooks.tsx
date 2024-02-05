@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
-import { Match, MatchResponse } from "@/components/common/api-football-response";
+import { Match, MatchEventType, MatchResponse } from "@/components/common/api-football-response";
 import axios from "@/lib/axios";
 
 export const useMatch = (matchID: string) => {
@@ -52,6 +52,23 @@ export const useMatch = (matchID: string) => {
                     }
                     return event;
                 });
+
+                // weird issue with API Football. On match day the player that came off is assigned to assist
+                // but if not match day, the player that came off is assinged to player
+                // So if match day, we swap assist and player to accomadate this.
+                const currentDate = new Date().toDateString();
+                const matchDate = new Date(match.fixture.date).toDateString();
+                if (matchDate === currentDate) {
+                    match.events = match.events.map((evt) => {
+                        const evtType = evt.type.toLocaleLowerCase() as MatchEventType;
+                        if (evtType === "subst") {
+                            const tempPlayer = evt.assist;
+                            evt.assist = evt.player;
+                            evt.player = tempPlayer;
+                        }
+                        return evt;
+                    });
+                }
 
                 setMatch(match);
                 setStatus("success");
