@@ -1,11 +1,11 @@
 import { Separator } from "@/components/ui/separator";
 import { MatchQuickInfoEventsComponent } from "../match-quick-info-events/match-quick-info-events";
-import { Match } from "@/components/common/api-football-response";
+import { IMatch } from "@/components/common/api-football-response";
 import { DateToolbox } from "@/components/common/toolbox/date";
 import { MatchToolbox } from "@/components/common/toolbox/match";
 
 interface IMatchQuickInfoCardContentComponentProps {
-    match: Match;
+    match: IMatch;
     hasStarted: boolean;
 }
 

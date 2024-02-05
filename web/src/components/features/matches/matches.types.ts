@@ -1,4 +1,4 @@
-import { Match } from "@/components/common/api-football-response";
+import { IMatch } from "@/components/common/api-football-response";
 
 export const ALL_COMPS = "All Competitions";
 export const ALL_TEAMS = "All Teams";
@@ -18,7 +18,7 @@ export interface ITeam {
 
 export interface IMatchesByCompetitionID {
     [leagueID: string]: {
-        matches: Match[];
+        matches: IMatch[];
         displayName: string;
     };
 }

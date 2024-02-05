@@ -5,7 +5,7 @@ export type MatchEventType = "goal" | "card" | "subst" | "var";
  * ! Do NOT modify unless API Football has been updated. Need to match word casing !
  */
 
-export interface MatchResponse {
+export interface IMatchResponse {
     errors: any[];
     get: string;
     paging: {
@@ -15,21 +15,21 @@ export interface MatchResponse {
     parameters: {
         [key: string]: string;
     };
-    response: Match[];
+    response: IMatch[];
 }
 
-export interface Match {
-    fixture: MatchFixture;
-    league: MatchLeague;
-    teams: MatchTeams;
-    goals: MatchGoals;
-    score: MatchScore;
-    events: MatchEvent[];
-    lineups: MatchLineup[];
-    statistics: MatchStat[];
+export interface IMatch {
+    fixture: IMatchFixture;
+    league: IMatchLeague;
+    teams: IMatchTeams;
+    goals: IMatchGoals;
+    score: IMatchScore;
+    events: IMatchEvent[];
+    lineups: IMatchLineup[];
+    statistics: IMatchStat[];
 }
 
-export interface MatchFixture {
+export interface IMatchFixture {
     id: number;
     referee: string;
     timezone: string;
@@ -44,10 +44,10 @@ export interface MatchFixture {
         name: string;
         city: string;
     };
-    status: MatchStatus;
+    status: IMatchStatus;
 }
 
-export interface MatchLeague {
+export interface IMatchLeague {
     id: number;
     name: string;
     country: string;
@@ -57,30 +57,30 @@ export interface MatchLeague {
     round: string;
 }
 
-export interface MatchTeams {
-    home: MatchTeam;
-    away: MatchTeam;
+export interface IMatchTeams {
+    home: IMatchTeam;
+    away: IMatchTeam;
 }
 
-export interface MatchTeam {
+export interface IMatchTeam {
     id: number;
     name: string;
     logo: string;
     winner: boolean;
 }
 
-export interface MatchGoals {
+export interface IMatchGoals {
     home: number;
     away: number;
 }
 
-export interface MatchStatus {
+export interface IMatchStatus {
     long: string;
     short: string;
     elapsed: number;
 }
 
-export interface MatchScore {
+export interface IMatchScore {
     halftime: {
         home: number;
         away: number;
@@ -99,7 +99,7 @@ export interface MatchScore {
     };
 }
 
-export interface MatchEvent {
+export interface IMatchEvent {
     time: {
         elapsed: number;
         extra: number;
@@ -122,8 +122,8 @@ export interface MatchEvent {
     comments: string;
 }
 
-export interface MatchLineup {
-    team: MatchLineupTeam;
+export interface IMatchLineup {
+    team: IMatchLineupTeam;
     coach: {
         id: number;
         name: string;
@@ -131,14 +131,14 @@ export interface MatchLineup {
     };
     formation: string;
     startXI: {
-        player: MatchLineupPlayer;
+        player: IMatchLineupPlayer;
     }[];
     substitutes: {
-        player: MatchLineupPlayer;
+        player: IMatchLineupPlayer;
     }[];
 }
 
-export interface MatchStat {
+export interface IMatchStat {
     team: {
         id: number;
         name: string;
@@ -150,29 +150,29 @@ export interface MatchStat {
     }[];
 }
 
-export interface MatchLineupTeam {
+export interface IMatchLineupTeam {
     id: number;
     name: string;
     logo: string;
-    colors: MatchLineupTeamColors;
+    colors: IMatchLineupTeamColors;
 }
 
-export interface MatchLineupTeamColors {
-    player: MatchLineupTeamColor;
-    goalkeeper: MatchLineupTeamColor;
+export interface IMatchLineupTeamColors {
+    player: IMatchLineupTeamColor;
+    goalkeeper: IMatchLineupTeamColor;
 }
 
-export interface MatchLineupTeamColor {
+export interface IMatchLineupTeamColor {
     primary: string;
     number: string;
     border: string;
 }
 
-export interface MatchLineupPlayer {
+export interface IMatchLineupPlayer {
     id: number;
     name: string;
     number: number;
     pos: string;
     grid: string;
-    events?: MatchEvent[];
+    events?: IMatchEvent[];
 }

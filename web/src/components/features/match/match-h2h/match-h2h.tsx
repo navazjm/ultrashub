@@ -1,10 +1,10 @@
 import { Spinner } from "@/components/ui/spinner";
 import { useMatchH2H } from "./match-h2h.hooks";
-import { MatchTeam } from "@/components/common/api-football-response";
+import { IMatchTeam } from "@/components/common/api-football-response";
 
 interface IMatchH2HComponentProps {
-    homeTeam: MatchTeam;
-    awayTeam: MatchTeam;
+    homeTeam: IMatchTeam;
+    awayTeam: IMatchTeam;
 }
 
 export const MatchH2HComponent = (props: IMatchH2HComponentProps) => {

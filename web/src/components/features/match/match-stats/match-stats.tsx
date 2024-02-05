@@ -1,9 +1,9 @@
-import { MatchStat } from "@/components/common/api-football-response";
+import { IMatchStat } from "@/components/common/api-football-response";
 import { StringsToolbox } from "@/components/common/toolbox/strings";
 import { Separator } from "@/components/ui/separator";
 
 interface IMatchStatsComponentProps {
-    stats: MatchStat[];
+    stats: IMatchStat[];
 }
 
 interface IStatItem {

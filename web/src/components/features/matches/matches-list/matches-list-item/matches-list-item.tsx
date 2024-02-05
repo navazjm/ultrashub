@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { IProps } from "@/components/common/types";
-import { Match } from "@/components/common/api-football-response";
+import { IMatch } from "@/components/common/api-football-response";
 import { MatchToolbox } from "@/components/common/toolbox/match";
 
 interface IMatchesListItemProps extends IProps {
-    match: Match;
+    match: IMatch;
     showScores: boolean;
 }
 export const MatchesListItemComponent = (props: IMatchesListItemProps) => {

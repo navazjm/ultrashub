@@ -1,9 +1,9 @@
-import { MatchEvent, MatchEventType } from "@/components/common/api-football-response";
+import { IMatchEvent, MatchEventType } from "@/components/common/api-football-response";
 import { MatchToolbox } from "@/components/common/toolbox/match";
 import { Card, CardContent } from "@/components/ui/card";
 
 interface IMatchEventsItemComponentProps {
-    event: MatchEvent;
+    event: IMatchEvent;
     matchDate: Date;
 }
 
@@ -36,7 +36,7 @@ export const MatchEventsItemComponent = (props: IMatchEventsItemComponentProps) 
 };
 
 interface IMatchEventsItemDetailsComponentProps {
-    event: MatchEvent;
+    event: IMatchEvent;
     matchDate: Date;
 }
 

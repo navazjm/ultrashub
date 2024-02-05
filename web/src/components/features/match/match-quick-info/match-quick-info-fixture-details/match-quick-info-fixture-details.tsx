@@ -1,9 +1,9 @@
-import { MatchFixture } from "@/components/common/api-football-response";
+import { IMatchFixture } from "@/components/common/api-football-response";
 import { DateToolbox } from "@/components/common/toolbox/date";
 import { Calendar, Clock, MapPin, User } from "lucide-react";
 
 interface IMatchQuickInfoFixtureDetailsComponentProps {
-    fixture: MatchFixture;
+    fixture: IMatchFixture;
     hasStarted: boolean;
 }
 

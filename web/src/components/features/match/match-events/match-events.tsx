@@ -1,8 +1,8 @@
-import { MatchEvent } from "@/components/common/api-football-response";
+import { IMatchEvent } from "@/components/common/api-football-response";
 import { MatchEventsItemComponent } from "./match-events-item/match-events-item";
 
 interface IMatchEventsComponentProps {
-    events: MatchEvent[];
+    events: IMatchEvent[];
     matchDate: Date;
 }
 

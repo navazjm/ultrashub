@@ -1,8 +1,8 @@
-import { MatchEvent } from "@/components/common/api-football-response";
+import { IMatchEvent } from "@/components/common/api-football-response";
 import { MatchToolbox } from "@/components/common/toolbox/match";
 
 interface IMatchQuickInfoEventsItemComponentProps {
-    event: MatchEvent;
+    event: IMatchEvent;
     isAwayTeam: boolean;
 }
 
@@ -29,7 +29,7 @@ export const MatchQuickInfoEventsItemComponent = (props: IMatchQuickInfoEventsIt
 };
 
 interface IMatchQuickInfoEventsItemPlayerDetailsComponentProps {
-    event: MatchEvent;
+    event: IMatchEvent;
 }
 
 export const MatchQuickInfoEventsItemPlayerDetailsComponent = (

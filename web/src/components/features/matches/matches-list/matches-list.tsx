@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
-import { MatchResponse } from "@/components/common/api-football-response";
+import { IMatchResponse } from "@/components/common/api-football-response";
 import { IProps } from "@/components/common/types";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Separator } from "@/components/ui/separator";
@@ -61,7 +61,7 @@ export const MatchesListComponent = (props: IMatchesListProps) => {
             try {
                 setShowScores(defaultShowScores);
                 setIsLoading(true);
-                const resp = await axios.get<any, AxiosResponse<MatchResponse>>("/apifootball/fixtures", {
+                const resp = await axios.get<any, AxiosResponse<IMatchResponse>>("/apifootball/fixtures", {
                     params: {
                         date: selectedDateString,
                     },

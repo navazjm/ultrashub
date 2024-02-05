@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
-import { Match, MatchResponse } from "@/components/common/api-football-response";
+import { IMatch, IMatchResponse } from "@/components/common/api-football-response";
 import axios from "@/lib/axios";
 
-let matchesCache: Match[] = [];
+let matchesCache: IMatch[] = [];
 let cacheTimestamp: number;
 
 export const useMatchH2H = (homeTeamID: number, awayTeamID: number) => {
     const cacheTimeout = 15 * 60 * 1000; // 15 minutes
-    const [matches, setMatches] = useState<Match[]>(matchesCache);
+    const [matches, setMatches] = useState<IMatch[]>(matchesCache);
     const initialStatus = matchesCache.length > 1 ? "success" : "loading";
     const [status, setStatus] = useState<"loading" | "success" | "error">(initialStatus);
 
@@ -39,7 +39,7 @@ export const useMatchH2H = (homeTeamID: number, awayTeamID: number) => {
     useEffect(() => {
         const fetchH2H = async () => {
             try {
-                const resp = await axios.get<any, AxiosResponse<MatchResponse>>("/apifootball/fixtures/headtohead", {
+                const resp = await axios.get<any, AxiosResponse<IMatchResponse>>("/apifootball/fixtures/headtohead", {
                     params: {
                         h2h: `${homeTeamID}-${awayTeamID}`,
                     },

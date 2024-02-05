@@ -1,4 +1,4 @@
-import { MatchEvent, MatchFixture } from "../api-football-response";
+import { IMatchEvent, IMatchFixture } from "../api-football-response";
 import SoccerBall from "@/assets/img/logo.png";
 
 export class MatchToolbox {
@@ -22,7 +22,7 @@ export class MatchToolbox {
      * @param fixture - current match fixture
      * @returns human understandable match status
      */
-    public static getDisplayMatchStatus(fixture: MatchFixture): string {
+    public static getDisplayMatchStatus(fixture: IMatchFixture): string {
         switch (fixture.status.short) {
             // use short
             case "TBD":
@@ -65,7 +65,7 @@ export class MatchToolbox {
      * @param size - icon size (default 24px)
      * @returns svg icon based on MatchEvent.type
      */
-    public static getEventTypeIcon(event: MatchEvent, size: number = 24): JSX.Element {
+    public static getEventTypeIcon(event: IMatchEvent, size: number = 24): JSX.Element {
         switch (event.type.toLocaleLowerCase()) {
             case "goal":
                 return (

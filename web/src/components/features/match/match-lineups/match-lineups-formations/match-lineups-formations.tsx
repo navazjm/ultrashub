@@ -1,9 +1,9 @@
-import { MatchLineup, MatchLineupPlayer, MatchLineupTeamColor } from "@/components/common/api-football-response";
+import { IMatchLineup, IMatchLineupPlayer, IMatchLineupTeamColor } from "@/components/common/api-football-response";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface IMatchLineupsFormationsComponentProps {
-    lineups: MatchLineup[];
+    lineups: IMatchLineup[];
 }
 
 export const MatchLineupsFormationsComponent = (props: IMatchLineupsFormationsComponentProps) => {
@@ -22,7 +22,7 @@ export const MatchLineupsFormationsComponent = (props: IMatchLineupsFormationsCo
 };
 
 interface IMatchLineupsFormationsItemComponentProps {
-    lineup: MatchLineup;
+    lineup: IMatchLineup;
     reverse?: boolean; // reverse the ordering of elements for the away team
 }
 
@@ -31,12 +31,12 @@ const MatchLineupsFormationsItemComponent = (props: IMatchLineupsFormationsItemC
     // last player in start XI will give the number of columns needed from grid property
     const lastPlayerIdx = props.lineup.startXI.length - 1;
     const numColumns = +props.lineup.startXI[lastPlayerIdx].player.grid.split(":")[0];
-    const playerPositionColumns: MatchLineupPlayer[][] = [];
+    const playerPositionColumns: IMatchLineupPlayer[][] = [];
     // split each player into their appropriate columns to display them in their respective position
     // i.e., 4-3-3 => playerPositionColumns = [[g1],[d1,d2,d3,d4],[m1,m2,m3], [f1,f2,f3]]
     // i.e., 4-3-2-1 => playerPositionColumns = [[g1],[d1,d2,d3,d4],[m1,m2,m3], [m1,m2], [f1]]
     for (let i = 0; i < numColumns; i++) {
-        const players: MatchLineupPlayer[] = [];
+        const players: IMatchLineupPlayer[] = [];
         props.lineup.startXI.forEach((obj) => {
             if (+obj.player.grid.split(":")[0] - 1 === i) {
                 players.push(obj.player);
@@ -82,8 +82,8 @@ const MatchLineupsFormationsItemComponent = (props: IMatchLineupsFormationsItemC
 };
 
 interface IMatchLineupsFormationsItemPlayerComponentProps {
-    player: MatchLineupPlayer;
-    colors: MatchLineupTeamColor;
+    player: IMatchLineupPlayer;
+    colors: IMatchLineupTeamColor;
 }
 
 const MatchLineupsFormationsItemPlayerComponent = (props: IMatchLineupsFormationsItemPlayerComponentProps) => {

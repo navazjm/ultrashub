@@ -1,4 +1,4 @@
-import { Match } from "@/components/common/api-football-response";
+import { IMatch } from "@/components/common/api-football-response";
 import { BackNavigationComponent } from "@/components/common/back-navigation/back-navigation";
 import { IProps } from "@/components/common/types";
 import { Card, CardHeader, CardFooter, CardContent } from "@/components/ui/card";
@@ -6,7 +6,7 @@ import { MatchQuickInfoCardContentComponent } from "./match-quick-info-card-cont
 import { MatchQuickInfoFixtureDetailsComponent } from "./match-quick-info-fixture-details/match-quick-info-fixture-details";
 
 export interface IMatchQuickInfoComponentProps extends IProps {
-    match: Match;
+    match: IMatch;
     hasStarted: boolean;
 }
 

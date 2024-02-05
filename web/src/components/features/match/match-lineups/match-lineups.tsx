@@ -1,9 +1,9 @@
-import { MatchLineup } from "@/components/common/api-football-response";
+import { IMatchLineup } from "@/components/common/api-football-response";
 import { MatchLineupsFormationsComponent } from "./match-lineups-formations/match-lineups-formations";
 import { MatchLineupsSquadsComponent } from "./match-lineups-squads/match-lineups-squads";
 
 interface IMatchLineupsComponentProps {
-    lineups: MatchLineup[];
+    lineups: IMatchLineup[];
 }
 
 export const MatchLineupsComponent = (props: IMatchLineupsComponentProps) => {

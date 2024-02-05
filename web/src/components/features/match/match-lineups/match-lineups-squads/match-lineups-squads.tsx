@@ -1,10 +1,15 @@
-import { MatchEvent, MatchEventType, MatchLineup, MatchLineupPlayer } from "@/components/common/api-football-response";
+import {
+    IMatchEvent,
+    MatchEventType,
+    IMatchLineup,
+    IMatchLineupPlayer,
+} from "@/components/common/api-football-response";
 import { MatchToolbox } from "@/components/common/toolbox/match";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface IMatchLineupsSquadsComponentProps {
-    lineups: MatchLineup[];
+    lineups: IMatchLineup[];
 }
 
 export const MatchLineupsSquadsComponent = (props: IMatchLineupsSquadsComponentProps) => {
@@ -20,7 +25,7 @@ export const MatchLineupsSquadsComponent = (props: IMatchLineupsSquadsComponentP
 };
 
 interface IMatchLineupsSquadsItemComponentProps {
-    lineup: MatchLineup;
+    lineup: IMatchLineup;
 }
 
 export const MatchLineupsSquadsItemComponent = (props: IMatchLineupsSquadsItemComponentProps) => {
@@ -63,7 +68,7 @@ export const MatchLineupsSquadsItemComponent = (props: IMatchLineupsSquadsItemCo
 };
 
 interface IMatchLineupsSquadsItemPlayerComponentProps {
-    player: MatchLineupPlayer;
+    player: IMatchLineupPlayer;
     isSubst: boolean; // is player in startXI or a substitute
 }
 
@@ -93,7 +98,7 @@ const MatchLineupsSquadsItemPlayerComponent = (props: IMatchLineupsSquadsItemPla
 };
 
 interface IMatchLineupsSquadsItemPlayerEventIconComponentProps {
-    evt: MatchEvent;
+    evt: IMatchEvent;
     isSubst: boolean; // is player in startXI or a substitute
 }
 
