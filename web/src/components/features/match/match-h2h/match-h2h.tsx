@@ -43,18 +43,18 @@ export const MatchH2HComponent = (props: IMatchH2HComponentProps) => {
                                 <section>{new Date(match.fixture.date).toLocaleDateString()}</section>
                                 <section>{`${match.league.season} ${match.league.name}`}</section>
                             </CardHeader>
-                            <CardContent className="flex justify-center p-2 pt-0">
+                            <CardContent className="flex justify-center items-start p-2 pt-0">
                                 <section
-                                    className={`flex-1 flex justify-end items-center gap-2 mr-10 ${match.teams.away.winner && "opacity-40"}`}
+                                    className={`flex-1 flex justify-end items-center gap-2 mr-2 ${match.teams.away.winner && "opacity-40"}`}
                                 >
                                     <img src={match.teams.home.logo} className="w-[25px] object-scale-down" />
-                                    <h3 className="font-bold hidden sm:block">{match.teams.home.name}</h3>
+                                    <h3 className="text-lg font-bold hidden sm:block">{match.teams.home.name}</h3>
                                 </section>
-                                <MatchScorelineComponent match={match} fontSize="text-xl" />
+                                <MatchScorelineComponent match={match} fontSize="text-lg" />
                                 <section
-                                    className={`flex-1 flex justify-start items-center gap-2 ml-10 ${match.teams.home.winner && "opacity-40"}`}
+                                    className={`flex-1 flex justify-start items-center gap-2 ml-2 ${match.teams.home.winner && "opacity-40"}`}
                                 >
-                                    <h3 className="font-bold hidden sm:block">{match.teams.away.name}</h3>
+                                    <h3 className="text-lg font-bold hidden sm:block">{match.teams.away.name}</h3>
                                     <img src={match.teams.away.logo} className="w-[25px] object-scale-down" />
                                 </section>
                             </CardContent>
