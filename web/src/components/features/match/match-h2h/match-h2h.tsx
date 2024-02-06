@@ -39,7 +39,7 @@ export const MatchH2HComponent = (props: IMatchH2HComponentProps) => {
             <section className="flex flex-col gap-2">
                 {last5Matches.map((match) => (
                     <NavLink to={`/match/${match.fixture.id}`} key={match.fixture.id}>
-                        <Card>
+                        <Card className="hover:bg-muted">
                             <CardHeader className="flex-1 flex flex-row justify-between items-center font-thin text-sm p-2">
                                 <section>
                                     {`${DateToolbox.getDayOfTheWeek(new Date(match.fixture.date).getDay())} 
