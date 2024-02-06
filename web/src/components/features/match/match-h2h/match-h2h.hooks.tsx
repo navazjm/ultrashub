@@ -48,6 +48,9 @@ export const useMatchH2H = (homeTeamID: number, awayTeamID: number) => {
                     throw new Error();
                 }
                 const matches = resp.data.response;
+                matches.sort((a, b) => {
+                    return new Date(a.fixture.date).getTime() - new Date(b.fixture.date).getTime();
+                });
                 setMatches(matches);
                 setStatus("success");
                 matchesCache = matches;

@@ -3,6 +3,7 @@ import { MatchToolbox } from "@/components/common/toolbox/match";
 
 interface IMatchScorelineComponentProps {
     match: IMatch;
+    fontSize?: string;
 }
 
 export const MatchScorelineComponent = (props: IMatchScorelineComponentProps) => {
@@ -10,10 +11,11 @@ export const MatchScorelineComponent = (props: IMatchScorelineComponentProps) =>
     const awayTeamScore: number = !!props.match.goals.away ? props.match.goals.away : 0;
     const displayMatchStatus: string = MatchToolbox.getDisplayMatchStatus(props.match.fixture);
     const matchInProgress: boolean = MatchToolbox.isMatchInProgress(props.match.fixture.status.short);
+    const fontSize = props.fontSize ? props.fontSize : "text-3xl";
 
     return (
         <section className="flex flex-col items-center gap-2">
-            <section className="flex items-center gap-2 text-3xl font-bold">
+            <section className={`flex items-center gap-2 font-bold ${fontSize}`}>
                 <div className={`${!matchInProgress && props.match.teams.away.winner && "opacity-40"}`}>
                     {homeTeamScore}
                     {props.match.fixture.status.short === "PEN" && (
