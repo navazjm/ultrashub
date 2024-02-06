@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { MatchScorelineComponent } from "../match-scoreline/match-scoreline";
 import { MatchToolbox } from "@/components/common/toolbox/match";
 import { NavLink } from "react-router-dom";
+import { DateToolbox } from "@/components/common/toolbox/date";
 
 interface IMatchH2HComponentProps {
     homeTeam: IMatchTeam;
@@ -40,7 +41,10 @@ export const MatchH2HComponent = (props: IMatchH2HComponentProps) => {
                     <NavLink to={`/match/${match.fixture.id}`} key={match.fixture.id}>
                         <Card>
                             <CardHeader className="flex-1 flex flex-row justify-between items-center font-thin text-sm p-2">
-                                <section>{new Date(match.fixture.date).toLocaleDateString()}</section>
+                                <section>
+                                    {`${DateToolbox.getDayOfTheWeek(new Date(match.fixture.date).getDay())} 
+                                      ${new Date(match.fixture.date).toLocaleDateString()}`}
+                                </section>
                                 <section>{`${match.league.season} ${match.league.name}`}</section>
                             </CardHeader>
                             <CardContent className="flex justify-center items-start p-2 pt-0">
