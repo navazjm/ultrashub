@@ -97,7 +97,7 @@ export const useMatch = (matchID: string) => {
             }
         };
         fetchMatchByID();
-    }, []);
+    }, [matchID]);
 
     const isLoading = status === "loading";
     const isError = status === "error";
