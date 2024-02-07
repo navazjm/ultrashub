@@ -4,6 +4,7 @@ import { MatchToolbox } from "@/components/common/toolbox/match";
 interface IMatchScorelineComponentProps {
     match: IMatch;
     fontSize?: string;
+    hideStatus?: boolean;
 }
 
 export const MatchScorelineComponent = (props: IMatchScorelineComponentProps) => {
@@ -30,9 +31,11 @@ export const MatchScorelineComponent = (props: IMatchScorelineComponentProps) =>
                     )}
                 </div>
             </section>
-            <section className="font-bold">
-                <p>{displayMatchStatus}</p>
-            </section>
+            {!props.hideStatus && (
+                <section className="font-bold">
+                    <p>{displayMatchStatus}</p>
+                </section>
+            )}
         </section>
     );
 };
