@@ -56,34 +56,34 @@ export const MatchH2HStatsComponent = (props: IMatchH2HStatsComponentProps) => {
     return (
         <Card>
             <CardHeader className="flex flex-row justify-evenly items-center p-2 space-y-0">
-                <section className="flex content-center">
+                <section className="flex content-center gap-2">
                     <img src={props.homeTeam.logo} className="w-[25px] object-scale-down" />
                     <h5 className="text-lg font-bold hidden sm:block">{props.homeTeam.name}</h5>
                 </section>
-                <section className="flex content-center">
+                <section className="flex content-center gap-2">
                     <h5 className="text-lg font-bold hidden sm:block">{props.awayTeam.name}</h5>
                     <img src={props.awayTeam.logo} className="w-[25px] object-scale-down" />
                 </section>
             </CardHeader>
             <Separator className="my-2" />
-            <CardContent className="flex justify-center items-center gap-20 p-2 pt-0">
-                <section className="w-80">
+            <CardContent className="flex justify-center items-center gap-5 md:gap-20 p-2 pt-0">
+                <section className="md:w-80">
                     <section className="flex items-center gap-2">
-                        <Progress value={homeTeamWinRatio} />
+                        <Progress value={homeTeamWinRatio} className="hidden md:block" />
                         <section className="flex justify-end gap-2">
                             <p className="w-[20px] font-black">{totalNumHomeTeamWins}</p>
                             <p className="w-[85px]">Total Wins</p>
                         </section>
                     </section>
                     <section className="flex items-center gap-2">
-                        <Progress value={homeTeamHomeWinsRatio} />
+                        <Progress value={homeTeamHomeWinsRatio} className="hidden md:block" />
                         <section className="flex justify-end gap-2">
                             <p className="w-[20px] font-black">{numHomeTeamHomeWins}</p>
                             <p className="w-[85px] text-right">Home</p>
                         </section>
                     </section>
                     <section className="flex items-center gap-2">
-                        <Progress value={homeTeamAwayWinsRatio} />
+                        <Progress value={homeTeamAwayWinsRatio} className="hidden md:block" />
                         <section className="flex justify-end gap-2">
                             <p className="w-[20px] font-black">{numHomeTeamAwayWins}</p>
                             <p className="w-[85px] text-right">Away</p>
@@ -97,27 +97,27 @@ export const MatchH2HStatsComponent = (props: IMatchH2HStatsComponentProps) => {
                         Draws <span className="font-black">{totalNumDraws}</span>
                     </small>
                 </section>
-                <section className="w-80">
+                <section className="md:w-80">
                     <section className="flex items-center gap-2">
                         <section className="flex justify-start gap-2">
                             <p className="w-[85px]">Total Wins</p>
                             <p className="w-[20px] font-black">{totalNumAwayTeamWins}</p>
                         </section>
-                        <Progress value={awayTeamWinRatio} />
+                        <Progress value={awayTeamWinRatio} className="hidden md:block" />
                     </section>
                     <section className="flex items-center gap-2">
                         <section className="flex justify-end gap-2">
                             <p className="w-[85px] text-left">Home</p>
                             <p className="w-[20px] font-black">{numAwayTeamHomeWins}</p>
                         </section>
-                        <Progress value={awayTeamHomeWinsRatio} />
+                        <Progress value={awayTeamHomeWinsRatio} className="hidden md:block" />
                     </section>
                     <section className="flex items-center gap-2">
                         <section className="flex justify-end gap-2">
                             <p className="w-[85px] text-left">Away</p>
                             <p className="w-[20px] font-black">{numAwayTeamAwayWins}</p>
                         </section>
-                        <Progress value={awayTeamAwayWinsRatio} />
+                        <Progress value={awayTeamAwayWinsRatio} className="hidden md:block" />
                     </section>
                 </section>
             </CardContent>
