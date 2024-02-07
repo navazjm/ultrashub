@@ -45,6 +45,22 @@ const MatchLineupsFormationsItemComponent = (props: IMatchLineupsFormationsItemC
         playerPositionColumns.push(players);
     }
 
+    // fallback to generic colorscheme if no team colors are provided by API Football
+    const teamColors = props.lineup.team.colors
+        ? props.lineup.team.colors
+        : {
+              player: {
+                  primary: props.reverse ? "191724" : "e0def4",
+                  number: props.reverse ? "e0def4" : "191724",
+                  border: props.reverse ? "e0def4" : "191724",
+              },
+              goalkeeper: {
+                  primary: props.reverse ? "e0def4" : "191724",
+                  number: props.reverse ? "191724" : "e0def4",
+                  border: props.reverse ? "191724" : "e0def4",
+              },
+          };
+
     return (
         <section className={`flex items-center justify-between ${props.reverse && "flex-row-reverse"}`}>
             <section className="flex flex-col justify-between h-full">
@@ -68,9 +84,7 @@ const MatchLineupsFormationsItemComponent = (props: IMatchLineupsFormationsItemC
                                 key={player.id}
                                 player={player}
                                 colors={
-                                    player.pos.toLocaleLowerCase() === "g"
-                                        ? props.lineup.team.colors.goalkeeper
-                                        : props.lineup.team.colors.player
+                                    player.pos.toLocaleLowerCase() === "g" ? teamColors.goalkeeper : teamColors.player
                                 }
                             />
                         ))}
