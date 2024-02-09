@@ -6,7 +6,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { IProps } from "../types";
 
 interface IBackNavigationComponentProps extends IProps {
-    title: string;
+    title?: string;
 }
 
 export const BackNavigationComponent = (props: IBackNavigationComponentProps) => {
