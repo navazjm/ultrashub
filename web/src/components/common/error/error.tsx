@@ -1,11 +1,14 @@
 import { BackNavigationComponent } from "../back-navigation/back-navigation";
 
 interface IErrorComponentProps {
-    message?: string;
+    backNavTitle?: string;
+    errorMessage?: string;
 }
 
 export const ErrorComponent = (props: IErrorComponentProps) => {
-    const errorMessage = !!props.message ? props.message : "Uh oh! Encountered an error. Please try again later.";
+    const errorMessage = !!props.errorMessage
+        ? props.errorMessage
+        : "Uh oh! Encountered an error. Please try again later.";
     // determine if previous page was from ultrashub origin
     const isPreviousPageFromUH = document.referrer.includes(window.location.origin);
 
@@ -15,7 +18,7 @@ export const ErrorComponent = (props: IErrorComponentProps) => {
 
     return (
         <>
-            <BackNavigationComponent />
+            <BackNavigationComponent title={props.backNavTitle} />
             <section className="my-3">
                 <p>{errorMessage}</p>
             </section>

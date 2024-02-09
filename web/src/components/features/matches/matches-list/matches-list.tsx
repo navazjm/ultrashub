@@ -20,7 +20,7 @@ export const MatchesListComponent = (props: IMatchesListProps) => {
     }
 
     if (isError || !data) {
-        return <ErrorComponent />;
+        return <ErrorComponent backNavTitle="Error" />;
     }
 
     /**
