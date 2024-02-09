@@ -26,7 +26,6 @@ interface IMatchesListFiltersProps extends IProps {
     defaultShowScores: boolean;
     showScores: boolean;
     setShowScores: React.Dispatch<React.SetStateAction<boolean>>;
-    isLoading: boolean;
 }
 
 export const MatchesListFiltersComponent = (props: IMatchesListFiltersProps) => {
@@ -91,7 +90,6 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersProps) => 
                                 variant="outline"
                                 role="combobox"
                                 className="justify-between w-full sm:w-[180px] h-[30px] p-1 "
-                                disabled={props.isLoading}
                             >
                                 <div className="w-80 truncate flex content-center justify-start gap-1">
                                     {props.selectedCompetition.logo && (
@@ -154,7 +152,6 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersProps) => 
                                 variant="outline"
                                 role="combobox"
                                 className="justify-between w-full sm:w-[180px] h-[30px] p-1 "
-                                disabled={props.isLoading}
                             >
                                 <div className="w-80 truncate flex content-center justify-start gap-1">
                                     {props.selectedTeam.logo && (
@@ -212,7 +209,6 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersProps) => 
                                 id="showResultsSwitch"
                                 checked={props.showScores}
                                 onCheckedChange={() => props.setShowScores((prev) => !prev)}
-                                disabled={props.isLoading}
                             />
                         </section>
                     </>
@@ -221,12 +217,7 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersProps) => 
                 <section className="hidden sm:block">
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <Button
-                                variant="outline"
-                                onClick={() => onClickResetFilters()}
-                                className="p-1"
-                                disabled={props.isLoading}
-                            >
+                            <Button variant="outline" onClick={() => onClickResetFilters()} className="p-1">
                                 <RotateCcw />
                             </Button>
                         </TooltipTrigger>
@@ -242,7 +233,6 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersProps) => 
                         variant="outline"
                         onClick={() => onClickResetFilters()}
                         className="text-base py-1 px-2 w-full"
-                        disabled={props.isLoading}
                     >
                         <RotateCcw className="mr-2" />
                         <span className="text-sm">Reset Filters</span>
@@ -253,7 +243,7 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersProps) => 
                     onOpenChange={() => setIsDatePickerPopoverOpen((prev) => !prev)}
                 >
                     <PopoverTrigger asChild>
-                        <Button variant={"outline"} className="text-base py-1 px-2" disabled={props.isLoading}>
+                        <Button variant={"outline"} className="text-base py-1 px-2">
                             <CalendarIcon className="mr-2" />
                             <span className="text-sm">{props.date.toDateString()}</span>
                         </Button>
