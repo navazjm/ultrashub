@@ -22,7 +22,12 @@ export const MatchComponent = (props: IMatchComponentProps) => {
     }
 
     if (isError || !match) {
-        return <ErrorComponent />;
+        return (
+            <ErrorComponent
+                backNavTitle="Error!"
+                errorMessage="No match data was found. Refresh the page or try again later."
+            />
+        );
     }
 
     const matchHasStarted = MatchToolbox.hasMatchStarted(match.fixture.status.short);

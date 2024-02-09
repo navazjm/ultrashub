@@ -20,7 +20,12 @@ export const MatchesListComponent = (props: IMatchesListProps) => {
     }
 
     if (isError || !data) {
-        return <ErrorComponent backNavTitle="Error" />;
+        return (
+            <ErrorComponent
+                backNavTitle="Error!"
+                errorMessage="No matches data was found. Refresh the page or try again later."
+            />
+        );
     }
 
     /**
