@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom";
 import { IMatch } from "@/components/common/api-football-response";
-import { MatchToolbox } from "@/components/common/toolbox/match";
 import { DateToolbox } from "@/components/common/toolbox/date";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { MatchScorelineComponent } from "../../match-scoreline/match-scoreline";
@@ -10,12 +9,7 @@ interface IMatchH2HRecentMatchesComponentProps {
 }
 
 export const MatchH2HRecentMatchesComponent = (props: IMatchH2HRecentMatchesComponentProps) => {
-    const last5Matches = props.matches
-        .filter((match) => {
-            return MatchToolbox.hasMatchStarted(match.fixture.status.short);
-        })
-        .slice(-5)
-        .reverse();
+    const last5Matches = props.matches.slice(-5).reverse();
 
     return (
         <section className="flex flex-col gap-2">

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
 import { IMatch, IMatchResponse } from "@/components/common/api-football-response";
 import axios from "@/lib/axios";
+import { MatchToolbox } from "@/components/common/toolbox/match";
 
 let matchesCache: IMatch[] = [];
 let cacheTimestamp: number;
@@ -47,7 +48,9 @@ export const useMatchH2H = (homeTeamID: number, awayTeamID: number) => {
                 if (resp.status !== 200) {
                     throw new Error();
                 }
-                const matches = resp.data.response;
+                const matches = resp.data.response.filter((match) =>
+                    MatchToolbox.hasMatchFinished(match.fixture.status.short),
+                );
                 matches.sort((a, b) => {
                     return new Date(a.fixture.date).getTime() - new Date(b.fixture.date).getTime();
                 });

@@ -19,6 +19,14 @@ export class MatchToolbox {
     }
 
     /**
+     * @param status - match.fixture.status.short
+     * @returns true if match status means the match is has been played/completed
+     */
+    public static hasMatchFinished(status: string): boolean {
+        return status === "FT" || status === "AET" || status === "PEN";
+    }
+
+    /**
      * @param fixture - current match fixture
      * @returns human understandable match status
      */
