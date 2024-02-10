@@ -138,7 +138,6 @@ export const useMatchList = (date?: string) => {
                 setSelectedTeam(newTeamsArr[0]);
                 setStatus("success");
             } catch (err) {
-                console.error(err);
                 setStatus("error");
             }
         };
