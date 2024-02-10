@@ -6,6 +6,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Layout } from "@/layouts/layout";
 import { MatchesPage } from "@/pages/matches";
 import { MatchPage } from "@/pages/match";
+import { TermsOfServicePage } from "@/pages/terms";
+import { SecurityPolicyPage } from "@/pages/security";
+import { PrivacyPolicyPage } from "@/pages/privacy";
 import { NotFoundPage } from "@/pages/not-found";
 import "./main.css";
 
@@ -25,6 +28,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                             <Route path="/" element={<MatchesPage />} />
                             <Route path="/matches/:date?" element={<MatchesPage />} />
                             <Route path="/match/:id" element={<MatchPage />} />
+                            <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+                            <Route path="/security-policy" element={<SecurityPolicyPage />} />
+                            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
                             <Route element={<NotFoundPage />} path="*" />
                         </Route>
                     </Routes>
