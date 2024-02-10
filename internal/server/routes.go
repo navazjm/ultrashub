@@ -15,7 +15,7 @@ func (srv *Server) Routes() http.Handler {
 
 	router.NotFound = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// If the request has the "/api/v1/" prefix, return a not found response
-		if strings.HasPrefix(r.URL.Path, "/api/v1/") {
+		if strings.HasPrefix(r.URL.Path, "/api/") {
 			utils.NotFoundResponse(w, r, srv.Logger)
 			return
 		}
