@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 export const TermsOfServicePage = () => {
     return (
         <>
-            <p>These terms of service were last updated on February 9th, 2024.</p>
+            <p>These terms of service were last updated on February 9, 2024.</p>
             <section className="space-y-5 my-5">
                 <h1 className="text-3xl font-bold text-primary">Agreement</h1>
                 <p>
