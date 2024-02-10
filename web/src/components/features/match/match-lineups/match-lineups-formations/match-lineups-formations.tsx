@@ -12,11 +12,11 @@ export const MatchLineupsFormationsComponent = (props: IMatchLineupsFormationsCo
 
     return (
         <section>
-            <section className="hidden sm:grid sm:grid-cols-2 mt-5">
+            <section className="hidden sm:grid sm:grid-cols-2 my-5">
                 <MatchLineupsFormationsItemComponent lineup={homeTeamLineup} />
                 <MatchLineupsFormationsItemComponent lineup={awayTeamLineup} reverse={true} />
             </section>
-            <Separator className="my-5" />
+            <Separator />
         </section>
     );
 };

@@ -17,7 +17,7 @@ export const MatchLineupsSquadsComponent = (props: IMatchLineupsSquadsComponentP
     const awayTeam = props.lineups[1];
 
     return (
-        <section className="grid grid-cols-1 sm:grid-cols-2 mt-5 sm:mt-0">
+        <section className="grid grid-cols-1 sm:grid-cols-2 py-5">
             <MatchLineupsSquadsItemComponent lineup={homeTeam} />
             <MatchLineupsSquadsItemComponent lineup={awayTeam} />
         </section>

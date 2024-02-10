@@ -7,9 +7,10 @@ interface IMatchLineupsComponentProps {
 }
 
 export const MatchLineupsComponent = (props: IMatchLineupsComponentProps) => {
+    const playerPosGridExists = !!props.lineups[0].startXI[0].player.grid;
     return (
         <>
-            <MatchLineupsFormationsComponent lineups={props.lineups} />
+            {playerPosGridExists && <MatchLineupsFormationsComponent lineups={props.lineups} />}
             <MatchLineupsSquadsComponent lineups={props.lineups} />
         </>
     );
