@@ -68,6 +68,7 @@ export const useMatchList = (date?: string) => {
     useEffect(() => {
         const getMatches = async () => {
             try {
+                setStatus("loading");
                 setShowScores(defaultShowScores);
                 const resp = await axios.get<any, AxiosResponse<IMatchResponse>>("/apifootball/fixtures", {
                     params: {
