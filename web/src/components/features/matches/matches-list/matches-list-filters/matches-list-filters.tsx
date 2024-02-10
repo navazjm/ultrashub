@@ -15,7 +15,7 @@ import { ALL_COMPS, ALL_TEAMS, ICompetition, ITeam } from "../../matches.types";
 import { cn } from "@/lib/shadcn";
 import { DateToolbox } from "@/components/common/toolbox/date";
 
-interface IMatchesListFiltersProps extends IProps {
+interface IMatchesListFiltersComponentProps extends IProps {
     date: Date;
     competitions: ICompetition[];
     selectedCompetition: ICompetition;
@@ -28,7 +28,7 @@ interface IMatchesListFiltersProps extends IProps {
     setShowScores: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const MatchesListFiltersComponent = (props: IMatchesListFiltersProps) => {
+export const MatchesListFiltersComponent = (props: IMatchesListFiltersComponentProps) => {
     const navigate = useNavigate();
     const [isCompetitionSelectPopoverOpen, setIsCompetitionSelectPopoverOpen] = useState<boolean>(false);
     const [isTeamSelectPopoverOpen, setIsTeamSelectPopoverOpen] = useState<boolean>(false);

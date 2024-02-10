@@ -4,11 +4,11 @@ import { IProps } from "@/components/common/types";
 import { IMatch } from "@/components/common/api-football-response";
 import { MatchToolbox } from "@/components/common/toolbox/match";
 
-interface IMatchesListItemProps extends IProps {
+interface IMatchesListItemComponentProps extends IProps {
     match: IMatch;
     showScores: boolean;
 }
-export const MatchesListItemComponent = (props: IMatchesListItemProps) => {
+export const MatchesListItemComponent = (props: IMatchesListItemComponentProps) => {
     let displayMatchStatus: string = MatchToolbox.getDisplayMatchStatus(props.match.fixture);
     let matchInProgress: boolean = MatchToolbox.isMatchInProgress(props.match.fixture.status.short);
 

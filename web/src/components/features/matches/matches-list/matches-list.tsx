@@ -8,11 +8,11 @@ import { Spinner } from "@/components/ui/spinner";
 import { useMatchList } from "./matches-list.hooks";
 import { ErrorComponent } from "@/components/common/error/error";
 
-interface IMatchesListProps extends IProps {
+interface IMatchesListComponentProps extends IProps {
     date: string | undefined;
 }
 
-export const MatchesListComponent = (props: IMatchesListProps) => {
+export const MatchesListComponent = (props: IMatchesListComponentProps) => {
     const [data, isLoading, isError] = useMatchList(props.date);
 
     if (isLoading) {
