@@ -6,9 +6,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Layout } from "@/layouts/layout";
 import { MatchesPage } from "@/pages/matches";
 import { MatchPage } from "@/pages/match";
-import { TermsOfServicePage } from "@/pages/terms";
-import { SecurityPolicyPage } from "@/pages/security";
-import { PrivacyPolicyPage } from "@/pages/privacy";
+import { TermsOfServicePage } from "@/pages/policies/terms";
+import { SecurityPolicyPage } from "@/pages/policies/security";
+import { PrivacyPolicyPage } from "@/pages/policies/privacy";
 import { NotFoundPage } from "@/pages/not-found";
 import "./main.css";
 
