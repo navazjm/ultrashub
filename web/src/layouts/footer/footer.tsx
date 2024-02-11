@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 export const FooterComponent = () => {
     return (
-        <section className="w-10/12 max-w-10/12 min-w-10/12 xl:w-7/12 xl:min-w-7/12 xl:max-w-7/12 m-auto py-3 flex flex-row justify-between items-center">
+        <section className="md:w-10/12 xl:w-7/12 mx-auto md:px-0 m-auto p-2 flex flex-row justify-center md:justify-between items-center flex-wrap gap-2">
             <section className="flex flex-row items-center gap-2">
                 <a
                     href="https://github.com/navazjm/ultrashub"
