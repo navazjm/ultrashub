@@ -33,7 +33,7 @@ export const SecurityPolicyPage = () => {
                 </h1>
                 <p>
                     For vulnerabilities that impact the confidentiality, integrity, and availability of UltrasHub
-                    services, please send your disclosure via{" "}
+                    services, please send your disclosure via
                     <a
                         href="mailto:contact@ultrashub.io"
                         rel="noopener"
@@ -41,9 +41,9 @@ export const SecurityPolicyPage = () => {
                     >
                         email
                     </a>{" "}
-                    . For non-security related platform bugs, follow the bug submission{" "}
+                    . For non-security related platform bugs, follow the bug submission
                     <a
-                        href="https://github.com/navazjm/ultrashub"
+                        href="https://github.com/navazjm/ultrashub/tree/main?tab=readme-ov-file#bug-report-or-feature-request"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="underline text-muted-foreground hover:text-current focus:text-current ml-1"
