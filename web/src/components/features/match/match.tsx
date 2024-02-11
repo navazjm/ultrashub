@@ -15,13 +15,13 @@ interface IMatchComponentProps extends IProps {
 }
 
 export const MatchComponent = (props: IMatchComponentProps) => {
-    const [match, isLoading, isError] = useMatch(props.id);
+    const [data, isLoading, isError] = useMatch(props.id);
 
     if (isLoading) {
         return <Spinner />;
     }
 
-    if (isError || !match) {
+    if (isError || !data) {
         return (
             <ErrorComponent
                 backNavTitle="Error!"
@@ -30,27 +30,35 @@ export const MatchComponent = (props: IMatchComponentProps) => {
         );
     }
 
-    const matchHasStarted = MatchToolbox.hasMatchStarted(match.fixture.status.short);
+    const matchHasStarted = MatchToolbox.hasMatchStarted(data.match.fixture.status.short);
     if (!matchHasStarted) {
         return (
             <>
-                <MatchQuickInfoComponent match={match} hasStarted={matchHasStarted} />
+                <MatchQuickInfoComponent match={data.match} hasStarted={matchHasStarted} />
                 <Tabs defaultValue="h2h" className="my-3 flex flex-col items-center justify-center">
                     <TabsList className="w-full">
                         <TabsTrigger value="h2h">Head-to-Head</TabsTrigger>
                     </TabsList>
                     <TabsContent value="h2h" className="w-full m-0">
-                        <MatchH2HComponent homeTeam={match.teams.home} awayTeam={match.teams.away} />
+                        {data.h2hMatches.length > 0 ? (
+                            <MatchH2HComponent
+                                matches={data.h2hMatches}
+                                homeTeam={data.match.teams.home}
+                                awayTeam={data.match.teams.away}
+                            />
+                        ) : (
+                            <p className="text-center my-2">No match head-to-head data found. Try again later.</p>
+                        )}
                     </TabsContent>
                 </Tabs>
             </>
         );
     }
 
-    const matchDate = new Date(match?.fixture.date);
+    const matchDate = new Date(data.match.fixture.date);
     return (
         <>
-            <MatchQuickInfoComponent match={match} hasStarted={matchHasStarted} />
+            <MatchQuickInfoComponent match={data.match} hasStarted={matchHasStarted} />
             <Tabs defaultValue="events" className="my-3 flex flex-col items-center justify-center">
                 <TabsList className="w-full">
                     <TabsTrigger value="events">Events</TabsTrigger>
@@ -59,28 +67,36 @@ export const MatchComponent = (props: IMatchComponentProps) => {
                     <TabsTrigger value="h2h">Head-to-Head</TabsTrigger>
                 </TabsList>
                 <TabsContent value="events" className="w-full m-0">
-                    {match.events.length > 0 ? (
-                        <MatchEventsComponent events={match.events} matchDate={matchDate} />
+                    {data.match.events.length > 0 ? (
+                        <MatchEventsComponent events={data.match.events} matchDate={matchDate} />
                     ) : (
                         <p className="text-center my-2">No match events found. Try again later.</p>
                     )}
                 </TabsContent>
                 <TabsContent value="stats" className="w-full m-0">
-                    {match.statistics.length > 0 ? (
-                        <MatchStatsComponent stats={match.statistics} />
+                    {data.match.statistics.length > 0 ? (
+                        <MatchStatsComponent stats={data.match.statistics} />
                     ) : (
                         <p className="text-center my-2">No match stats found. Try again later.</p>
                     )}
                 </TabsContent>
                 <TabsContent value="lineups" className="w-full m-0">
-                    {match.lineups.length > 0 ? (
-                        <MatchLineupsComponent lineups={match.lineups} />
+                    {data.match.lineups.length > 0 ? (
+                        <MatchLineupsComponent lineups={data.match.lineups} />
                     ) : (
                         <p className="text-center my-2">No match lineups found. Try again later.</p>
                     )}
                 </TabsContent>
                 <TabsContent value="h2h" className="w-full m-0">
-                    <MatchH2HComponent homeTeam={match.teams.home} awayTeam={match.teams.away} />
+                    {data.h2hMatches.length > 0 ? (
+                        <MatchH2HComponent
+                            matches={data.h2hMatches}
+                            homeTeam={data.match.teams.home}
+                            awayTeam={data.match.teams.away}
+                        />
+                    ) : (
+                        <p className="text-center my-2">No match head-to-head data found. Try again later.</p>
+                    )}
                 </TabsContent>
             </Tabs>
         </>

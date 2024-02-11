@@ -2,9 +2,21 @@ import { useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
 import { IMatch, MatchEventType, IMatchResponse } from "@/components/common/api-football-response";
 import axios from "@/lib/axios";
+import { MatchToolbox } from "@/components/common/toolbox/match";
+
+interface IUseMatchData {
+    match: IMatch;
+    h2hMatches: IMatch[];
+}
+
+interface IFetchMatchByIDResponse {
+    homeTeamID: number;
+    awayTeamID: number;
+}
 
 export const useMatch = (matchID: string) => {
     const [match, setMatch] = useState<IMatch | null>(null);
+    const [h2hMatches, setH2HMatches] = useState<IMatch[] | null>(null);
     const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
 
     useEffect(() => {
@@ -91,16 +103,67 @@ export const useMatch = (matchID: string) => {
                 });
 
                 setMatch(match);
-                setStatus("success");
+                const homeTeamID = match.teams.home.id;
+                const awayTeamID = match.teams.away.id;
+                return { homeTeamID, awayTeamID };
             } catch (err) {
-                setStatus("error");
+                return null;
             }
         };
-        fetchMatchByID();
+
+        const fetchH2HMatches = async (homeTeamID: number, awayTeamID: number) => {
+            try {
+                const resp = await axios.get<any, AxiosResponse<IMatchResponse>>("/apifootball/fixtures/headtohead", {
+                    params: {
+                        h2h: `${homeTeamID}-${awayTeamID}`,
+                    },
+                });
+                if (resp.status !== 200) {
+                    throw new Error();
+                }
+                const matches = resp.data.response.filter((match) =>
+                    MatchToolbox.hasMatchFinished(match.fixture.status.short),
+                );
+                matches.sort((a, b) => {
+                    return new Date(a.fixture.date).getTime() - new Date(b.fixture.date).getTime();
+                });
+                setH2HMatches(matches);
+                return true;
+            } catch (err) {
+                return false;
+            }
+        };
+
+        const getUseMatchData = async () => {
+            const fetchMatchByIDResp: IFetchMatchByIDResponse | null = await fetchMatchByID();
+            if (!fetchMatchByIDResp) {
+                setStatus("error");
+                return;
+            }
+            const fetchH2HMatchesResp = await fetchH2HMatches(
+                fetchMatchByIDResp.homeTeamID,
+                fetchMatchByIDResp.awayTeamID,
+            );
+            if (!fetchH2HMatchesResp) {
+                setStatus("error");
+                return;
+            }
+            setStatus("success");
+        };
+
+        getUseMatchData();
     }, [matchID]);
 
     const isLoading = status === "loading";
     const isError = status === "error";
 
-    return [match, isLoading, isError] as const;
+    const data: IUseMatchData | null =
+        !match || !h2hMatches
+            ? null
+            : {
+                  match,
+                  h2hMatches,
+              };
+
+    return [data, isLoading, isError] as const;
 };
