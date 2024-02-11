@@ -7,6 +7,7 @@ export const FooterComponent = () => {
             <section className="flex flex-row items-center gap-2">
                 <a
                     href="mailto:contact@ultrashub.io"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="flex flex-row items-center text-muted-foreground font-light hover:text-current focus:text-current"
                 >
@@ -15,6 +16,7 @@ export const FooterComponent = () => {
                 </a>
                 <a
                     href="https://ko-fi.com/ultrashub"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="flex flex-row items-center text-muted-foreground font-light hover:text-current focus:text-current"
                 >
