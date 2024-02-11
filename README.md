@@ -35,6 +35,10 @@ cp .env.sample .env
 go run ./cmd/webapp
 ```
 
+## Bug Report or Feature Request
+
+If you encounter a bug or have a feature request, [send us an email](mailto:contact@ultrashub.io) or [create an issue](https://github.com/navazjm/ultrashub/issues), [create a discussion thread](https://github.com/navazjm/ultrashub/discussions).
+
 ## Contribute
 
 All contributions are welcome! Just open a pull request. Please read [CONTRIBUTING.md](./docs/CONTRIBUTING.md)
