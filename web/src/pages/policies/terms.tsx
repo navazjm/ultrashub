@@ -7,7 +7,7 @@ export const TermsOfServicePage = () => {
             <section className="space-y-5 my-5">
                 <h1 className="text-3xl font-bold text-primary">Agreement</h1>
                 <p>
-                    By accessing this Website, accessible from ultrashub.com, you are agreeing to be bound by these
+                    By accessing this Website, accessible from ultrashub.io, you are agreeing to be bound by these
                     Website Terms of Service and agree that you are responsible for the agreement in accordance with any
                     applicable local laws.
                     <strong>
@@ -208,7 +208,7 @@ export const TermsOfServicePage = () => {
                 <p className="my-2">
                     Email:
                     <a
-                        href="mailto:contact@ultrashub.com"
+                        href="mailto:contact@ultrashub.io"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="underline text-muted-foreground hover:text-current focus:text-current ml-1"
