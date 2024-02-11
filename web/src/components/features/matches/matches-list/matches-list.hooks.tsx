@@ -9,10 +9,10 @@ import { DateToolbox } from "@/components/common/toolbox/date";
 interface IMatchListData {
     title: string;
     selectedDate: Date;
-    allMatchesByCompetitionID: IMatchesByCompetitionID;
-    setAllMatchesByCompetitionID: React.Dispatch<React.SetStateAction<IMatchesByCompetitionID>>;
-    filteredMatchesByCompetitionID: IMatchesByCompetitionID;
-    setFilteredMatchesByCompetitionID: React.Dispatch<React.SetStateAction<IMatchesByCompetitionID>>;
+    allMatchesByCompetitionID: IMatchesByCompetitionID[];
+    setAllMatchesByCompetitionID: React.Dispatch<React.SetStateAction<IMatchesByCompetitionID[]>>;
+    filteredMatchesByCompetitionID: IMatchesByCompetitionID[];
+    setFilteredMatchesByCompetitionID: React.Dispatch<React.SetStateAction<IMatchesByCompetitionID[]>>;
     allCompetitions: ICompetition[];
     setAllCompetitions: React.Dispatch<React.SetStateAction<ICompetition[]>>;
     selectedCompetition: ICompetition;
@@ -45,9 +45,9 @@ export const useMatchList = (date?: string) => {
 
     const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
     // matches to be displayed to user based on selected filters
-    const [allMatchesByCompetitionID, setAllMatchesByCompetitionID] = useState<IMatchesByCompetitionID>({});
+    const [allMatchesByCompetitionID, setAllMatchesByCompetitionID] = useState<IMatchesByCompetitionID[]>([]);
     // matches filtered based on user selected filters
-    const [filteredMatchesByCompetitionID, setFilteredMatchesByCompetitionID] = useState<IMatchesByCompetitionID>({});
+    const [filteredMatchesByCompetitionID, setFilteredMatchesByCompetitionID] = useState<IMatchesByCompetitionID[]>([]);
     // all unique competitions
     const [allCompetitions, setAllCompetitions] = useState<ICompetition[]>([{ id: 0, displayName: ALL_COMPS }]);
     // store filter by Competition selection
@@ -76,16 +76,16 @@ export const useMatchList = (date?: string) => {
                     },
                 });
 
-                const newFilteredMatches: IMatchesByCompetitionID = {};
+                const newFilteredMatches: IMatchesByCompetitionID[] = [];
                 const newCompetitionsArr: ICompetition[] = [];
                 const newTeamsArr: ITeam[] = [];
                 resp.data.response.forEach((match) => {
-                    const leagueID = match.league.id;
+                    const competitionID = match.league.id;
                     // generate unique competitions array
-                    const foundLeagueIDIndex = newCompetitionsArr.findIndex((comp) => comp.id === leagueID);
+                    const foundLeagueIDIndex = newCompetitionsArr.findIndex((comp) => comp.id === competitionID);
                     if (foundLeagueIDIndex === -1) {
                         const newComp: ICompetition = {
-                            id: leagueID,
+                            id: competitionID,
                             displayName: `${match.league.country} ${match.league.name}`,
                             logo: match.league.logo,
                         };
@@ -97,7 +97,7 @@ export const useMatchList = (date?: string) => {
                     if (foundTeamIDIndex === -1) {
                         const newTeam: ITeam = {
                             id: teamID,
-                            leagueID: leagueID,
+                            leagueID: competitionID,
                             name: match.teams.away.name,
                             logo: match.teams.away.logo,
                         };
@@ -108,20 +108,26 @@ export const useMatchList = (date?: string) => {
                     if (foundTeamIDIndex === -1) {
                         const newTeam: ITeam = {
                             id: teamID,
-                            leagueID: leagueID,
+                            leagueID: competitionID,
                             name: match.teams.home.name,
                             logo: match.teams.home.logo,
                         };
                         newTeamsArr.push(newTeam);
                     }
 
-                    if (!newFilteredMatches[leagueID]) {
-                        newFilteredMatches[leagueID] = {
-                            matches: [],
+                    const foundCompetitionMatches = newFilteredMatches.find(
+                        (comp) => comp.competitionID === competitionID,
+                    );
+                    if (!foundCompetitionMatches) {
+                        const newFilteredMatchByCompetitionID: IMatchesByCompetitionID = {
+                            competitionID: competitionID,
+                            matches: [match],
                             displayName: newCompetitionsArr[newCompetitionsArr.length - 1].displayName,
                         };
+                        newFilteredMatches.push(newFilteredMatchByCompetitionID);
+                    } else {
+                        foundCompetitionMatches.matches.push(match);
                     }
-                    newFilteredMatches[leagueID].matches.push(match);
                 });
 
                 setAllMatchesByCompetitionID(newFilteredMatches);
@@ -156,9 +162,11 @@ export const useMatchList = (date?: string) => {
         }
 
         // filter matches by selectedCompetition.id
-        setFilteredMatchesByCompetitionID({
-            [selectedCompetition.id]: allMatchesByCompetitionID[selectedCompetition.id],
+        const foundFilteredMatchByCompetitionID = filteredMatchesByCompetitionID.find((comp) => {
+            return comp.competitionID == selectedCompetition.id;
         });
+        if (!foundFilteredMatchByCompetitionID) return;
+        setFilteredMatchesByCompetitionID([foundFilteredMatchByCompetitionID]);
 
         // get teams for the respective selectedCompetition.id
         const foundTeams = allTeams.filter((team) => team.leagueID === selectedCompetition.id);
@@ -195,12 +203,13 @@ export const useMatchList = (date?: string) => {
         const foundCompetition = allCompetitions.find((comp) => comp.id === foundMatch?.league.id);
         if (!foundCompetition) return;
 
-        setFilteredMatchesByCompetitionID({
-            [foundMatch?.league?.id]: {
-                matches: [foundMatch],
-                displayName: foundCompetition.displayName,
-            },
-        });
+        const newFilteredMatchByCompetitionID: IMatchesByCompetitionID = {
+            competitionID: foundCompetition.id,
+            matches: [foundMatch],
+            displayName: foundCompetition.displayName,
+        };
+
+        setFilteredMatchesByCompetitionID([newFilteredMatchByCompetitionID]);
     }, [selectedTeam]);
 
     const isLoading = status === "loading";

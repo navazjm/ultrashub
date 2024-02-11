@@ -17,8 +17,7 @@ export interface ITeam {
 }
 
 export interface IMatchesByCompetitionID {
-    [leagueID: string]: {
-        matches: IMatch[];
-        displayName: string;
-    };
+    competitionID: number;
+    displayName: string;
+    matches: IMatch[];
 }

@@ -7,6 +7,7 @@ import VirtualScroller from "virtual-scroller/react";
 import { Spinner } from "@/components/ui/spinner";
 import { useMatchList } from "./matches-list.hooks";
 import { ErrorComponent } from "@/components/common/error/error";
+import { IMatchesByCompetitionID } from "../matches.types";
 
 interface IMatchesListComponentProps extends IProps {
     date: string | undefined;
@@ -32,20 +33,17 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
      * Used by VirtualScroller to render each competition's matches when scrolled into view
      */
     const renderMatchesByCompetition = (parm: any) => {
-        const { item, itemIndex } = parm;
-        const { displayName, matches } = data.filteredMatchesByCompetitionID[item];
+        const { item, itemIndex }: { item: IMatchesByCompetitionID; itemIndex: number } = parm;
 
         return (
-            <section key={item}>
-                <h4 className="text-lg font-semibold mb-3 sm:mb-5">{displayName}</h4>
+            <section key={item.competitionID}>
+                <h4 className="text-lg font-semibold mb-3 sm:mb-5">{item.displayName}</h4>
                 <section className="flex flex-row content-center gap-2 flex-wrap">
-                    {matches.map((match) => (
+                    {item.matches.map((match) => (
                         <MatchesListItemComponent match={match} key={match.fixture.id} showScores={data.showScores} />
                     ))}
                 </section>
-                {itemIndex !== Object.keys(data.filteredMatchesByCompetitionID).length - 1 && (
-                    <Separator className="my-3 sm:my-5" />
-                )}
+                {itemIndex !== data.filteredMatchesByCompetitionID.length - 1 && <Separator className="my-3 sm:my-5" />}
             </section>
         );
     };
@@ -95,10 +93,7 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
                 <Separator className="my-5" />
             </section>
 
-            <VirtualScroller
-                items={Object.keys(data.filteredMatchesByCompetitionID)}
-                itemComponent={renderMatchesByCompetition}
-            />
+            <VirtualScroller items={data.filteredMatchesByCompetitionID} itemComponent={renderMatchesByCompetition} />
         </section>
     );
 };
