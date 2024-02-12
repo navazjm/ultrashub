@@ -2,7 +2,6 @@ package server
 
 import (
 	"net/http"
-	"strings"
 
 	"github.com/julienschmidt/httprouter"
 
@@ -14,13 +13,7 @@ func (srv *Server) Routes() http.Handler {
 	router := httprouter.New()
 
 	router.NotFound = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// If the request has the "/api/v1/" prefix, return a not found response
-		if strings.HasPrefix(r.URL.Path, "/api/") {
-			utils.NotFoundResponse(w, r, srv.Logger)
-			return
-		}
-
-		// Otherwise, serve the React app by default
+		// serve react FE, if endpoint is not found here or in react app, it will display not found page
 		contentBytes, err := web.StaticFS.ReadFile("dist/index.html")
 		if err != nil {
 			utils.ServerErrorResponse(w, r, srv.Logger, err)
