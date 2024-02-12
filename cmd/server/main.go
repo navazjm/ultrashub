@@ -17,13 +17,13 @@ import (
 func main() {
 	uhServer := server.New()
 
-	db, err := server.OpenDB(uhServer.Config)
-	if err != nil {
-		uhServer.Logger.Error(err.Error())
-		os.Exit(1)
-	}
-	defer db.Close()
-	uhServer.Logger.Info("database connection pool established")
+	// db, err := server.OpenDB(uhServer.Config)
+	// if err != nil {
+	// 	uhServer.Logger.Error(err.Error())
+	// 	os.Exit(1)
+	// }
+	// defer db.Close()
+	// uhServer.Logger.Info("database connection pool established")
 
 	afSerivce := apifootball.NewService(uhServer.Logger, uhServer.Config.APIFootballKey)
 	uhServer.APIFootballService = afSerivce
@@ -51,7 +51,7 @@ func main() {
 	}()
 
 	uhServer.Logger.Info("starting server", "port", srv.Addr, "env", uhServer.Config.Env)
-	err = srv.ListenAndServe()
+	err := srv.ListenAndServe()
 	if !errors.Is(err, http.ErrServerClosed) {
 		uhServer.Logger.Error(err.Error())
 		os.Exit(1)
