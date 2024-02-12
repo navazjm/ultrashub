@@ -33,7 +33,7 @@ export const FooterComponent = () => {
                     <p className="text-sm">GitHub</p>
                 </a>
                 <NavLink
-                    to="/terms-of-service"
+                    to="/policies/terms-of-service"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex flex-row items-center text-muted-foreground font-light hover:text-current focus:text-current"
@@ -42,7 +42,7 @@ export const FooterComponent = () => {
                     <p className="text-sm">Terms</p>
                 </NavLink>
                 <NavLink
-                    to="/security-policy"
+                    to="/policies/security"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex flex-row items-center text-muted-foreground font-light hover:text-current focus:text-current"
@@ -51,7 +51,7 @@ export const FooterComponent = () => {
                     <p className="text-sm">Security</p>
                 </NavLink>
                 <NavLink
-                    to="/privacy-policy"
+                    to="/policies/privacy"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex flex-row items-center text-muted-foreground font-light hover:text-current focus:text-current"
