@@ -26,8 +26,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                             }
                         >
                             <Route path="/" element={<MatchesPage />} />
-                            <Route path="/matches/:date?" element={<MatchesPage />} />
-                            <Route path="/match/:id" element={<MatchPage />} />
+                            <Route path="/matches/date/:date?" element={<MatchesPage />} />
+                            <Route path="/match/id/:id" element={<MatchPage />} />
                             <Route path="/terms-of-service" element={<TermsOfServicePage />} />
                             <Route path="/security-policy" element={<SecurityPolicyPage />} />
                             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />

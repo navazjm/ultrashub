@@ -13,7 +13,7 @@ export const MatchesListItemComponent = (props: IMatchesListItemComponentProps) 
     let matchInProgress: boolean = MatchToolbox.isMatchInProgress(props.match.fixture.status.short);
 
     return (
-        <NavLink to={`/match/${props.match.fixture.id}`} className="w-full sm:w-[300px] ">
+        <NavLink to={`/match/id/${props.match.fixture.id}`} className="w-full sm:w-[300px] ">
             <Card className="w-full p-3 hover:bg-muted">
                 <CardHeader className="p-0 mb-2">
                     <div className="font-extralight">{displayMatchStatus}</div>

@@ -39,7 +39,7 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersComponentP
         if (!date) return;
 
         const dateStr = DateToolbox.apiFootballDateFormat(date);
-        navigate(`/matches/${dateStr}`);
+        navigate(`/matches/date/${dateStr}`);
         setIsDatePickerPopoverOpen(false);
     };
 
