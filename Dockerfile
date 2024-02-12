@@ -12,6 +12,9 @@ RUN npm install
 # Copy the rest of the application
 COPY web .
 
+ARG VITE_ULTRASHUB_BASE_URL
+ENV VITE_ULTRASHUB_BASE_URL=$VITE_ULTRASHUB_BASE_URL
+
 # Build the frontend
 RUN npm run build:prod
 
@@ -45,7 +48,6 @@ EXPOSE 8080
 
 # Define environment variables if needed
 ENV API_FOOTBALL_KEY=$API_FOOTBALL_KEY
-ENV VITE_ULTRASHUB_BASE_URL=$VITE_ULTRASHUB_BASE_URL
 
 # Command to run the executable
 CMD ["webapp"]
