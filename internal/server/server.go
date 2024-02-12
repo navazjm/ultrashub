@@ -4,8 +4,6 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/joho/godotenv"
-
 	"github.com/navazjm/ultrashub/internal/apifootball"
 )
 
@@ -17,12 +15,11 @@ type Server struct {
 
 func New() *Server {
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
-	err := godotenv.Load()
+	cfg, err := NewConfig()
 	if err != nil {
 		logger.Error(err.Error())
 		os.Exit(1)
 	}
-	cfg := NewConfig()
 
 	srv := &Server{
 		Config: cfg,

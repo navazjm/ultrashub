@@ -4,6 +4,8 @@ import (
 	"flag"
 	"os"
 	"time"
+
+	"github.com/joho/godotenv"
 )
 
 type Config struct {
@@ -23,12 +25,23 @@ type Config struct {
 	}
 }
 
-func NewConfig() *Config {
+func NewConfig() (*Config, error) {
+	var err error
 	cfg := &Config{}
 
 	cfg.Version = "0.1.0"
 	flag.IntVar(&cfg.Port, "port", 8080, "Server port")
-	flag.StringVar(&cfg.Env, "env", "prod", "Environment (dev|test|prod)")
+	flag.StringVar(&cfg.Env, "env", "prod", "Environment (dev|prod)")
+	flag.Parse()
+
+	if cfg.Env == "dev" {
+		err = godotenv.Load()
+		if err != nil {
+			return nil, err
+		}
+		cfg.Cors.TrustedOrigins = []string{"http://localhost:3000", "http://127.0.0.1:3000"}
+	}
+
 	flag.StringVar(&cfg.DB.Dsn, "db-dsn", os.Getenv("ULTRASHUB_DB_DSN"), "PostgreSQL DSN")
 	flag.IntVar(&cfg.DB.MaxOpenConns, "db-max-open-conns", 25, "PostgreSQL max open connections")
 	flag.IntVar(&cfg.DB.MaxIdleConns, "db-max-idle-conns", 25, "PostgreSQL max idle connections")
@@ -36,9 +49,5 @@ func NewConfig() *Config {
 	flag.StringVar(&cfg.APIFootballKey, "af-key", os.Getenv("API_FOOTBALL_KEY"), "API Key for API-Football")
 	flag.Parse()
 
-	if cfg.Env == "dev" {
-		cfg.Cors.TrustedOrigins = []string{"http://localhost:3000", "http://127.0.0.1:3000"}
-	}
-
-	return cfg
+	return cfg, nil
 }
