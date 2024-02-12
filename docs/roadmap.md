@@ -42,7 +42,7 @@
 
 - [x] Convert webapp to REST API
 - [x] convert web from templates to react app
-- [ ] make any additional UI/UX changes to existing functionality
+- [x] make any additional UI/UX changes to existing functionality
   - [x] added way to filter matches by competitions and teams for "/matches/data/YYYY-MM-DD"
   - [x] added show scores toggle to hide/show scores when selected date is the current match date for "/matches/data/YYYY-MM-DD"
   - [x] added a date picker instead of showing a range of dates around the selected date for "/matches/data/YYYY-MM-DD"
