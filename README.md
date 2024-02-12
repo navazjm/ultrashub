@@ -9,31 +9,7 @@
 
 ## About UltrasHub
 
-## Run From Source Code
-
-### Run the project locally
-
-1. [Install Go 1.21](https://go.dev/dl/)
-
-2. Clone the repo and cd into the root directory of the project
-
-```sh
-git clone https://github.com/navazjm/ultrashub && cd ultrashub
-```
-
-3. copy .env.sample to .env \
-   _Note: Update with your API Football API Key_
-
-```sh
-cp .env.sample .env
-```
-
-4. Run the dev server \
-   _Note: Will start the server at port 4000_
-
-```sh
-go run ./cmd/webapp
-```
+UltrasHub is a UI wrapper around [API-Football](https://www.api-football.com/). We try to be different from sources like ESPN and Sky Sports, by our main objective of getting you the information you need as fast as possible. UltrasHub also allows you to easily view the teams and competitons that you care about.
 
 ## Bug Report or Feature Request
 
@@ -41,7 +17,7 @@ If you encounter a bug or have a feature request, [send us an email](mailto:cont
 
 ## Contribute
 
-All contributions are welcome! Just open a pull request. Please read [CONTRIBUTING.md](./docs/CONTRIBUTING.md)
+All contributions are welcome! Just open a pull request. Please read [CONTRIBUTING.md](./docs/contributing/CONTRIBUTING.md)
 
 ## License
 

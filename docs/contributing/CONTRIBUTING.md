@@ -12,7 +12,7 @@ Pull requests are the best way to propose changes to the codebase. We actively
 welcome your pull requests:
 
 1. Fork the repo and create your branch from `main`.
-1. setup environment
+1. [setup environment](./environment_setup.md)
 1. Be sure to test your modifications.
 1. Write a good commit message.
 1. Issue that pull request!
