@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 export const FooterComponent = () => {
     return (
         <section className="md:w-10/12 xl:w-7/12 mx-auto md:px-0 m-auto p-2 flex flex-row justify-center md:justify-between items-center flex-wrap gap-2">
-            <section className="flex flex-row items-center gap-2">
+            <section className="flex flex-row items-center gap-2 flex-wrap">
                 <a
                     href="mailto:contact@ultrashub.io"
                     target="_blank"
