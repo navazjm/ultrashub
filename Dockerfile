@@ -45,8 +45,7 @@ EXPOSE 8080
 
 # Define environment variables if needed
 ENV API_FOOTBALL_KEY=$API_FOOTBALL_KEY
-RUN apk update && apk add tzdata \
-     && cp -r -f /usr/share/zoneinfo/$TZ /etc/localtime
+ENV VITE_ULTRASHUB_BASE_URL=$VITE_ULTRASHUB_BASE_URL
 
 # Command to run the executable
 CMD ["webapp"]
