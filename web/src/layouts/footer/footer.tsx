@@ -61,7 +61,7 @@ export const FooterComponent = () => {
                 </NavLink>
             </section>
             <section className="text-xs text-muted-foreground">
-                <span className="font-black">UltrasHub</span> &copy; 2023
+                &copy;<span className="font-black mx-1">UltrasHub</span>2024
             </section>
         </section>
     );
