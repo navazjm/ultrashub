@@ -34,7 +34,7 @@ export const MatchLineupsSquadsItemComponent = (props: IMatchLineupsSquadsItemCo
                 ))}
             </section>
             <Separator className="my-5" />
-            <section className="h-[320px]">
+            <section className="sm:h-[320px]">
                 <h5 className="text-xl mb-5">Substitutes</h5>
                 {props.lineup.substitutes.map((obj) => (
                     <section key={obj.player.id} className="flex items-center gap-3">
