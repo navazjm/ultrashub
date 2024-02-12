@@ -7,7 +7,7 @@ import VirtualScroller from "virtual-scroller/react";
 import { Spinner } from "@/components/ui/spinner";
 import { useMatchList } from "./matches-list.hooks";
 import { ErrorComponent } from "@/components/common/error/error";
-import { IMatchesByCompetitionID } from "../matches.types";
+import { IMatchesByCompetitionID, TOP_COMPS_IDS } from "../matches.types";
 
 interface IMatchesListComponentProps extends IProps {
     date: string | undefined;
@@ -28,6 +28,26 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
             />
         );
     }
+
+    const topCompetitionsMatches = data.filteredMatchesByCompetitionID.filter((comp) =>
+        TOP_COMPS_IDS.includes(comp.competitionID),
+    );
+    topCompetitionsMatches.sort((a, b) =>
+        a.displayName.localeCompare(b.displayName, undefined, { sensitivity: "base" }),
+    );
+    const worldCompetitionsMatches = data.filteredMatchesByCompetitionID.filter((comp) => {
+        return comp.displayName.toLocaleLowerCase().includes("world") && !TOP_COMPS_IDS.includes(comp.competitionID);
+    });
+    worldCompetitionsMatches.sort((a, b) =>
+        a.displayName.localeCompare(b.displayName, undefined, { sensitivity: "base" }),
+    );
+    const nonTopCompetitionsMatches = data.filteredMatchesByCompetitionID.filter(
+        (comp) => !TOP_COMPS_IDS.includes(comp.competitionID),
+    );
+    nonTopCompetitionsMatches.sort((a, b) =>
+        a.displayName.localeCompare(b.displayName, undefined, { sensitivity: "base" }),
+    );
+    const matchesDisplayOrder = [...topCompetitionsMatches, ...worldCompetitionsMatches, ...nonTopCompetitionsMatches];
 
     /**
      * Used by VirtualScroller to render each competition's matches when scrolled into view
@@ -93,7 +113,7 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
                 <Separator className="my-5" />
             </section>
 
-            <VirtualScroller items={data.filteredMatchesByCompetitionID} itemComponent={renderMatchesByCompetition} />
+            <VirtualScroller items={matchesDisplayOrder} itemComponent={renderMatchesByCompetition} />
         </section>
     );
 };
