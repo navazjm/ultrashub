@@ -7,7 +7,7 @@ import VirtualScroller from "virtual-scroller/react";
 import { Spinner } from "@/components/ui/spinner";
 import { useMatchList } from "./matches-list.hooks";
 import { ErrorComponent } from "@/components/common/error/error";
-import { IMatchesByCompetitionID, TOP_COMPS_IDS } from "../matches.types";
+import { IMatches, TOP_COMPS_IDS } from "../matches.types";
 
 interface IMatchesListComponentProps extends IProps {
     date: string | undefined;
@@ -29,19 +29,17 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
         );
     }
 
-    const topCompetitionsMatches = data.filteredMatchesByCompetitionID.filter((comp) =>
-        TOP_COMPS_IDS.includes(comp.competitionID),
-    );
+    const topCompetitionsMatches = data.filteredMatches.filter((comp) => TOP_COMPS_IDS.includes(comp.competitionID));
     topCompetitionsMatches.sort((a, b) =>
         a.displayName.localeCompare(b.displayName, undefined, { sensitivity: "base" }),
     );
-    const worldCompetitionsMatches = data.filteredMatchesByCompetitionID.filter((comp) => {
+    const worldCompetitionsMatches = data.filteredMatches.filter((comp) => {
         return comp.displayName.toLocaleLowerCase().includes("world") && !TOP_COMPS_IDS.includes(comp.competitionID);
     });
     worldCompetitionsMatches.sort((a, b) =>
         a.displayName.localeCompare(b.displayName, undefined, { sensitivity: "base" }),
     );
-    const nonTopCompetitionsMatches = data.filteredMatchesByCompetitionID.filter(
+    const nonTopCompetitionsMatches = data.filteredMatches.filter(
         (comp) => !TOP_COMPS_IDS.includes(comp.competitionID),
     );
     nonTopCompetitionsMatches.sort((a, b) =>
@@ -53,7 +51,7 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
      * Used by VirtualScroller to render each competition's matches when scrolled into view
      */
     const renderMatchesByCompetition = (parm: any) => {
-        const { item, itemIndex }: { item: IMatchesByCompetitionID; itemIndex: number } = parm;
+        const { item, itemIndex }: { item: IMatches; itemIndex: number } = parm;
 
         return (
             <section key={item.competitionID}>
@@ -63,7 +61,7 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
                         <MatchesListItemComponent match={match} key={match.fixture.id} showScores={data.showScores} />
                     ))}
                 </section>
-                {itemIndex !== data.filteredMatchesByCompetitionID.length - 1 && <Separator className="my-3 sm:my-5" />}
+                {itemIndex !== data.filteredMatches.length - 1 && <Separator className="my-3 sm:my-5" />}
             </section>
         );
     };

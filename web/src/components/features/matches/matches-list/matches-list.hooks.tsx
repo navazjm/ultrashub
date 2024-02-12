@@ -2,17 +2,17 @@ import { useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
 import { IMatchResponse } from "@/components/common/api-football-response";
 import axios from "@/lib/axios";
-import { ALL_COMPS, ALL_TEAMS, ICompetition, IMatchesByCompetitionID, ITeam } from "../matches.types";
+import { ALL_COMPS, ALL_TEAMS, ICompetition, IMatches, ITeam } from "../matches.types";
 import { findMatchByTeamID } from "../matches.utils";
 import { DateToolbox } from "@/components/common/toolbox/date";
 
 interface IMatchListData {
     title: string;
     selectedDate: Date;
-    allMatchesByCompetitionID: IMatchesByCompetitionID[];
-    setAllMatchesByCompetitionID: React.Dispatch<React.SetStateAction<IMatchesByCompetitionID[]>>;
-    filteredMatchesByCompetitionID: IMatchesByCompetitionID[];
-    setFilteredMatchesByCompetitionID: React.Dispatch<React.SetStateAction<IMatchesByCompetitionID[]>>;
+    allMatches: IMatches[];
+    setAllMatches: React.Dispatch<React.SetStateAction<IMatches[]>>;
+    filteredMatches: IMatches[];
+    setFilteredMatches: React.Dispatch<React.SetStateAction<IMatches[]>>;
     allCompetitions: ICompetition[];
     setAllCompetitions: React.Dispatch<React.SetStateAction<ICompetition[]>>;
     selectedCompetition: ICompetition;
@@ -45,9 +45,9 @@ export const useMatchList = (date?: string) => {
 
     const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
     // matches to be displayed to user based on selected filters
-    const [allMatchesByCompetitionID, setAllMatchesByCompetitionID] = useState<IMatchesByCompetitionID[]>([]);
+    const [allMatches, setAllMatches] = useState<IMatches[]>([]);
     // matches filtered based on user selected filters
-    const [filteredMatchesByCompetitionID, setFilteredMatchesByCompetitionID] = useState<IMatchesByCompetitionID[]>([]);
+    const [filteredMatches, setFilteredMatches] = useState<IMatches[]>([]);
     // all unique competitions
     const [allCompetitions, setAllCompetitions] = useState<ICompetition[]>([{ id: 0, displayName: ALL_COMPS }]);
     // store filter by Competition selection
@@ -76,7 +76,7 @@ export const useMatchList = (date?: string) => {
                     },
                 });
 
-                const newFilteredMatches: IMatchesByCompetitionID[] = [];
+                const newMatchesArr: IMatches[] = [];
                 const newCompetitionsArr: ICompetition[] = [];
                 const newTeamsArr: ITeam[] = [];
                 resp.data.response.forEach((match) => {
@@ -115,23 +115,21 @@ export const useMatchList = (date?: string) => {
                         newTeamsArr.push(newTeam);
                     }
 
-                    const foundCompetitionMatches = newFilteredMatches.find(
-                        (comp) => comp.competitionID === competitionID,
-                    );
+                    const foundCompetitionMatches = newMatchesArr.find((comp) => comp.competitionID === competitionID);
                     if (!foundCompetitionMatches) {
-                        const newFilteredMatchByCompetitionID: IMatchesByCompetitionID = {
+                        const newFilteredMatchByCompetitionID: IMatches = {
                             competitionID: competitionID,
                             matches: [match],
                             displayName: newCompetitionsArr[newCompetitionsArr.length - 1].displayName,
                         };
-                        newFilteredMatches.push(newFilteredMatchByCompetitionID);
+                        newMatchesArr.push(newFilteredMatchByCompetitionID);
                     } else {
                         foundCompetitionMatches.matches.push(match);
                     }
                 });
 
-                setAllMatchesByCompetitionID(newFilteredMatches);
-                setFilteredMatchesByCompetitionID(newFilteredMatches);
+                setAllMatches(newMatchesArr);
+                setFilteredMatches(newMatchesArr);
 
                 newCompetitionsArr.sort((a, b) => a.displayName.localeCompare(b.displayName));
                 newCompetitionsArr.unshift({ id: 0, displayName: ALL_COMPS });
@@ -155,18 +153,18 @@ export const useMatchList = (date?: string) => {
     useEffect(() => {
         // user selected ALL_COMPS, reset to show all available options
         if (selectedCompetition.id === 0) {
-            setFilteredMatchesByCompetitionID(allMatchesByCompetitionID);
+            setFilteredMatches(allMatches);
             setFilteredTeams(allTeams);
             setSelectedTeam(allTeams[0]);
             return;
         }
 
         // filter matches by selectedCompetition.id
-        const foundFilteredMatchByCompetitionID = filteredMatchesByCompetitionID.find((comp) => {
-            return comp.competitionID == selectedCompetition.id;
+        const foundFilteredMatchByCompetitionID = filteredMatches.find((comp) => {
+            return comp.competitionID === selectedCompetition.id;
         });
         if (!foundFilteredMatchByCompetitionID) return;
-        setFilteredMatchesByCompetitionID([foundFilteredMatchByCompetitionID]);
+        setFilteredMatches([foundFilteredMatchByCompetitionID]);
 
         // get teams for the respective selectedCompetition.id
         const foundTeams = allTeams.filter((team) => team.leagueID === selectedCompetition.id);
@@ -190,7 +188,7 @@ export const useMatchList = (date?: string) => {
 
         // user selected ALL_TEAMS, reset filters to reflect
         if (selectedTeam.id === 0) {
-            setFilteredMatchesByCompetitionID(allMatchesByCompetitionID);
+            setFilteredMatches(allMatches);
             setFilteredTeams(allTeams);
             return;
         }
@@ -198,18 +196,18 @@ export const useMatchList = (date?: string) => {
         // get first match where selectedTeam is either the away or home team. Highly unlikely that
         // a professional football team plays more than one game in a single day
 
-        const foundMatch = findMatchByTeamID(allMatchesByCompetitionID, selectedTeam.id);
+        const foundMatch = findMatchByTeamID(allMatches, selectedTeam.id);
         if (!foundMatch) return;
         const foundCompetition = allCompetitions.find((comp) => comp.id === foundMatch?.league.id);
         if (!foundCompetition) return;
 
-        const newFilteredMatchByCompetitionID: IMatchesByCompetitionID = {
+        const newFilteredMatchByCompetitionID: IMatches = {
             competitionID: foundCompetition.id,
             matches: [foundMatch],
             displayName: foundCompetition.displayName,
         };
 
-        setFilteredMatchesByCompetitionID([newFilteredMatchByCompetitionID]);
+        setFilteredMatches([newFilteredMatchByCompetitionID]);
     }, [selectedTeam]);
 
     const isLoading = status === "loading";
@@ -220,10 +218,10 @@ export const useMatchList = (date?: string) => {
             : {
                   title,
                   selectedDate,
-                  allMatchesByCompetitionID,
-                  setAllMatchesByCompetitionID,
-                  filteredMatchesByCompetitionID,
-                  setFilteredMatchesByCompetitionID,
+                  allMatches,
+                  setAllMatches,
+                  filteredMatches,
+                  setFilteredMatches,
                   allCompetitions,
                   setAllCompetitions,
                   selectedCompetition,

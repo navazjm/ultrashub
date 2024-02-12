@@ -18,7 +18,7 @@ export interface ITeam {
     logo?: string;
 }
 
-export interface IMatchesByCompetitionID {
+export interface IMatches {
     competitionID: number;
     displayName: string;
     matches: IMatch[];
