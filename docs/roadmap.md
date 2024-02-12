@@ -13,12 +13,12 @@
 - [x] "/"
   - [x] returns all matches (both fixtures and results) for current date of access
   - [x] displays 7 day calendar to navigate between dates
-  - [x] displays top leagues/cups first
+  - [x] displays top competitions/cups first
 - [x] "/matches/date/YYYY-MM-DD"
   - [x] if given date == todays date, redirect to "/"
   - [x] returns all matches for given date.
   - [x] displays 7 day calendar to navigate between dates
-  - [x] displays top leagues/cups first
+  - [x] displays top competitions/cups first
 - [x] "/matches/id/:id"
   - [x] returns a single match based on id
   - [x] if match is upcoming fixture:
@@ -41,26 +41,25 @@
 ### :construction: v0.2.0 - Migrate to REST API & SPA
 
 - [x] Convert webapp to REST API
-- [ ] convert web from templates to react app
-- [x] introduced player events in "/match/:id" lineups tab
+- [x] convert web from templates to react app
+- [ ] make any additional UI/UX changes to existing functionality
+  - [x] introduced player events in "/match/:id" lineups tab
 
-### :x: v0.3.0 - Introduce leagues and clubs endpoints
+### :x: v0.3.0 - Introduce competitions and clubs endpoints
 
-- [ ] cli tool -> API Football leagues endpoint
-- [ ] cli tool -> API Football teams endpoint
-- [ ] add leagues nav link option
-  - should be a dropdown lists thats lists top leagues/cups
-  - should have an option to view all leagues
-- [ ] "/leagues"
-  - returns list of leagues to navigate to "/leagues/id/:id"
-- [ ] "/leagues/id/:id"
+- [ ] add competitions nav link option
+  - should be a dropdown lists thats lists top competitions (leagues/cups)
+  - should have an option to view all competitions
+- [ ] "/competitions"
+  - returns list of competitions to navigate to "/competitions/id/:id"
+- [ ] "/competitions/id/:id"
   - returns matches, table, stats(show details like top goal scorer, assists??), clubs (links to "/clubs/id/:id"), and transfers for the specific league
 - [ ] "/clubs/id/:id"
   - returns matches, league table with club highlighted, roster (show details like goals and assists??), transfers
 - [ ] add filter by league to the following routes:
   - "/"
   - "/matches/date/YYYY-MM-DD"
-- [ ] add links to "/clubs/id/:id" and "/leagues/id/:id" in the following routes:
+- [ ] add links to "/clubs/id/:id" and "/competitions/id/:id" in the following routes:
   - "/"
   - "/matches/date/YYYY-MM-DD"
   - "/matches/id/:id"
@@ -74,7 +73,7 @@
 - [ ] "/users/preferences"
   - user can CRUD app preferences
     - favorite clubs
-    - favorite leagues/cups
+    - favorite competitions (leagues/cups)
     - enable/disable hide results on "/"
     - enable/disable hide scores on "/" and "/matches/fixtures/date/YYYY-MM-DD"
 - [ ] highlight users favorite teams/league/cups for the following routes:
@@ -82,12 +81,12 @@
   - "/matches/date/YYYY-MM-DD"
   - "/transfers/latest"
   - "/transfers/news"
-  - "/leagues/id/:id"
-- [ ] Add "favorite" button for leagues/cups
+  - "/competitions/id/:id"
+- [ ] Add "favorite" button for competitions/cups
   - "/"
-  - "/leagues"
-  - "/leagues/id/:id"
+  - "/competitions"
+  - "/competitions/id/:id"
 
 ### Needs more planning
 
-- add quick links to nav (like tables and clubs for top leagues/cups)
+- add quick links to nav (like tables and clubs for top competitions/cups)
