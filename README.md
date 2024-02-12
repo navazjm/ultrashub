@@ -15,6 +15,15 @@ UltrasHub is a UI wrapper around [API-Football](https://www.api-football.com/). 
 
 If you encounter a bug or have a feature request, [send us an email](mailto:contact@ultrashub.io) or [create an issue](https://github.com/navazjm/ultrashub/issues), [create a discussion thread](https://github.com/navazjm/ultrashub/discussions).
 
+## Product Roadmap
+
+This roadmap contains all improvements and new features we plan for UltrasHub.
+
+Check the [Kanban board in this project](https://github.com/users/navazjm/projects/2/views/2) for an overview.
+
+Note: This roadmap is only the improvements and new features and not the bugs. We use GitHub issues to track public bugs. Report a bug by [opening a new
+issue](https://github.com/navazjm/ultrashub/issues/new); it's that easy!
+
 ## Contribute
 
 All contributions are welcome! Just open a pull request. Please read [CONTRIBUTING.md](./docs/contributing/CONTRIBUTING.md)
