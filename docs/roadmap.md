@@ -38,7 +38,7 @@
   - player off and player in are swapped.
   - only for 10/07. any date before 10/07 works as intended
 
-### :construction: v0.2.0 - Migrate to REST API & SPA
+### :sparkles: v0.2.0 - Migrate to REST API & SPA
 
 - [x] Convert webapp to REST API
 - [x] convert web from templates to react app
@@ -56,7 +56,7 @@
   - [x] changed from displaying 10 recent matches to 5 recent matches for "/match/id/:id" head-to-head tab
   - [x] added links to footer for contact, support, and policies (terms, security, & privacy)
 
-### :x: v0.3.0 - Introduce competitions and clubs endpoints
+### :construction: v0.3.0 - Introduce competitions and clubs endpoints
 
 - [ ] add competitions nav link option
   - should be a dropdown lists thats lists top competitions (leagues/cups)
