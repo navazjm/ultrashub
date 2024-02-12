@@ -43,7 +43,18 @@
 - [x] Convert webapp to REST API
 - [x] convert web from templates to react app
 - [ ] make any additional UI/UX changes to existing functionality
-  - [x] introduced player events in "/match/:id" lineups tab
+  - [x] added way to filter matches by competitions and teams for "/matches/data/YYYY-MM-DD"
+  - [x] added show scores toggle to hide/show scores when selected date is the current match date for "/matches/data/YYYY-MM-DD"
+  - [x] added a date picker instead of showing a range of dates around the selected date for "/matches/data/YYYY-MM-DD"
+  - [x] matches are shown in the order of top competitions, world competitions, and rest of the world compeititons for "/matches/data/YYYY-MM-DD"
+  - [x] added "important" match events (goals, red cards, VAR) to the quick info section for "/match/id/:id"
+  - [x] added more info for each match event for "/match/id/:id" events tab
+  - [x] merged second yellow card events into a red card event for "/match/id/:id" events tab
+    - so instead of displaying a yellow card and a red card event back to back, we now display it as a single red card event with its event detail explaining it is the player's second yellow card.
+  - [x] added player events for "/match/id/:id" lineups tab
+  - [x] added new total h2h stats for "/match/id/:id" head-to-head tab
+  - [x] changed from displaying 10 recent matches to 5 recent matches for "/match/id/:id" head-to-head tab
+  - [x] added links to footer for contact, support, and policies (terms, security, & privacy)
 
 ### :x: v0.3.0 - Introduce competitions and clubs endpoints
 
