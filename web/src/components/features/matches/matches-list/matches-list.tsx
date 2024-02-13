@@ -71,7 +71,7 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
             <h3 className="text-2xl font-bold">{data.title}</h3>
 
             {/** display filters in accordion component if on mobile devices */}
-            <section className="sm:hidden mb-2 pb-3 bg-background">
+            <section className="md:hidden mb-2 pb-3 bg-background">
                 <Separator className="mt-3" />
                 <Accordion type="single" collapsible className="">
                     <AccordionItem value="filter">
@@ -94,7 +94,7 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
                 </Accordion>
             </section>
             {/** display normal filters toolbar for larger devices */}
-            <section className="hidden sm:block bg-background">
+            <section className="hidden md:block bg-background">
                 <Separator className="my-5" />
                 <MatchesListFiltersComponent
                     date={data.selectedDate}

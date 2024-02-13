@@ -66,7 +66,7 @@ export const MatchH2HStatsComponent = (props: IMatchH2HStatsComponentProps) => {
                 </section>
             </CardHeader>
             <Separator className="my-2" />
-            <CardContent className="flex justify-center items-center gap-5 md:gap-20 p-2 pt-0">
+            <CardContent className="flex justify-center items-center gap-5 md:gap-10 p-2 pt-0">
                 <section className="md:w-80">
                     <section className="flex items-center gap-2">
                         <Progress value={homeTeamWinRatio} className="hidden md:block" />
