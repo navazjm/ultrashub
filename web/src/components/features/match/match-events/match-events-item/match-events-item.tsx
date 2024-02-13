@@ -48,7 +48,12 @@ const MatchEventsItemDetailsComponent = (props: IMatchEventsItemDetailsComponent
             const displayCardType = cardType.toLocaleLowerCase() === "yellow card" ? "Yellow Card" : "Red Card";
             let cardComment = `${props.event.player.name} is shown a ${cardType.toLocaleLowerCase()}`;
             if (props.event.comments) {
-                cardComment += ` for ${props.event.comments.toLocaleLowerCase()}`;
+                const eventComments = props.event.comments.toLocaleLowerCase();
+                if (eventComments === "misses next match") {
+                    cardComment += ` (${eventComments})`;
+                } else {
+                    cardComment += ` for ${eventComments}`;
+                }
             }
             return (
                 <>
