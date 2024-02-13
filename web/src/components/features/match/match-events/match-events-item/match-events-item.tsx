@@ -18,7 +18,7 @@ export const MatchEventsItemComponent = (props: IMatchEventsItemComponentProps) 
     return (
         <Card className="w-full">
             <CardContent className="p-3 flex justify-between items-center font-bold">
-                <section className="flex items-center gap-5">
+                <section className="flex items-center gap-3 sm:gap-5">
                     <section className="flex items-center gap-1">
                         {eventIcon}
                         {elapsedTime}
@@ -56,20 +56,20 @@ const MatchEventsItemDetailsComponent = (props: IMatchEventsItemDetailsComponent
                 }
             }
             return (
-                <>
-                    <section className="text-xl">{displayCardType}</section>
-                    <section className="text-sm font-light">{cardComment}</section>
-                </>
+                <section className="w-[200px] sm:w-auto">
+                    <section className="text-base sm:text-xl">{displayCardType}</section>
+                    <section className="text-xs sm:text-sm font-light">{cardComment}</section>
+                </section>
             );
         case "var":
             const varDetails = !!props.event.detail ? props.event.detail : "";
             const varComment = !!props.event.comments ? props.event.comments : "";
             const varCommentDetails = `${varDetails} ${varComment} for ${props.event.player.name}`;
             return (
-                <>
-                    <section className="text-xl">{eventType.toLocaleUpperCase()}</section>
-                    <section className="text-sm font-light">{varCommentDetails}</section>
-                </>
+                <section className="w-[200px] sm:w-auto">
+                    <section className="text-base sm:text-xl">{eventType.toLocaleUpperCase()}</section>
+                    <section className="text-xs sm:text-sm font-light">{varCommentDetails}</section>
+                </section>
             );
         case "goal":
             const goalType = props.event.detail.toLocaleLowerCase() === "normal goal" ? "Goal" : props.event.detail;
@@ -79,9 +79,9 @@ const MatchEventsItemDetailsComponent = (props: IMatchEventsItemDetailsComponent
             const goalMessage = `${goalType} scored by `;
             const goalTitle = isOwnGoal ? "Own Goal!" : "Goal!";
             return (
-                <>
-                    <section className="text-xl">{goalTitle}</section>
-                    <section className="text-sm font-light">
+                <section className="w-[200px] sm:w-auto">
+                    <section className="text-base sm:text-xl">{goalTitle}</section>
+                    <section className="text-xs sm:text-sm font-light">
                         {scorer && (
                             <>
                                 <span>{goalMessage}</span>
@@ -91,15 +91,15 @@ const MatchEventsItemDetailsComponent = (props: IMatchEventsItemDetailsComponent
                             </>
                         )}
                     </section>
-                </>
+                </section>
             );
         case "subst":
             const playerOff = props.event.player.name;
             const playerOn = props.event.assist.name;
 
             return (
-                <>
-                    <section className="text-xl">Substitution</section>
+                <section className="w-[200px] sm:w-auto">
+                    <section className="text-base sm:text-xl">Substitution</section>
                     <section className="text-xs flex items-center gap-2">
                         <section className="flex items-center">
                             {MatchToolbox.displayPlayerOffIcon(12)}
@@ -112,7 +112,7 @@ const MatchEventsItemDetailsComponent = (props: IMatchEventsItemDetailsComponent
                             {playerOn}
                         </section>
                     </section>
-                </>
+                </section>
             );
         default:
             return <></>;
