@@ -49,7 +49,6 @@ const MatchEventsItemDetailsComponent = (props: IMatchEventsItemDetailsComponent
             let cardComment = `${props.event.player.name} is shown a ${cardType.toLocaleLowerCase()}`;
             if (props.event.comments) {
                 const eventComments = props.event.comments.toLocaleLowerCase();
-                console.log(eventComments);
                 if (eventComments === "misses next match") {
                     cardComment += ` (${eventComments})`;
                 } else {
