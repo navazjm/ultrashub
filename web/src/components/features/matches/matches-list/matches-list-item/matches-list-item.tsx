@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { IProps } from "@/components/common/types";
 import { IMatch } from "@/components/common/api-football-response";
 import { MatchToolbox } from "@/components/common/toolbox/match";
+import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
 
 interface IMatchesListItemComponentProps extends IProps {
     match: IMatch;
@@ -23,12 +24,12 @@ export const MatchesListItemComponent = (props: IMatchesListItemComponentProps) 
                         className={`flex justify-between content-center 
                             ${props.showScores && !matchInProgress && props.match.teams.away.winner && "opacity-40"}`}
                     >
-                        <div className="flex content-center">
-                            <img
+                        <div className="flex items-center gap-2">
+                            <ApiFootballLogoComponent
                                 src={props.match.teams.home.logo}
-                                alt=""
-                                loading="lazy"
-                                className="w-[30px] h-[30px] mr-2 object-scale-down"
+                                alt={`${props.match.teams.home.name} logo`}
+                                width={30}
+                                height={30}
                             />
                             <p>{props.match.teams.home.name}</p>
                         </div>
@@ -44,12 +45,12 @@ export const MatchesListItemComponent = (props: IMatchesListItemComponentProps) 
                     <div
                         className={`flex justify-between content-center ${props.showScores && !matchInProgress && props.match.teams.home.winner && "opacity-40"}`}
                     >
-                        <div className="flex content-center">
-                            <img
+                        <div className="flex items-center gap-2">
+                            <ApiFootballLogoComponent
                                 src={props.match.teams.away.logo}
-                                alt=""
-                                loading="lazy"
-                                className="w-[30px] h-[30px] mr-2 object-scale-down"
+                                alt={`${props.match.teams.away.name} logo`}
+                                width={30}
+                                height={30}
                             />
                             <p>{props.match.teams.away.name}</p>
                         </div>

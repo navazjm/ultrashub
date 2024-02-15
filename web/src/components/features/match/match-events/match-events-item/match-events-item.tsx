@@ -1,3 +1,4 @@
+import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
 import { IMatchEvent, MatchEventType } from "@/components/common/api-football-response";
 import { MatchToolbox } from "@/components/common/toolbox/match";
 import { Card, CardContent } from "@/components/ui/card";
@@ -28,7 +29,11 @@ export const MatchEventsItemComponent = (props: IMatchEventsItemComponentProps) 
                     </section>
                 </section>
                 <section>
-                    <img src={props.event.team.logo} alt="" loading="lazy" className="w-[30px] object-scale-down" />
+                    <ApiFootballLogoComponent
+                        src={props.event.team.logo}
+                        alt={`${props.event.team.name} logo`}
+                        width={30}
+                    />
                 </section>
             </CardContent>
         </Card>

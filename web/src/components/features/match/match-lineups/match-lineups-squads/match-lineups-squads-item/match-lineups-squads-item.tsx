@@ -1,3 +1,4 @@
+import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
 import {
     IMatchEvent,
     MatchEventType,
@@ -15,12 +16,12 @@ interface IMatchLineupsSquadsItemComponentProps {
 export const MatchLineupsSquadsItemComponent = (props: IMatchLineupsSquadsItemComponentProps) => {
     return (
         <section>
-            <section className="flex items-center">
-                <img
+            <section className="flex items-center gap-2">
+                <ApiFootballLogoComponent
                     src={props.lineup.team.logo}
-                    alt=""
-                    loading="lazy"
-                    className="w-[30px] h-[30px] mr-2 object-scale-down"
+                    alt={`${props.lineup.team.name} logo`}
+                    width={30}
+                    height={30}
                 />
                 <h3 className="text-xl font-bold">{props.lineup.team.name}</h3>
             </section>
