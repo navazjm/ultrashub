@@ -3,6 +3,7 @@ import { MatchQuickInfoEventsComponent } from "../match-quick-info-events/match-
 import { IMatch } from "@/components/common/api-football-response";
 import { DateToolbox } from "@/components/common/toolbox/date";
 import { MatchScorelineComponent } from "../../match-scoreline/match-scoreline";
+import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
 
 interface IMatchQuickInfoCardContentComponentProps {
     match: IMatch;
@@ -14,7 +15,11 @@ export const MatchQuickInfoCardContentComponent = (props: IMatchQuickInfoCardCon
         <>
             <section className="flex justify-between items-center">
                 <section className="flex-1 flex items-center gap-2">
-                    <img src={props.match.teams.home.logo} className="w-[40px] object-scale-down" />
+                    <ApiFootballLogoComponent
+                        src={props.match.teams.home.logo}
+                        alt={`${props.match.teams.home.name} logo`}
+                        width={40}
+                    />
                     <h3 className="text-xl font-bold hidden sm:block">{props.match.teams.home.name}</h3>
                 </section>
 
@@ -24,7 +29,11 @@ export const MatchQuickInfoCardContentComponent = (props: IMatchQuickInfoCardCon
 
                 <section className="flex-1 flex items-center justify-end gap-2">
                     <h3 className="text-xl font-bold hidden sm:block">{props.match.teams.away.name}</h3>
-                    <img src={props.match.teams.away.logo} className="w-[40px] object-scale-down" />
+                    <ApiFootballLogoComponent
+                        src={props.match.teams.away.logo}
+                        alt={`${props.match.teams.away.name} logo`}
+                        width={40}
+                    />
                 </section>
             </section>
             {props.hasStarted && <MatchQuickInfoEventsComponent match={props.match} />}

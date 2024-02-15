@@ -1,3 +1,4 @@
+import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
 import { IMatch, IMatchTeam } from "@/components/common/api-football-response";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -57,16 +58,24 @@ export const MatchH2HStatsComponent = (props: IMatchH2HStatsComponentProps) => {
         <Card>
             <CardHeader className="flex flex-row justify-evenly items-center p-2 space-y-0">
                 <section className="flex content-center gap-2">
-                    <img src={props.homeTeam.logo} className="w-[25px] object-scale-down" />
+                    <ApiFootballLogoComponent
+                        src={props.homeTeam.logo}
+                        alt={`${props.homeTeam.name} logo`}
+                        width={25}
+                    />
                     <h5 className="text-lg font-bold hidden sm:block">{props.homeTeam.name}</h5>
                 </section>
                 <section className="flex content-center gap-2">
                     <h5 className="text-lg font-bold hidden sm:block">{props.awayTeam.name}</h5>
-                    <img src={props.awayTeam.logo} className="w-[25px] object-scale-down" />
+                    <ApiFootballLogoComponent
+                        src={props.awayTeam.logo}
+                        alt={`${props.awayTeam.name} logo`}
+                        width={25}
+                    />
                 </section>
             </CardHeader>
             <Separator className="my-2" />
-            <CardContent className="flex justify-center items-center gap-5 md:gap-20 p-2 pt-0">
+            <CardContent className="flex justify-center items-center gap-5 md:gap-10 p-2 pt-0">
                 <section className="md:w-80">
                     <section className="flex items-center gap-2">
                         <Progress value={homeTeamWinRatio} className="hidden md:block" />
