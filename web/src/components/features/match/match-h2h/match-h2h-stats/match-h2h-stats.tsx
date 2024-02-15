@@ -57,22 +57,22 @@ export const MatchH2HStatsComponent = (props: IMatchH2HStatsComponentProps) => {
     return (
         <Card>
             <CardHeader className="flex flex-row justify-evenly items-center p-2 space-y-0">
-                <section className="flex content-center gap-2">
+                <section className="flex items-center gap-2">
                     <ApiFootballLogoComponent
                         src={props.homeTeam.logo}
                         alt={`${props.homeTeam.name} logo`}
-                        width={25}
-                        height={25}
+                        width={30}
+                        height={30}
                     />
                     <h5 className="text-lg font-bold hidden sm:block">{props.homeTeam.name}</h5>
                 </section>
-                <section className="flex content-center gap-2">
+                <section className="flex items-center gap-2">
                     <h5 className="text-lg font-bold hidden sm:block">{props.awayTeam.name}</h5>
                     <ApiFootballLogoComponent
                         src={props.awayTeam.logo}
                         alt={`${props.awayTeam.name} logo`}
-                        width={25}
-                        height={25}
+                        width={30}
+                        height={30}
                     />
                 </section>
             </CardHeader>
