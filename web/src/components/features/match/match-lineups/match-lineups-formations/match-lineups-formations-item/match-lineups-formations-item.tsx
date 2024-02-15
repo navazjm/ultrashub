@@ -1,3 +1,4 @@
+import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
 import { IMatchLineup, IMatchLineupPlayer, IMatchLineupTeamColor } from "@/components/common/api-football-response";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -46,11 +47,11 @@ export const MatchLineupsFormationsItemComponent = (props: IMatchLineupsFormatio
             <section className="flex flex-col justify-between h-full">
                 <section className="font-thin">{props.lineup.formation}</section>
                 <section>
-                    <img
+                    <ApiFootballLogoComponent
                         src={props.lineup.team.logo}
-                        alt=""
-                        loading="lazy"
-                        className="w-[30px] h-[30px] mr-2 object-scale-down"
+                        alt={`${props.lineup.team.name} logo`}
+                        width={30}
+                        height={30}
                     />
                 </section>
                 <section></section>

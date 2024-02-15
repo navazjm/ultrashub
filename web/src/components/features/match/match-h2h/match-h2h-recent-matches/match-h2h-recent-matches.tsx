@@ -3,6 +3,7 @@ import { IMatch } from "@/components/common/api-football-response";
 import { DateToolbox } from "@/components/common/toolbox/date";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { MatchScorelineComponent } from "../../match-scoreline/match-scoreline";
+import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
 
 interface IMatchH2HRecentMatchesComponentProps {
     matches: IMatch[];
@@ -27,7 +28,11 @@ export const MatchH2HRecentMatchesComponent = (props: IMatchH2HRecentMatchesComp
                             <section
                                 className={`flex-1 flex justify-end items-center gap-2 mr-2 ${match.teams.away.winner && "opacity-40"}`}
                             >
-                                <img src={match.teams.home.logo} className="w-[25px] object-scale-down" />
+                                <ApiFootballLogoComponent
+                                    src={match.teams.home.logo}
+                                    alt={`${match.teams.home.name} logo`}
+                                    width={25}
+                                />
                                 <h3 className="text-lg font-bold hidden sm:block">{match.teams.home.name}</h3>
                             </section>
                             <MatchScorelineComponent match={match} fontSize="text-lg" hideStatus={true} />
@@ -35,7 +40,11 @@ export const MatchH2HRecentMatchesComponent = (props: IMatchH2HRecentMatchesComp
                                 className={`flex-1 flex justify-start items-center gap-2 ml-2 ${match.teams.home.winner && "opacity-40"}`}
                             >
                                 <h3 className="text-lg font-bold hidden sm:block">{match.teams.away.name}</h3>
-                                <img src={match.teams.away.logo} className="w-[25px] object-scale-down" />
+                                <ApiFootballLogoComponent
+                                    src={match.teams.away.logo}
+                                    alt={`${match.teams.away.name} logo`}
+                                    width={25}
+                                />
                             </section>
                         </CardContent>
                     </Card>

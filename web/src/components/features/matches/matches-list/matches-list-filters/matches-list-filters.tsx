@@ -14,6 +14,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { ALL_COMPS, ALL_TEAMS, ICompetition, ITeam } from "../../matches.types";
 import { cn } from "@/lib/shadcn";
 import { DateToolbox } from "@/components/common/toolbox/date";
+import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
 
 interface IMatchesListFiltersComponentProps extends IProps {
     date: Date;
@@ -93,10 +94,10 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersComponentP
                             >
                                 <div className="w-80 truncate flex content-center justify-start gap-1">
                                     {props.selectedCompetition.logo && (
-                                        <img
+                                        <ApiFootballLogoComponent
                                             src={props.selectedCompetition.logo}
-                                            className="w-[20px] object-scale-down"
-                                            loading="lazy"
+                                            alt={`${props.selectedCompetition.displayName} logo`}
+                                            width={20}
                                         />
                                     )}
                                     {props.selectedCompetition.displayName}
@@ -126,10 +127,10 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersComponentP
                                                     )}
                                                 />
                                                 {comp.logo && (
-                                                    <img
+                                                    <ApiFootballLogoComponent
                                                         src={comp.logo}
-                                                        className="w-[20px] object-scale-down"
-                                                        loading="lazy"
+                                                        alt={`${comp.displayName} logo`}
+                                                        width={20}
                                                     />
                                                 )}
                                                 {comp.displayName}
@@ -155,10 +156,10 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersComponentP
                             >
                                 <div className="w-80 truncate flex content-center justify-start gap-1">
                                     {props.selectedTeam.logo && (
-                                        <img
+                                        <ApiFootballLogoComponent
                                             src={props.selectedTeam.logo}
-                                            className="w-[20px] object-scale-down"
-                                            loading="lazy"
+                                            alt={`${props.selectedTeam.name} logo`}
+                                            width={20}
                                         />
                                     )}
                                     {props.selectedTeam.name}
@@ -183,10 +184,10 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersComponentP
                                                     className={cn("h-4", props.selectedTeam.id !== team.id && "hidden")}
                                                 />
                                                 {team.logo && (
-                                                    <img
+                                                    <ApiFootballLogoComponent
                                                         src={team.logo}
-                                                        className="w-[20px] object-scale-down"
-                                                        loading="lazy"
+                                                        alt={`${team.name} logo`}
+                                                        width={20}
                                                     />
                                                 )}
                                                 {team.name}
