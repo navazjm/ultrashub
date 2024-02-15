@@ -1,4 +1,4 @@
-import { IProps } from "@/components/common/types";
+import { IProps, TOP_COMPS_IDS } from "@/components/common/types";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Separator } from "@/components/ui/separator";
 import { MatchesListFiltersComponent } from "./matches-list-filters/matches-list-filters";
@@ -7,7 +7,7 @@ import VirtualScroller from "virtual-scroller/react";
 import { Spinner } from "@/components/ui/spinner";
 import { useMatchList } from "./matches-list.hooks";
 import { ErrorComponent } from "@/components/common/error/error";
-import { IMatches, TOP_COMPS_IDS } from "../matches.types";
+import { IMatches } from "../matches.types";
 
 interface IMatchesListComponentProps extends IProps {
     date: string | undefined;
