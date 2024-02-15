@@ -19,6 +19,7 @@ export const MatchQuickInfoCardContentComponent = (props: IMatchQuickInfoCardCon
                         src={props.match.teams.home.logo}
                         alt={`${props.match.teams.home.name} logo`}
                         width={40}
+                        height={40}
                     />
                     <h3 className="text-xl font-bold hidden sm:block">{props.match.teams.home.name}</h3>
                 </section>
@@ -33,6 +34,7 @@ export const MatchQuickInfoCardContentComponent = (props: IMatchQuickInfoCardCon
                         src={props.match.teams.away.logo}
                         alt={`${props.match.teams.away.name} logo`}
                         width={40}
+                        height={40}
                     />
                 </section>
             </section>
