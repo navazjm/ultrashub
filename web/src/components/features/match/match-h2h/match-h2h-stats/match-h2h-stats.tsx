@@ -62,6 +62,7 @@ export const MatchH2HStatsComponent = (props: IMatchH2HStatsComponentProps) => {
                         src={props.homeTeam.logo}
                         alt={`${props.homeTeam.name} logo`}
                         width={25}
+                        height={25}
                     />
                     <h5 className="text-lg font-bold hidden sm:block">{props.homeTeam.name}</h5>
                 </section>
@@ -71,6 +72,7 @@ export const MatchH2HStatsComponent = (props: IMatchH2HStatsComponentProps) => {
                         src={props.awayTeam.logo}
                         alt={`${props.awayTeam.name} logo`}
                         width={25}
+                        height={25}
                     />
                 </section>
             </CardHeader>

@@ -32,6 +32,7 @@ export const MatchH2HRecentMatchesComponent = (props: IMatchH2HRecentMatchesComp
                                     src={match.teams.home.logo}
                                     alt={`${match.teams.home.name} logo`}
                                     width={25}
+                                    height={25}
                                 />
                                 <h3 className="text-lg font-bold hidden sm:block">{match.teams.home.name}</h3>
                             </section>
@@ -44,6 +45,7 @@ export const MatchH2HRecentMatchesComponent = (props: IMatchH2HRecentMatchesComp
                                     src={match.teams.away.logo}
                                     alt={`${match.teams.away.name} logo`}
                                     width={25}
+                                    height={25}
                                 />
                             </section>
                         </CardContent>
