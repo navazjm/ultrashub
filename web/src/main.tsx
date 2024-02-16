@@ -11,6 +11,7 @@ import { SecurityPolicyPage } from "@/pages/policies/security";
 import { PrivacyPolicyPage } from "@/pages/policies/privacy";
 import { NotFoundPage } from "@/pages/not-found";
 import "./main.css";
+import { CompetitionsPage } from "./pages/competitions";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
@@ -28,6 +29,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                             <Route path="/" element={<MatchesPage />} />
                             <Route path="/matches/date/:date?" element={<MatchesPage />} />
                             <Route path="/match/id/:id" element={<MatchPage />} />
+                            <Route path="/competitions/all" element={<CompetitionsPage />} />
+                            <Route path="/competitions/id/:id" element={<NotFoundPage />} />
                             <Route path="/policies/terms-of-service" element={<TermsOfServicePage />} />
                             <Route path="/policies/security" element={<SecurityPolicyPage />} />
                             <Route path="/policies/privacy" element={<PrivacyPolicyPage />} />

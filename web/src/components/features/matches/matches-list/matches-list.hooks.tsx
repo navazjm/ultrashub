@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
 import { IMatchResponse } from "@/components/common/api-football-response";
 import axios from "@/lib/axios";
-import { ALL_COMPS, ALL_TEAMS, ICompetition, IMatches, ITeam } from "../matches.types";
+import { ALL_MATCHES_COMPS, ALL_MATCHES_TEAMS, IMatchesCompetition, IMatches, IMatchesTeam } from "../matches.types";
 import { findMatchByTeamID } from "../matches.utils";
 import { DateToolbox } from "@/components/common/toolbox/date";
 
@@ -13,16 +13,16 @@ interface IMatchListData {
     setAllMatches: React.Dispatch<React.SetStateAction<IMatches[]>>;
     filteredMatches: IMatches[];
     setFilteredMatches: React.Dispatch<React.SetStateAction<IMatches[]>>;
-    allCompetitions: ICompetition[];
-    setAllCompetitions: React.Dispatch<React.SetStateAction<ICompetition[]>>;
-    selectedCompetition: ICompetition;
-    setSelectedCompetition: React.Dispatch<React.SetStateAction<ICompetition>>;
-    allTeams: ITeam[];
-    setAllTeams: React.Dispatch<React.SetStateAction<ITeam[]>>;
-    filteredTeams: ITeam[];
-    setFilteredTeams: React.Dispatch<React.SetStateAction<ITeam[]>>;
-    selectedTeam: ITeam;
-    setSelectedTeam: React.Dispatch<React.SetStateAction<ITeam>>;
+    allCompetitions: IMatchesCompetition[];
+    setAllCompetitions: React.Dispatch<React.SetStateAction<IMatchesCompetition[]>>;
+    selectedCompetition: IMatchesCompetition;
+    setSelectedCompetition: React.Dispatch<React.SetStateAction<IMatchesCompetition>>;
+    allTeams: IMatchesTeam[];
+    setAllTeams: React.Dispatch<React.SetStateAction<IMatchesTeam[]>>;
+    filteredTeams: IMatchesTeam[];
+    setFilteredTeams: React.Dispatch<React.SetStateAction<IMatchesTeam[]>>;
+    selectedTeam: IMatchesTeam;
+    setSelectedTeam: React.Dispatch<React.SetStateAction<IMatchesTeam>>;
     defaultShowScores: boolean;
     showScores: boolean;
     setShowScores: React.Dispatch<React.SetStateAction<boolean>>;
@@ -49,15 +49,17 @@ export const useMatchList = (date?: string) => {
     // matches filtered based on user selected filters
     const [filteredMatches, setFilteredMatches] = useState<IMatches[]>([]);
     // all unique competitions
-    const [allCompetitions, setAllCompetitions] = useState<ICompetition[]>([{ id: 0, displayName: ALL_COMPS }]);
+    const [allCompetitions, setAllCompetitions] = useState<IMatchesCompetition[]>([
+        { id: 0, displayName: ALL_MATCHES_COMPS },
+    ]);
     // store filter by Competition selection
-    const [selectedCompetition, setSelectedCompetition] = useState<ICompetition>(allCompetitions[0]);
+    const [selectedCompetition, setSelectedCompetition] = useState<IMatchesCompetition>(allCompetitions[0]);
     // all unique teams
-    const [allTeams, setAllTeams] = useState<ITeam[]>([{ id: 0, leagueID: 0, name: ALL_TEAMS }]);
+    const [allTeams, setAllTeams] = useState<IMatchesTeam[]>([{ id: 0, leagueID: 0, name: ALL_MATCHES_TEAMS }]);
     // filtered teams based on selectedCompetition
-    const [filteredTeams, setFilteredTeams] = useState<ITeam[]>(allTeams);
+    const [filteredTeams, setFilteredTeams] = useState<IMatchesTeam[]>(allTeams);
     // store filter by teams selection
-    const [selectedTeam, setSelectedTeam] = useState<ITeam>(allTeams[0]);
+    const [selectedTeam, setSelectedTeam] = useState<IMatchesTeam>(allTeams[0]);
     // track if user wants to see scores, only used when selectedDate === currentDate
     const [showScores, setShowScores] = useState<boolean>(defaultShowScores);
 
@@ -77,14 +79,14 @@ export const useMatchList = (date?: string) => {
                 });
 
                 const newMatchesArr: IMatches[] = [];
-                const newCompetitionsArr: ICompetition[] = [];
-                const newTeamsArr: ITeam[] = [];
+                const newCompetitionsArr: IMatchesCompetition[] = [];
+                const newTeamsArr: IMatchesTeam[] = [];
                 resp.data.response.forEach((match) => {
                     const competitionID = match.league.id;
                     // generate unique competitions array
                     const foundLeagueIDIndex = newCompetitionsArr.findIndex((comp) => comp.id === competitionID);
                     if (foundLeagueIDIndex === -1) {
-                        const newComp: ICompetition = {
+                        const newComp: IMatchesCompetition = {
                             id: competitionID,
                             displayName: `${match.league.country} ${match.league.name}`,
                             logo: match.league.logo,
@@ -95,7 +97,7 @@ export const useMatchList = (date?: string) => {
                     let teamID = match.teams.away.id;
                     let foundTeamIDIndex = newTeamsArr.findIndex((team) => team.id === teamID);
                     if (foundTeamIDIndex === -1) {
-                        const newTeam: ITeam = {
+                        const newTeam: IMatchesTeam = {
                             id: teamID,
                             leagueID: competitionID,
                             name: match.teams.away.name,
@@ -106,7 +108,7 @@ export const useMatchList = (date?: string) => {
                     teamID = match.teams.home.id;
                     foundTeamIDIndex = newTeamsArr.findIndex((team) => team.id === teamID);
                     if (foundTeamIDIndex === -1) {
-                        const newTeam: ITeam = {
+                        const newTeam: IMatchesTeam = {
                             id: teamID,
                             leagueID: competitionID,
                             name: match.teams.home.name,
@@ -132,12 +134,12 @@ export const useMatchList = (date?: string) => {
                 setFilteredMatches(newMatchesArr);
 
                 newCompetitionsArr.sort((a, b) => a.displayName.localeCompare(b.displayName));
-                newCompetitionsArr.unshift({ id: 0, displayName: ALL_COMPS });
+                newCompetitionsArr.unshift({ id: 0, displayName: ALL_MATCHES_COMPS });
                 setAllCompetitions(newCompetitionsArr);
                 setSelectedCompetition(newCompetitionsArr[0]);
 
                 newTeamsArr.sort((a, b) => a.name.localeCompare(b.name));
-                newTeamsArr.unshift({ id: 0, leagueID: 0, name: ALL_TEAMS });
+                newTeamsArr.unshift({ id: 0, leagueID: 0, name: ALL_MATCHES_TEAMS });
                 setAllTeams(newTeamsArr);
                 setFilteredTeams(newTeamsArr);
                 setSelectedTeam(newTeamsArr[0]);
@@ -151,7 +153,7 @@ export const useMatchList = (date?: string) => {
 
     // update filteredMatches, filterTeams, and selectedTeam based on selectedCompetition
     useEffect(() => {
-        // user selected ALL_COMPS, reset to show all available options
+        // user selected ALL_MATCH_COMPS, reset to show all available options
         if (selectedCompetition.id === 0) {
             setFilteredMatches(allMatches);
             setFilteredTeams(allTeams);
@@ -168,7 +170,7 @@ export const useMatchList = (date?: string) => {
 
         // get teams for the respective selectedCompetition.id
         const foundTeams = allTeams.filter((team) => team.leagueID === selectedCompetition.id);
-        foundTeams.unshift({ id: 0, leagueID: 0, name: ALL_TEAMS });
+        foundTeams.unshift({ id: 0, leagueID: 0, name: ALL_MATCHES_TEAMS });
         setFilteredTeams(foundTeams);
 
         // reset selectedTeam to ALL_TEAMS. Only occurs when user first selects a team and then selects

@@ -11,19 +11,19 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { ALL_COMPS, ALL_TEAMS, ICompetition, ITeam } from "../../matches.types";
+import { ALL_MATCHES_COMPS, ALL_MATCHES_TEAMS, IMatchesCompetition, IMatchesTeam } from "../../matches.types";
 import { cn } from "@/lib/shadcn";
 import { DateToolbox } from "@/components/common/toolbox/date";
 import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
 
 interface IMatchesListFiltersComponentProps extends IProps {
     date: Date;
-    competitions: ICompetition[];
-    selectedCompetition: ICompetition;
-    setSelectedCompetition: React.Dispatch<React.SetStateAction<ICompetition>>;
-    teams: ITeam[];
-    selectedTeam: ITeam;
-    setSelectedTeam: React.Dispatch<React.SetStateAction<ITeam>>;
+    competitions: IMatchesCompetition[];
+    selectedCompetition: IMatchesCompetition;
+    setSelectedCompetition: React.Dispatch<React.SetStateAction<IMatchesCompetition>>;
+    teams: IMatchesTeam[];
+    selectedTeam: IMatchesTeam;
+    setSelectedTeam: React.Dispatch<React.SetStateAction<IMatchesTeam>>;
     defaultShowScores: boolean;
     showScores: boolean;
     setShowScores: React.Dispatch<React.SetStateAction<boolean>>;
@@ -44,7 +44,7 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersComponentP
         setIsDatePickerPopoverOpen(false);
     };
 
-    const onSelectCompetitionChange = (value: string, competition: ICompetition) => {
+    const onSelectCompetitionChange = (value: string, competition: IMatchesCompetition) => {
         setIsCompetitionSelectPopoverOpen(false);
         // if users selects the competition that is already selected, deselect it
         if (value.toLocaleUpperCase() === props.selectedCompetition.displayName.toLocaleUpperCase()) {
@@ -54,7 +54,7 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersComponentP
         props.setSelectedCompetition(competition);
     };
 
-    const onSelectTeamChange = (value: string, team: ITeam) => {
+    const onSelectTeamChange = (value: string, team: IMatchesTeam) => {
         setIsTeamSelectPopoverOpen(false);
         // if users selects the team that is already selected, deselect it
         if (value.toLocaleUpperCase() === props.selectedTeam.name.toLocaleUpperCase()) {
@@ -68,12 +68,12 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersComponentP
         props.setShowScores(props.defaultShowScores);
         // by resetting competition selection, we also reset filtered teams selection back to ALL_TEAMS
         if (props.selectedCompetition.id !== 0) {
-            onSelectCompetitionChange(ALL_COMPS, props.competitions[0]);
+            onSelectCompetitionChange(ALL_MATCHES_COMPS, props.competitions[0]);
             return;
         }
         // only need to directly reset team selection when no competition is selected
         if (props.selectedTeam.id !== 0) {
-            onSelectTeamChange(ALL_TEAMS, props.teams[0]);
+            onSelectTeamChange(ALL_MATCHES_TEAMS, props.teams[0]);
             return;
         }
     };

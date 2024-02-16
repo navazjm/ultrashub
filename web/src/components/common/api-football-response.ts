@@ -5,7 +5,7 @@ export type MatchEventType = "goal" | "card" | "subst" | "var";
  * ! Do NOT modify unless API Football has been updated. Need to match word casing !
  */
 
-export interface IMatchResponse {
+export interface IBaseResponse {
     errors: any[];
     get: string;
     paging: {
@@ -15,6 +15,11 @@ export interface IMatchResponse {
     parameters: {
         [key: string]: string;
     };
+}
+
+// Match Types
+
+export interface IMatchResponse extends IBaseResponse {
     response: IMatch[];
 }
 
@@ -175,4 +180,58 @@ export interface IMatchLineupPlayer {
     pos: string;
     grid: string;
     events?: IMatchEvent[];
+}
+
+// End Match Types
+
+// Competition (League) Types
+
+export interface ICompetitionResponse extends IBaseResponse {
+    response: ICompetition[];
+}
+
+export interface ICompetition {
+    league: ICompetitionLeague;
+    country: ICompetitionCountry;
+    seasons: ICompetitionSeason[];
+}
+
+export interface ICompetitionLeague {
+    id: number;
+    name: string;
+    type: string;
+    logo: string;
+}
+
+export interface ICompetitionCountry {
+    name: string;
+    code: string;
+    flag: string;
+}
+
+export interface ICompetitionSeason {
+    year: number;
+    start: string;
+    end: string;
+    current: boolean;
+    coverage: ICompetitionSeasonCoverage;
+}
+
+export interface ICompetitionSeasonCoverage {
+    fixtures: ICompetitionSeasonCoverageFixtures;
+    standings: boolean;
+    players: boolean;
+    top_scorers: boolean;
+    top_assists: boolean;
+    top_cards: boolean;
+    injuries: boolean;
+    predictions: boolean;
+    odds: boolean;
+}
+
+export interface ICompetitionSeasonCoverageFixtures {
+    events: boolean;
+    lineup: boolean;
+    statistics_fixtures: boolean;
+    statistics_players: boolean;
 }
