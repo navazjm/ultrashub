@@ -79,7 +79,7 @@ const topLeagues: ICompetitionNavLink[] = [
     {
         to: "/competitions/id/61",
         logo: "https://media.api-sports.io/football/leagues/61.png",
-        name: "Ligue Un",
+        name: "Ligue 1",
     },
     {
         to: "/competitions/id/253",
