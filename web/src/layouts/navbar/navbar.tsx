@@ -33,7 +33,7 @@ export const NavbarComponent = () => {
                         </Button>
                     </SheetTrigger>
                     <SheetContent side="left">
-                        <NavbarNavContentComponent setIsSheetOpen={setIsSheetOpen} />
+                        <NavbarMobileNavContentComponent setIsSheetOpen={setIsSheetOpen} />
                     </SheetContent>
                 </Sheet>
                 <a href="/" className="flex gap-x-2 content-center">
@@ -116,11 +116,156 @@ const topCups: ICompetitionNavLink[] = [
     },
 ];
 
-interface INavbarNavComponentProps {
+interface INavbarNavComponentProps {}
+
+const NavbarNavContentComponent = (_props: INavbarNavComponentProps) => {
+    return (
+        <section className="h-full flex flex-col justify-between">
+            <section className="flex flex-col gap-3">
+                <a href="/" className="flex gap-x-2 content-center">
+                    <img src={ultrashubLogo} className="w-[30px] h-[30px]" />
+                    <h3 className="text-2xl font-black">UltrasHub</h3>
+                </a>
+                <section className="flex flex-col gap-2">
+                    <NavLink to="/" className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted">
+                        <Calendar />
+                        Matches
+                    </NavLink>
+                    <Accordion type="single" collapsible className="p-0">
+                        <AccordionItem value="competitions" className="border-0">
+                            <AccordionTrigger className="p-2 rounded-md hover:bg-muted hover:no-underline">
+                                <section className="flex gap-2 items-center ">
+                                    <Trophy />
+                                    Competitions
+                                </section>
+                            </AccordionTrigger>
+                            <AccordionContent>
+                                <NavLink
+                                    to="/competitions/all"
+                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                >
+                                    <View className="h-4 2-4" />
+                                    View all competitions
+                                </NavLink>
+                                <section className="w-full flex flex-col items-start gap-2">
+                                    <section className="w-full flex flex-col items-start gap-2">
+                                        <p className="w-full pl-2 font-light">Top Leagues</p>
+                                        {topLeagues.map((league) => (
+                                            <NavLink
+                                                key={league.name}
+                                                to={league.to}
+                                                className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                            >
+                                                <ApiFootballLogoComponent
+                                                    src={league.logo}
+                                                    alt={`${league.name} logo`}
+                                                    width={20}
+                                                    height={20}
+                                                />
+                                                {league.name}
+                                            </NavLink>
+                                        ))}
+                                    </section>
+                                    <section className="w-full flex flex-col items-start gap-2">
+                                        <p className="w-full pl-2 font-light">Top Cups</p>
+                                        {topCups.map((cup) => (
+                                            <NavLink
+                                                key={cup.name}
+                                                to={cup.to}
+                                                className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                            >
+                                                <ApiFootballLogoComponent
+                                                    src={cup.logo}
+                                                    alt={`${cup.name} logo`}
+                                                    width={20}
+                                                    height={20}
+                                                />
+                                                {cup.name}
+                                            </NavLink>
+                                        ))}
+                                    </section>
+                                </section>
+                            </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="more" className="border-0">
+                            <AccordionTrigger className="p-2 rounded-md hover:bg-muted hover:no-underline">
+                                <section className="flex gap-2 items-center ">
+                                    <Info />
+                                    More
+                                </section>
+                            </AccordionTrigger>
+                            <AccordionContent>
+                                <a
+                                    href="mailto:contact@ultrashub.io"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                >
+                                    <Mail className="h-4 2-4" />
+                                    Contact
+                                </a>
+                                <a
+                                    href="https://ko-fi.com/ultrashub"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                >
+                                    <CircleDollarSignIcon className="h-4 2-4" />
+                                    Support
+                                </a>
+                                <a
+                                    href="https://github.com/navazjm/ultrashub"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                >
+                                    <Code2 className="h-4 2-4" />
+                                    GitHub
+                                </a>
+                                <NavLink
+                                    to="/policies/terms-of-service"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                >
+                                    <FileText className="h-4 2-4" />
+                                    Terms
+                                </NavLink>
+                                <NavLink
+                                    to="/policies/security"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                >
+                                    <ShieldCheck className="h-4 2-4" />
+                                    Security
+                                </NavLink>
+                                <NavLink
+                                    to="/policies/privacy"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                >
+                                    <Lock className="h-4 2-4" />
+                                    Privacy
+                                </NavLink>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                </section>
+            </section>
+            <section>
+                <ThemeToggleComponent />
+            </section>
+        </section>
+    );
+};
+
+interface INavbarMobileNavComponentProps {
     setIsSheetOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const NavbarNavContentComponent = (props: INavbarNavComponentProps) => {
+const NavbarMobileNavContentComponent = (props: INavbarMobileNavComponentProps) => {
     const closeSheet = () => {
         if (props.setIsSheetOpen) {
             props.setIsSheetOpen(false);
@@ -143,65 +288,15 @@ const NavbarNavContentComponent = (props: INavbarNavComponentProps) => {
                         <Calendar />
                         Matches
                     </NavLink>
+                    <NavLink
+                        to="/competitions/all"
+                        className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                        onClick={() => closeSheet()}
+                    >
+                        <Trophy />
+                        Competitions
+                    </NavLink>
                     <Accordion type="single" collapsible className="p-0">
-                        <AccordionItem value="competitions" className="border-0">
-                            <AccordionTrigger className="p-2 rounded-md hover:bg-muted hover:no-underline">
-                                <section className="flex gap-2 items-center ">
-                                    <Trophy />
-                                    Competitions
-                                </section>
-                            </AccordionTrigger>
-                            <AccordionContent>
-                                <NavLink
-                                    to="/competitions/all"
-                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
-                                    onClick={() => closeSheet()}
-                                >
-                                    <View className="h-4 2-4" />
-                                    View all competitions
-                                </NavLink>
-                                <section className="w-full flex flex-col items-start gap-2">
-                                    <section className="w-full flex flex-col items-start gap-2">
-                                        <p className="w-full pl-2 font-light">Top Leagues</p>
-                                        {topLeagues.map((league) => (
-                                            <NavLink
-                                                key={league.name}
-                                                to={league.to}
-                                                className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
-                                                onClick={() => closeSheet()}
-                                            >
-                                                <ApiFootballLogoComponent
-                                                    src={league.logo}
-                                                    alt={`${league.name} logo`}
-                                                    width={20}
-                                                    height={20}
-                                                />
-                                                {league.name}
-                                            </NavLink>
-                                        ))}
-                                    </section>
-                                    <section className="w-full flex flex-col items-start gap-2">
-                                        <p className="w-full pl-2 font-light">Top Cups</p>
-                                        {topCups.map((cup) => (
-                                            <NavLink
-                                                key={cup.name}
-                                                to={cup.to}
-                                                className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
-                                                onClick={() => closeSheet()}
-                                            >
-                                                <ApiFootballLogoComponent
-                                                    src={cup.logo}
-                                                    alt={`${cup.name} logo`}
-                                                    width={20}
-                                                    height={20}
-                                                />
-                                                {cup.name}
-                                            </NavLink>
-                                        ))}
-                                    </section>
-                                </section>
-                            </AccordionContent>
-                        </AccordionItem>
                         <AccordionItem value="more" className="border-0">
                             <AccordionTrigger className="p-2 rounded-md hover:bg-muted hover:no-underline">
                                 <section className="flex gap-2 items-center ">
