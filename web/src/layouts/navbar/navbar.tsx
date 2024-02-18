@@ -127,7 +127,10 @@ const NavbarNavContentComponent = (_props: INavbarNavComponentProps) => {
                     <h3 className="text-2xl font-black">UltrasHub</h3>
                 </a>
                 <section className="flex flex-col gap-2">
-                    <NavLink to="/" className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted">
+                    <NavLink
+                        to="/"
+                        className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted font-medium"
+                    >
                         <Calendar />
                         Matches
                     </NavLink>
@@ -282,7 +285,7 @@ const NavbarMobileNavContentComponent = (props: INavbarMobileNavComponentProps) 
                 <section className="flex flex-col gap-2">
                     <NavLink
                         to="/"
-                        className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                        className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted font-medium"
                         onClick={() => closeSheet()}
                     >
                         <Calendar />
@@ -290,7 +293,7 @@ const NavbarMobileNavContentComponent = (props: INavbarMobileNavComponentProps) 
                     </NavLink>
                     <NavLink
                         to="/competitions/all"
-                        className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                        className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted font-medium"
                         onClick={() => closeSheet()}
                     >
                         <Trophy />
