@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { IMatch } from "@/components/common/api-football-response";
 import { DateToolbox } from "@/components/common/toolbox/date";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { MatchScorelineComponent } from "../../match-scoreline/match-scoreline";
+import { MatchScorelineComponent } from "@/components/common/match-scoreline/match-scoreline";
 import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
 
 interface IMatchH2HRecentMatchesComponentProps {
