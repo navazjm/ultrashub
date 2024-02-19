@@ -16,7 +16,6 @@ export const CompetitionsSearchComponent = (props: ICompetitionsSearchComponentP
     const debouncedValue = useDebounce(searchTerm, 200);
 
     useEffect(() => {
-        console.log("Debounced value:", debouncedValue);
         const newFilteredCompetitions = props.allCompetitions.filter((comp) => {
             return comp.league.name.toLocaleLowerCase().includes(debouncedValue.toLocaleLowerCase());
         });
