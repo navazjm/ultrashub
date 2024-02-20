@@ -29,7 +29,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                         >
                             <Route path="/" element={<MatchesPage />} />
                             <Route path="/matches/date/:date?" element={<MatchesPage />} />
-                            <Route path="/match/id/:id" element={<MatchPage />} />
+                            <Route path="/matches/id/:id" element={<MatchPage />} />
                             <Route path="/competitions/all" element={<CompetitionsPage />} />
                             <Route path="/competitions/id/:id" element={<CompetitionPage />} />
                             <Route path="/policies/terms-of-service" element={<TermsOfServicePage />} />
