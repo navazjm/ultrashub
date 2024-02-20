@@ -8,6 +8,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { useMatchList } from "./matches-list.hooks";
 import { ErrorComponent } from "@/components/common/error/error";
 import { IMatches } from "../matches.types";
+import { NavLink } from "react-router-dom";
 
 interface IMatchesListComponentProps extends IProps {
     date: string | undefined;
@@ -55,7 +56,14 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
 
         return (
             <section key={item.competitionID}>
-                <h4 className="text-lg font-semibold mb-3 sm:mb-5">{item.displayName}</h4>
+                <h4 className="text-lg font-semibold mb-3 sm:mb-5">
+                    <NavLink
+                        to={`/competitions/id/${item.matches[0].league.id}`}
+                        className="hover:font-black focus:font-black"
+                    >
+                        {item.displayName}
+                    </NavLink>
+                </h4>
                 <section className="flex flex-row content-center gap-2 flex-wrap">
                     {item.matches.map((match) => (
                         <MatchesListItemComponent match={match} key={match.fixture.id} showScores={data.showScores} />

@@ -1,6 +1,7 @@
 import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
 import { IMatchLineup, IMatchLineupPlayer, IMatchLineupTeamColor } from "@/components/common/api-football-response";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { NavLink } from "react-router-dom";
 
 interface IMatchLineupsFormationsItemComponentProps {
     lineup: IMatchLineup;
@@ -46,14 +47,14 @@ export const MatchLineupsFormationsItemComponent = (props: IMatchLineupsFormatio
         <section className={`flex items-center justify-between ${props.reverse && "flex-row-reverse"}`}>
             <section className="flex flex-col justify-between h-full">
                 <section className="font-thin">{props.lineup.formation}</section>
-                <section>
+                <NavLink to={`/clubs/id/${props.lineup.team.id}`}>
                     <ApiFootballLogoComponent
                         src={props.lineup.team.logo}
                         alt={`${props.lineup.team.name} logo`}
                         width={30}
                         height={30}
                     />
-                </section>
+                </NavLink>
                 <section></section>
             </section>
             <section className={`flex items-center gap-3 ${props.reverse && "flex-row-reverse"} p-5`}>

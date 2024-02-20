@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { IMatch } from "@/components/common/api-football-response";
 import { DateToolbox } from "@/components/common/toolbox/date";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { MatchScorelineComponent } from "../../match-scoreline/match-scoreline";
+import { MatchScorelineComponent } from "@/components/common/match-scoreline/match-scoreline";
 import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
 
 interface IMatchH2HRecentMatchesComponentProps {
@@ -15,8 +15,8 @@ export const MatchH2HRecentMatchesComponent = (props: IMatchH2HRecentMatchesComp
     return (
         <section className="flex flex-col gap-2">
             {last5Matches.map((match) => (
-                <NavLink to={`/match/id/${match.fixture.id}`} key={match.fixture.id}>
-                    <Card className="hover:bg-muted">
+                <NavLink to={`/matches/id/${match.fixture.id}`} key={match.fixture.id}>
+                    <Card className="hover:bg-muted focus:bg-muted">
                         <CardHeader className="flex-1 flex flex-col justify-center items-center font-extralight text-sm p-2">
                             <section>{`${match.league.season} ${match.league.name}`}</section>
                             <section>

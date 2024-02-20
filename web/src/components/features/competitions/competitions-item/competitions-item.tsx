@@ -10,7 +10,7 @@ interface ICompetitionsItemComponentProps {
 export const CompetitionsItemComponent = (props: ICompetitionsItemComponentProps) => {
     return (
         <NavLink key={props.competition.league.id} to={`/competitions/id/${props.competition.league.id}`}>
-            <Card className="hover:bg-muted">
+            <Card className="hover:bg-muted focus:bg-muted">
                 <CardContent className="flex flex-row justify-between items-center p-3">
                     <section className="flex gap-2 items-center">
                         {props.competition.league.logo && (

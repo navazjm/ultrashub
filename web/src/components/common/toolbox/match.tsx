@@ -57,7 +57,7 @@ export class MatchToolbox {
             // display kickoff time
             case "NS":
                 const date = new Date(fixture.date);
-                return `${date.toLocaleTimeString()}`;
+                return `${date.toLocaleTimeString([], { timeStyle: "short" })}`;
             // custom
             case "AET":
                 return "FT (ET)";

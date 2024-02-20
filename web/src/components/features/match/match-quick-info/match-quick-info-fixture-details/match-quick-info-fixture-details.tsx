@@ -13,7 +13,7 @@ export const MatchQuickInfoFixtureDetailsComponent = (props: IMatchQuickInfoFixt
     const matchDay = DateToolbox.getDayOfTheWeek(matchDate.getDay()).slice(0, 3);
 
     const hasMatchLocation = !!props.fixture.venue.name && !!props.fixture.venue.city;
-    const matchLocation = `${props.fixture.venue.name}, ${props.fixture.venue.city}`;
+    const matchLocation = `${props.fixture.venue.name}, ${props.fixture.venue.city.split(",")[0]}`;
 
     const hasReferee = !!props.fixture.referee;
 

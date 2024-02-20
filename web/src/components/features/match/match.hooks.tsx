@@ -135,6 +135,7 @@ export const useMatch = (matchID: string) => {
         };
 
         const getUseMatchData = async () => {
+            setStatus("loading");
             const fetchMatchByIDResp: IFetchMatchByIDResponse | null = await fetchMatchByID();
             if (!fetchMatchByIDResp) {
                 setStatus("error");
