@@ -13,7 +13,7 @@ interface ICompetitionMatchesItemComponentProps {
 export const CompetitionMatchesItemComponent = (props: ICompetitionMatchesItemComponentProps) => {
     return (
         <NavLink to={`/match/id/${props.match.fixture.id}`} className="w-full">
-            <Card className="w-full p-3 hover:bg-muted">
+            <Card className="w-full p-3 hover:bg-muted focus:bg-muted">
                 <CardContent className="p-2 flex items-center justify-center gap-5">
                     <section className="flex-1 flex items-center justify-end gap-2">
                         <h5 className="hidden sm:block">{props.match.teams.home.name}</h5>

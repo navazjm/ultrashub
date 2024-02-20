@@ -13,7 +13,7 @@ export const CompetitionClubsComponent = (props: ICompetitionClubsComponentProps
         <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2">
             {props.clubs.map((club) => (
                 <NavLink key={club.id} to={`/club/id/${club.id}`}>
-                    <Card className="w-full p-3 hover:bg-muted">
+                    <Card className="w-full p-3 hover:bg-muted focus:bg-muted">
                         <CardContent className="p-2 flex justify-between items-center">
                             <section className="flex items-center gap-2">
                                 <ApiFootballLogoComponent

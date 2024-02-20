@@ -8,6 +8,7 @@ import {
 import { MatchToolbox } from "@/components/common/toolbox/match";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { NavLink } from "react-router-dom";
 
 interface IMatchLineupsSquadsItemComponentProps {
     lineup: IMatchLineup;
@@ -16,15 +17,18 @@ interface IMatchLineupsSquadsItemComponentProps {
 export const MatchLineupsSquadsItemComponent = (props: IMatchLineupsSquadsItemComponentProps) => {
     return (
         <section>
-            <section className="flex items-center gap-2">
+            <NavLink
+                to={`/clubs/id/${props.lineup.team.id}`}
+                className="flex items-center gap-2 font-bold hover:font-black focus:font-black"
+            >
                 <ApiFootballLogoComponent
                     src={props.lineup.team.logo}
                     alt={`${props.lineup.team.name} logo`}
                     width={30}
                     height={30}
                 />
-                <h3 className="text-xl font-bold">{props.lineup.team.name}</h3>
-            </section>
+                <h3 className="text-xl">{props.lineup.team.name}</h3>
+            </NavLink>
             <Separator className="my-5" />
             <section>
                 <h5 className="text-xl mb-5">Starting XI</h5>

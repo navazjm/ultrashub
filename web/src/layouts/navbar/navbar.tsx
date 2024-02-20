@@ -129,14 +129,14 @@ const NavbarNavContentComponent = (_props: INavbarNavComponentProps) => {
                 <section className="flex flex-col gap-2">
                     <NavLink
                         to="/"
-                        className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted font-medium"
+                        className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted focus:bg-muted font-medium"
                     >
                         <Calendar />
                         Matches
                     </NavLink>
                     <Accordion type="single" collapsible className="p-0">
                         <AccordionItem value="competitions" className="border-0">
-                            <AccordionTrigger className="p-2 rounded-md hover:bg-muted hover:no-underline">
+                            <AccordionTrigger className="p-2 rounded-md hover:bg-muted hover:no-underline focus:bg-muted focus:no-underline">
                                 <section className="flex gap-2 items-center ">
                                     <Trophy />
                                     Competitions
@@ -145,7 +145,7 @@ const NavbarNavContentComponent = (_props: INavbarNavComponentProps) => {
                             <AccordionContent>
                                 <NavLink
                                     to="/competitions/all"
-                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted focus:bg-muted"
                                 >
                                     <View className="h-4 2-4" />
                                     View all competitions
@@ -157,7 +157,7 @@ const NavbarNavContentComponent = (_props: INavbarNavComponentProps) => {
                                             <NavLink
                                                 key={league.name}
                                                 to={league.to}
-                                                className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                                className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted focus:bg-muted"
                                             >
                                                 <ApiFootballLogoComponent
                                                     src={league.logo}
@@ -175,7 +175,7 @@ const NavbarNavContentComponent = (_props: INavbarNavComponentProps) => {
                                             <NavLink
                                                 key={cup.name}
                                                 to={cup.to}
-                                                className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                                className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted focus:bg-muted"
                                             >
                                                 <ApiFootballLogoComponent
                                                     src={cup.logo}
@@ -191,7 +191,7 @@ const NavbarNavContentComponent = (_props: INavbarNavComponentProps) => {
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="more" className="border-0">
-                            <AccordionTrigger className="p-2 rounded-md hover:bg-muted hover:no-underline">
+                            <AccordionTrigger className="p-2 rounded-md hover:bg-muted hover:no-underline focus:bg-muted focus:no-underline">
                                 <section className="flex gap-2 items-center ">
                                     <Info />
                                     More
@@ -202,7 +202,7 @@ const NavbarNavContentComponent = (_props: INavbarNavComponentProps) => {
                                     href="mailto:contact@ultrashub.io"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted focus:bg-muted"
                                 >
                                     <Mail className="h-4 2-4" />
                                     Contact
@@ -211,7 +211,7 @@ const NavbarNavContentComponent = (_props: INavbarNavComponentProps) => {
                                     href="https://ko-fi.com/ultrashub"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted focus:bg-muted"
                                 >
                                     <CircleDollarSignIcon className="h-4 2-4" />
                                     Support
@@ -220,7 +220,7 @@ const NavbarNavContentComponent = (_props: INavbarNavComponentProps) => {
                                     href="https://github.com/navazjm/ultrashub"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted focus:bg-muted"
                                 >
                                     <Code2 className="h-4 2-4" />
                                     GitHub
@@ -229,7 +229,7 @@ const NavbarNavContentComponent = (_props: INavbarNavComponentProps) => {
                                     to="/policies/terms-of-service"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted focus:bg-muted"
                                 >
                                     <FileText className="h-4 2-4" />
                                     Terms
@@ -238,7 +238,7 @@ const NavbarNavContentComponent = (_props: INavbarNavComponentProps) => {
                                     to="/policies/security"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted focus:bg-muted"
                                 >
                                     <ShieldCheck className="h-4 2-4" />
                                     Security
@@ -247,7 +247,7 @@ const NavbarNavContentComponent = (_props: INavbarNavComponentProps) => {
                                     to="/policies/privacy"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted focus:bg-muted"
                                 >
                                     <Lock className="h-4 2-4" />
                                     Privacy
@@ -285,7 +285,7 @@ const NavbarMobileNavContentComponent = (props: INavbarMobileNavComponentProps) 
                 <section className="flex flex-col gap-2">
                     <NavLink
                         to="/"
-                        className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted font-medium"
+                        className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted focus:bg-muted font-medium"
                         onClick={() => closeSheet()}
                     >
                         <Calendar />
@@ -293,7 +293,7 @@ const NavbarMobileNavContentComponent = (props: INavbarMobileNavComponentProps) 
                     </NavLink>
                     <NavLink
                         to="/competitions/all"
-                        className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted font-medium"
+                        className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted focus:bg-muted font-medium"
                         onClick={() => closeSheet()}
                     >
                         <Trophy />
@@ -301,7 +301,7 @@ const NavbarMobileNavContentComponent = (props: INavbarMobileNavComponentProps) 
                     </NavLink>
                     <Accordion type="single" collapsible className="p-0">
                         <AccordionItem value="more" className="border-0">
-                            <AccordionTrigger className="p-2 rounded-md hover:bg-muted hover:no-underline">
+                            <AccordionTrigger className="p-2 rounded-md hover:bg-muted hover:no-underline focus:bg-muted focus:no-underline">
                                 <section className="flex gap-2 items-center ">
                                     <Info />
                                     More
@@ -312,7 +312,7 @@ const NavbarMobileNavContentComponent = (props: INavbarMobileNavComponentProps) 
                                     href="mailto:contact@ultrashub.io"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted focus:bg-muted"
                                     onClick={() => closeSheet()}
                                 >
                                     <Mail className="h-4 2-4" />
@@ -322,7 +322,7 @@ const NavbarMobileNavContentComponent = (props: INavbarMobileNavComponentProps) 
                                     href="https://ko-fi.com/ultrashub"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted focus:bg-muted"
                                     onClick={() => closeSheet()}
                                 >
                                     <CircleDollarSignIcon className="h-4 2-4" />
@@ -332,7 +332,7 @@ const NavbarMobileNavContentComponent = (props: INavbarMobileNavComponentProps) 
                                     href="https://github.com/navazjm/ultrashub"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted focus:bg-muted"
                                     onClick={() => closeSheet()}
                                 >
                                     <Code2 className="h-4 2-4" />
@@ -342,7 +342,7 @@ const NavbarMobileNavContentComponent = (props: INavbarMobileNavComponentProps) 
                                     to="/policies/terms-of-service"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted focus:bg-muted"
                                     onClick={() => closeSheet()}
                                 >
                                     <FileText className="h-4 2-4" />
@@ -352,7 +352,7 @@ const NavbarMobileNavContentComponent = (props: INavbarMobileNavComponentProps) 
                                     to="/policies/security"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted focus:bg-muted"
                                     onClick={() => closeSheet()}
                                 >
                                     <ShieldCheck className="h-4 2-4" />
@@ -362,7 +362,7 @@ const NavbarMobileNavContentComponent = (props: INavbarMobileNavComponentProps) 
                                     to="/policies/privacy"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted"
+                                    className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted focus:bg-muted"
                                     onClick={() => closeSheet()}
                                 >
                                     <Lock className="h-4 2-4" />

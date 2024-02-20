@@ -57,7 +57,10 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
         return (
             <section key={item.competitionID}>
                 <h4 className="text-lg font-semibold mb-3 sm:mb-5">
-                    <NavLink to={`/competitions/id/${item.matches[0].league.id}`} className="hover:underline">
+                    <NavLink
+                        to={`/competitions/id/${item.matches[0].league.id}`}
+                        className="hover:font-black focus:font-black"
+                    >
                         {item.displayName}
                     </NavLink>
                 </h4>

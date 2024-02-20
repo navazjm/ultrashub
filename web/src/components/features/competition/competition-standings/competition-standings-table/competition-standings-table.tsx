@@ -1,6 +1,7 @@
 import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
 import { IStandingsByTeam } from "@/components/common/api-football-response";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { NavLink } from "react-router-dom";
 
 interface ICompetitionStandingsTableProps {
     standings: IStandingsByTeam[];
@@ -36,7 +37,10 @@ export const CompetitionStandingsTable = (props: ICompetitionStandingsTableProps
                     >
                         <TableCell className="p-1">{club.rank}</TableCell>
                         <TableCell className="p-1">
-                            <section className="flex items-center gap-2">
+                            <NavLink
+                                to={`/clubs/id/${club.team.id}`}
+                                className="flex items-center gap-2 hover:font-semibold focus:font-semibold"
+                            >
                                 <ApiFootballLogoComponent
                                     src={club.team.logo}
                                     alt={`${club.team.name} logo`}
@@ -44,7 +48,7 @@ export const CompetitionStandingsTable = (props: ICompetitionStandingsTableProps
                                     height={30}
                                 />
                                 <p className="hidden md:block">{club.team.name}</p>
-                            </section>
+                            </NavLink>
                         </TableCell>
                         <TableCell className="p-1 font-black">{club.points}</TableCell>
                         <TableCell className="p-1">{club.all.played}</TableCell>

@@ -16,7 +16,7 @@ export const MatchH2HRecentMatchesComponent = (props: IMatchH2HRecentMatchesComp
         <section className="flex flex-col gap-2">
             {last5Matches.map((match) => (
                 <NavLink to={`/match/id/${match.fixture.id}`} key={match.fixture.id}>
-                    <Card className="hover:bg-muted">
+                    <Card className="hover:bg-muted focus:bg-muted">
                         <CardHeader className="flex-1 flex flex-col justify-center items-center font-extralight text-sm p-2">
                             <section>{`${match.league.season} ${match.league.name}`}</section>
                             <section>
