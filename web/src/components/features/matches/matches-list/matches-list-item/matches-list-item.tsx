@@ -25,7 +25,7 @@ export const MatchesListItemComponent = (props: IMatchesListItemComponentProps) 
                             ${props.showScores && !matchInProgress && props.match.teams.away.winner && "opacity-40"}`}
                     >
                         <NavLink
-                            to={`/clubs/id/${props.match.teams.home.id}`}
+                            to={`/teams/id/${props.match.teams.home.id}`}
                             className="flex items-center gap-2  hover:font-bold focus:font-bold"
                         >
                             <ApiFootballLogoComponent
@@ -49,7 +49,7 @@ export const MatchesListItemComponent = (props: IMatchesListItemComponentProps) 
                         className={`flex justify-between content-center ${props.showScores && !matchInProgress && props.match.teams.home.winner && "opacity-40"}`}
                     >
                         <NavLink
-                            to={`/clubs/id/${props.match.teams.away.id}`}
+                            to={`/teams/id/${props.match.teams.away.id}`}
                             className="flex items-center gap-2 hover:font-bold focus:font-bold"
                         >
                             <ApiFootballLogoComponent

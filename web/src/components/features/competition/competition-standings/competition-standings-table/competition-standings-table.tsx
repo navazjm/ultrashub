@@ -38,7 +38,7 @@ export const CompetitionStandingsTable = (props: ICompetitionStandingsTableProps
                         <TableCell className="p-1">{club.rank}</TableCell>
                         <TableCell className="p-1">
                             <NavLink
-                                to={`/clubs/id/${club.team.id}`}
+                                to={`/teams/id/${club.team.id}`}
                                 className="flex items-center gap-2 hover:font-semibold focus:font-semibold"
                             >
                                 <ApiFootballLogoComponent

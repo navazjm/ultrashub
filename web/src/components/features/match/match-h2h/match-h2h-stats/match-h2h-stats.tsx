@@ -59,7 +59,7 @@ export const MatchH2HStatsComponent = (props: IMatchH2HStatsComponentProps) => {
         <Card>
             <CardHeader className="flex flex-row justify-evenly items-center p-2 space-y-0">
                 <NavLink
-                    to={`/clubs/id/${props.homeTeam.id}`}
+                    to={`/teams/id/${props.homeTeam.id}`}
                     className="flex items-center gap-2 font-bold hover:font-black focus:font-black"
                 >
                     <ApiFootballLogoComponent
@@ -71,7 +71,7 @@ export const MatchH2HStatsComponent = (props: IMatchH2HStatsComponentProps) => {
                     <h5 className="text-lg hidden sm:block">{props.homeTeam.name}</h5>
                 </NavLink>
                 <NavLink
-                    to={`/clubs/id/${props.awayTeam.id}`}
+                    to={`/teams/id/${props.awayTeam.id}`}
                     className="flex items-center gap-2 font-bold hover:font-black focus:font-black"
                 >
                     <h5 className="text-lg hidden sm:block">{props.awayTeam.name}</h5>

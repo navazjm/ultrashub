@@ -17,7 +17,7 @@ export const MatchQuickInfoCardContentComponent = (props: IMatchQuickInfoCardCon
             <section className="flex justify-between items-center">
                 <section className="flex-1">
                     <NavLink
-                        to={`/clubs/id/${props.match.teams.home.id}`}
+                        to={`/teams/id/${props.match.teams.home.id}`}
                         className="flex items-center gap-2 font-bold hover:font-black focus:font-black"
                     >
                         <ApiFootballLogoComponent
@@ -36,7 +36,7 @@ export const MatchQuickInfoCardContentComponent = (props: IMatchQuickInfoCardCon
 
                 <section className="flex-1">
                     <NavLink
-                        to={`/clubs/id/${props.match.teams.away.id}`}
+                        to={`/teams/id/${props.match.teams.away.id}`}
                         className="flex items-center justify-end gap-2 font-bold hover:font-black focus:font-black"
                     >
                         <h3 className="text-xl hidden sm:block">{props.match.teams.away.name}</h3>

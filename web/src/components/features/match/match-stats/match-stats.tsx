@@ -30,7 +30,7 @@ export const MatchStatsComponent = (props: IMatchStatsComponentProps) => {
             <Separator />
             <section className="w-full p-3 flex justify-between">
                 <NavLink
-                    to={`/clubs/id/${props.stats[0].team.id}`}
+                    to={`/teams/id/${props.stats[0].team.id}`}
                     className="flex flex-1 justify-center items-center gap-2  font-bold hover:font-black focus:font-black"
                 >
                     <ApiFootballLogoComponent
@@ -43,7 +43,7 @@ export const MatchStatsComponent = (props: IMatchStatsComponentProps) => {
                 </NavLink>
                 <section className="w-[175px]"></section>
                 <NavLink
-                    to={`/clubs/id/${props.stats[1].team.id}`}
+                    to={`/teams/id/${props.stats[1].team.id}`}
                     className="flex flex-1 justify-center items-center gap-2 font-bold hover:font-black focus:font-black"
                 >
                     <h5 className="hidden sm:block text-lg">{props.stats[1].team.name}</h5>
