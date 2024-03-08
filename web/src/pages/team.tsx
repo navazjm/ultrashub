@@ -1,3 +1,4 @@
+import { TeamComponent } from "@/components/features/team/team";
 import { useParams } from "react-router-dom";
 
 interface ITeamPageParams {
@@ -9,7 +10,7 @@ export const TeamPage = () => {
 
     return (
         <>
-            <h3>Welcome to Team {id} Page</h3>
+            <TeamComponent teamID={id} />
         </>
     );
 };

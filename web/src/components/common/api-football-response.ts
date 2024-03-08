@@ -425,3 +425,36 @@ export interface IPlayerStatsStatsInfoTeam {
     logo: string;
     name: string;
 }
+
+// End Player Stats Types
+
+// Teams Types
+
+export interface ITeamsResponse extends IBaseResponse {
+    response: ITeams[];
+}
+
+export interface ITeams {
+    team: ITeamsTeam;
+    venue: ITeamsVenue;
+}
+
+export interface ITeamsTeam {
+    id: number;
+    name: string;
+    code: string;
+    country: string;
+    founded: number;
+    national: boolean;
+    logo: string;
+}
+
+export interface ITeamsVenue {
+    id: number;
+    name: string;
+    address: string;
+    city: string;
+    capacity: number;
+    surface: string;
+    image: string;
+}
