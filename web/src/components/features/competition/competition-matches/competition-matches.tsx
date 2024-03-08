@@ -1,5 +1,5 @@
 import { IMatch } from "@/components/common/api-football-response";
-import { CompetitionMatchesItemComponent } from "./competition-matches-item/competition-matches-item";
+import { MatchItemComponent } from "@/components/common/match-item/match-item";
 import { Separator } from "@/components/ui/separator";
 
 interface IMatchesByDate {
@@ -36,11 +36,7 @@ export const CompetitionMatchesComponent = (props: ICompetitionMatchesComponentP
                     <h3 className="font-bold text-lg text-center">{group.date}</h3>
                     <section className="flex flex-row items-center flex-wrap gap-2">
                         {group.matches.map((match) => (
-                            <CompetitionMatchesItemComponent
-                                key={match.fixture.id}
-                                match={match}
-                                isResult={props.isResult}
-                            />
+                            <MatchItemComponent key={match.fixture.id} match={match} isResult={props.isResult} />
                         ))}
                     </section>
                     <Separator />

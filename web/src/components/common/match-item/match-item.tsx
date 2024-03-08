@@ -5,12 +5,12 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { MatchScorelineComponent } from "@/components/common/match-scoreline/match-scoreline";
 
-interface ICompetitionMatchesItemComponentProps {
+interface IMatchItemComponentProps {
     match: IMatch;
     isResult: boolean;
 }
 
-export const CompetitionMatchesItemComponent = (props: ICompetitionMatchesItemComponentProps) => {
+export const MatchItemComponent = (props: IMatchItemComponentProps) => {
     return (
         <NavLink to={`/matches/id/${props.match.fixture.id}`} className="w-full">
             <Card className="w-full p-3 hover:bg-muted focus:bg-muted">
@@ -25,7 +25,7 @@ export const CompetitionMatchesItemComponent = (props: ICompetitionMatchesItemCo
                         />
                     </section>
                     <section>
-                        <CompetitionMatchesItemStatusComponent match={props.match} isResult={props.isResult} />{" "}
+                        <MatchItemStatusComponent match={props.match} isResult={props.isResult} />{" "}
                     </section>
                     <section className="flex-1 flex items-center gap-2">
                         <ApiFootballLogoComponent
@@ -42,12 +42,12 @@ export const CompetitionMatchesItemComponent = (props: ICompetitionMatchesItemCo
     );
 };
 
-interface ICompetitionMatchesItemStatusComponentProps {
+interface IMatchItemStatusComponentProps {
     match: IMatch;
     isResult: boolean;
 }
 
-export const CompetitionMatchesItemStatusComponent = (props: ICompetitionMatchesItemStatusComponentProps) => {
+export const MatchItemStatusComponent = (props: IMatchItemStatusComponentProps) => {
     if (props.isResult) {
         return (
             <>
