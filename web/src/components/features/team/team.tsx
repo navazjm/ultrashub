@@ -49,21 +49,21 @@ export const TeamComponent = (props: ITeamComponentProps) => {
                     <TabsTrigger value="squad">Squad</TabsTrigger>
                 </TabsList>
                 <TabsContent value="fixtures" className="w-full mb-3">
-                    {data.fixtures && data.fixtures.length > 0 ? (
+                    {data.fixtures.length > 0 ? (
                         <TeamMatchesComponent matches={data.fixtures} isResult={false} />
                     ) : (
                         <p className="text-center my-2">No match fixtures found. Try again later.</p>
                     )}
                 </TabsContent>
                 <TabsContent value="results" className="w-full mb-3">
-                    {data.results && data.results.length > 0 ? (
+                    {data.results.length > 0 ? (
                         <TeamMatchesComponent matches={data.results} isResult={true} />
                     ) : (
                         <p className="text-center my-2">No match results found. Try again later.</p>
                     )}
                 </TabsContent>
                 <TabsContent value="squad" className="w-full mb-3">
-                    {data.squad ? (
+                    {data.squad.length > 0 ? (
                         <>Squad data</>
                     ) : (
                         <p className="text-center my-2">No squad data found. Try again later.</p>

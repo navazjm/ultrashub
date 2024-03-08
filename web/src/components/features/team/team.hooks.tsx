@@ -1,4 +1,11 @@
-import { IMatch, IMatchResponse, ITeams, ITeamsResponse } from "@/components/common/api-football-response";
+import {
+    IMatch,
+    IMatchResponse,
+    IPlayersSquadsPlayers,
+    IPlayersSquadsResponse,
+    ITeams,
+    ITeamsResponse,
+} from "@/components/common/api-football-response";
 import { MatchToolbox } from "@/components/common/toolbox/match";
 import axios from "@/lib/axios";
 import { AxiosResponse } from "axios";
@@ -6,16 +13,16 @@ import { useEffect, useState } from "react";
 
 export interface IUseTeamData {
     team: ITeams | null;
-    fixtures: IMatch[] | null;
-    results: IMatch[] | null;
-    squad: any;
+    fixtures: IMatch[];
+    results: IMatch[];
+    squad: IPlayersSquadsPlayers[];
 }
 
 export const useTeam = (teamID: string) => {
     const [team, setTeam] = useState<ITeams | null>(null);
-    const [fixtures, setFixtures] = useState<IMatch[] | null>(null);
-    const [results, setResults] = useState<IMatch[] | null>(null);
-    const [squad, setSquad] = useState<any | null>(null);
+    const [fixtures, setFixtures] = useState<IMatch[]>([]);
+    const [results, setResults] = useState<IMatch[]>([]);
+    const [squad, setSquad] = useState<IPlayersSquadsPlayers[]>([]);
     const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
 
     useEffect(() => {
@@ -37,6 +44,8 @@ export const useTeam = (teamID: string) => {
         };
 
         const fetchMatchesByTeamID = async (teamID: number) => {
+            setFixtures([]);
+            setResults([]);
             const resp = await axios.get<any, AxiosResponse<IMatchResponse>>("/apifootball/fixtures", {
                 params: {
                     team: teamID,
@@ -55,7 +64,20 @@ export const useTeam = (teamID: string) => {
             setResults(newResults);
         };
 
-        const getUseCompetitionData = async () => {
+        const fetchPlayersByTeamID = async (teamID: number) => {
+            setSquad([]);
+            const resp = await axios.get<any, AxiosResponse<IPlayersSquadsResponse>>("/apifootball/players/squads", {
+                params: {
+                    team: teamID,
+                },
+            });
+            if (resp.status !== 200) {
+                return;
+            }
+            setSquad(resp.data.response[0].players);
+        };
+
+        const getUseTeamData = async () => {
             setStatus("loading");
             // other requests are dependent on this one
             // therefore set status to error if this request fails to display generic error page component
@@ -68,12 +90,15 @@ export const useTeam = (teamID: string) => {
             // we do not care if any of these fail,
             // by default their respective state variables are set to null
             // for the requests that fail, we display a generic error message
-            await Promise.all([fetchMatchesByTeamID(fetchTeamByIDResp.team.id)]);
+            await Promise.all([
+                fetchMatchesByTeamID(fetchTeamByIDResp.team.id),
+                fetchPlayersByTeamID(fetchTeamByIDResp.team.id),
+            ]);
 
             setStatus("success");
         };
 
-        getUseCompetitionData();
+        getUseTeamData();
     }, [teamID]);
 
     const isLoading = status === "loading";

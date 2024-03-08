@@ -458,3 +458,31 @@ export interface ITeamsVenue {
     surface: string;
     image: string;
 }
+
+// End Team Types
+
+// Players Squads Types
+
+export interface IPlayersSquadsResponse extends IBaseResponse {
+    response: IPlayersSquads[];
+}
+
+export interface IPlayersSquads {
+    team: IPlayersSquadsTeam;
+    players: IPlayersSquadsPlayers[];
+}
+
+export interface IPlayersSquadsTeam {
+    id: number;
+    name: string;
+    logo: string;
+}
+
+export interface IPlayersSquadsPlayers {
+    id: number;
+    name: string;
+    age: number;
+    number: number;
+    position: string;
+    photo: string;
+}
