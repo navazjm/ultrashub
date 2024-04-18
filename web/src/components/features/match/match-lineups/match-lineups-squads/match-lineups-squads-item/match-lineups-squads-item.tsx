@@ -18,7 +18,7 @@ export const MatchLineupsSquadsItemComponent = (props: IMatchLineupsSquadsItemCo
     return (
         <section>
             <NavLink
-                to={`/clubs/id/${props.lineup.team.id}`}
+                to={`/teams/id/${props.lineup.team.id}`}
                 className="flex items-center gap-2 font-bold hover:font-black focus:font-black"
             >
                 <ApiFootballLogoComponent

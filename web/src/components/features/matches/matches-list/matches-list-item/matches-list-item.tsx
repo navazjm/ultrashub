@@ -17,17 +17,14 @@ export const MatchesListItemComponent = (props: IMatchesListItemComponentProps) 
         <NavLink to={`/matches/id/${props.match.fixture.id}`} className="w-full sm:w-[300px] ">
             <Card className="w-full p-3 hover:bg-muted focus:bg-muted">
                 <CardHeader className="p-0 mb-2">
-                    <div className="font-extralight">{displayMatchStatus}</div>
+                    <section className="font-extralight">{displayMatchStatus}</section>
                 </CardHeader>
                 <CardContent className="p-0 flex flex-col gap-2">
-                    <div
+                    <section
                         className={`flex justify-between content-center 
                             ${props.showScores && !matchInProgress && props.match.teams.away.winner && "opacity-40"}`}
                     >
-                        <NavLink
-                            to={`/clubs/id/${props.match.teams.home.id}`}
-                            className="flex items-center gap-2  hover:font-bold focus:font-bold"
-                        >
+                        <section className="flex items-center gap-2">
                             <ApiFootballLogoComponent
                                 src={props.match.teams.home.logo}
                                 alt={`${props.match.teams.home.name} logo`}
@@ -35,23 +32,20 @@ export const MatchesListItemComponent = (props: IMatchesListItemComponentProps) 
                                 height={30}
                             />
                             <p>{props.match.teams.home.name}</p>
-                        </NavLink>
+                        </section>
                         {props.showScores && (
-                            <div>
+                            <section>
                                 {props.match.goals.home}
                                 {props.match.fixture.status.short === "PEN" && (
                                     <span className="ml-1">({props.match.score.penalty.home})</span>
                                 )}
-                            </div>
+                            </section>
                         )}
-                    </div>
-                    <div
+                    </section>
+                    <section
                         className={`flex justify-between content-center ${props.showScores && !matchInProgress && props.match.teams.home.winner && "opacity-40"}`}
                     >
-                        <NavLink
-                            to={`/clubs/id/${props.match.teams.away.id}`}
-                            className="flex items-center gap-2 hover:font-bold focus:font-bold"
-                        >
+                        <section className="flex items-center gap-2">
                             <ApiFootballLogoComponent
                                 src={props.match.teams.away.logo}
                                 alt={`${props.match.teams.away.name} logo`}
@@ -59,16 +53,16 @@ export const MatchesListItemComponent = (props: IMatchesListItemComponentProps) 
                                 height={30}
                             />
                             <p>{props.match.teams.away.name}</p>
-                        </NavLink>
+                        </section>
                         {props.showScores && (
-                            <div>
+                            <section>
                                 {props.match.goals.away}
                                 {props.match.fixture.status.short === "PEN" && (
                                     <span className="ml-1">({props.match.score.penalty.away})</span>
                                 )}
-                            </div>
+                            </section>
                         )}
-                    </div>
+                    </section>
                 </CardContent>
             </Card>
         </NavLink>

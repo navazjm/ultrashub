@@ -30,7 +30,7 @@ export const MatchEventsItemComponent = (props: IMatchEventsItemComponentProps) 
                     </section>
                 </section>
                 <section>
-                    <NavLink to={`/clubs/id/${props.event.team.id}`}>
+                    <NavLink to={`/teams/id/${props.event.team.id}`}>
                         <ApiFootballLogoComponent
                             src={props.event.team.logo}
                             alt={`${props.event.team.name} logo`}

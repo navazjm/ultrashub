@@ -425,3 +425,64 @@ export interface IPlayerStatsStatsInfoTeam {
     logo: string;
     name: string;
 }
+
+// End Player Stats Types
+
+// Teams Types
+
+export interface ITeamsResponse extends IBaseResponse {
+    response: ITeams[];
+}
+
+export interface ITeams {
+    team: ITeamsTeam;
+    venue: ITeamsVenue;
+}
+
+export interface ITeamsTeam {
+    id: number;
+    name: string;
+    code: string;
+    country: string;
+    founded: number;
+    national: boolean;
+    logo: string;
+}
+
+export interface ITeamsVenue {
+    id: number;
+    name: string;
+    address: string;
+    city: string;
+    capacity: number;
+    surface: string;
+    image: string;
+}
+
+// End Team Types
+
+// Players Squads Types
+
+export interface IPlayersSquadsResponse extends IBaseResponse {
+    response: IPlayersSquads[];
+}
+
+export interface IPlayersSquads {
+    team: IPlayersSquadsTeam;
+    players: IPlayersSquadsPlayers[];
+}
+
+export interface IPlayersSquadsTeam {
+    id: number;
+    name: string;
+    logo: string;
+}
+
+export interface IPlayersSquadsPlayers {
+    id: number;
+    name: string;
+    age: number;
+    number: number;
+    position: string;
+    photo: string;
+}

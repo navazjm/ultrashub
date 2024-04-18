@@ -47,7 +47,7 @@ export const MatchLineupsFormationsItemComponent = (props: IMatchLineupsFormatio
         <section className={`flex items-center justify-between ${props.reverse && "flex-row-reverse"}`}>
             <section className="flex flex-col justify-between h-full">
                 <section className="font-thin">{props.lineup.formation}</section>
-                <NavLink to={`/clubs/id/${props.lineup.team.id}`}>
+                <NavLink to={`/teams/id/${props.lineup.team.id}`}>
                     <ApiFootballLogoComponent
                         src={props.lineup.team.logo}
                         alt={`${props.lineup.team.name} logo`}

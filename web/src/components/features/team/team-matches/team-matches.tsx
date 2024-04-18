@@ -7,12 +7,12 @@ interface IMatchesByDate {
     matches: IMatch[];
 }
 
-interface ICompetitionMatchesComponentProps {
+interface ITeamMatchesComponentProps {
     matches: IMatch[];
     isResult: boolean;
 }
 
-export const CompetitionMatchesComponent = (props: ICompetitionMatchesComponentProps) => {
+export const TeamMatchesComponent = (props: ITeamMatchesComponentProps) => {
     const groupMatchesByDate: IMatchesByDate[] = [];
     props.matches.forEach((match) => {
         const foundDateMatch = groupMatchesByDate.find(
