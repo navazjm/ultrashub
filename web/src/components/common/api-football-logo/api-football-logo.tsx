@@ -12,7 +12,7 @@ export const ApiFootballLogoComponent = (props: IApiFootballLogoComponentProps) 
             src={props.src}
             alt={props.alt}
             loading="lazy"
-            className={`object-cover ${props.width ? `w-[${props.width}px]` : "w-auto"} ${
+            className={`object-scale-down ${props.width ? `w-[${props.width}px]` : "w-auto"} ${
                 props.height ? `h-[${props.height}px]` : "h-auto"
             }`}
             style={{

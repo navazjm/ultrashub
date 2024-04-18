@@ -5,7 +5,7 @@ export type MatchEventType = "goal" | "card" | "subst" | "var";
  * ! Do NOT modify unless API Football has been updated. Need to match word casing !
  */
 
-export interface IMatchResponse {
+export interface IBaseResponse {
     errors: any[];
     get: string;
     paging: {
@@ -15,6 +15,11 @@ export interface IMatchResponse {
     parameters: {
         [key: string]: string;
     };
+}
+
+// Match Types
+
+export interface IMatchResponse extends IBaseResponse {
     response: IMatch[];
 }
 
@@ -175,4 +180,309 @@ export interface IMatchLineupPlayer {
     pos: string;
     grid: string;
     events?: IMatchEvent[];
+}
+
+// End Match Types
+
+// Competition (League) Types
+
+export interface ICompetitionResponse extends IBaseResponse {
+    response: ICompetition[];
+}
+
+export interface ICompetition {
+    league: ICompetitionLeague;
+    country: ICompetitionCountry;
+    seasons: ICompetitionSeason[];
+}
+
+export interface ICompetitionLeague {
+    id: number;
+    name: string;
+    type: string;
+    logo: string;
+}
+
+export interface ICompetitionCountry {
+    name: string;
+    code: string;
+    flag: string;
+}
+
+export interface ICompetitionSeason {
+    year: number;
+    start: string;
+    end: string;
+    current: boolean;
+    coverage: ICompetitionSeasonCoverage;
+}
+
+export interface ICompetitionSeasonCoverage {
+    fixtures: ICompetitionSeasonCoverageFixtures;
+    standings: boolean;
+    players: boolean;
+    top_scorers: boolean;
+    top_assists: boolean;
+    top_cards: boolean;
+    injuries: boolean;
+    predictions: boolean;
+    odds: boolean;
+}
+
+export interface ICompetitionSeasonCoverageFixtures {
+    events: boolean;
+    lineup: boolean;
+    statistics_fixtures: boolean;
+    statistics_players: boolean;
+}
+
+// End Competition (League) Types
+
+// Standings Types
+
+export interface IStandingsResponse extends IBaseResponse {
+    response: IStandings[];
+}
+
+export interface IStandings {
+    league: IStandingsByLeague;
+}
+
+export interface IStandingsByLeague {
+    country: string;
+    flag: string;
+    id: number;
+    logo: string;
+    name: string;
+    season: number;
+    standings: IStandingsByTeam[][];
+}
+
+export interface IStandingsByTeam {
+    all: IStandingResults;
+    away: IStandingResults;
+    description: string;
+    form: string;
+    goalsDiff: number;
+    group: string;
+    home: IStandingResults;
+    points: number;
+    rank: number;
+    status: string;
+    team: IStandingTeamInfo;
+    update: Date;
+}
+
+export interface IStandingResults {
+    draw: number;
+    goals: IStandingResultsGoals;
+    lose: number;
+    played: number;
+    win: number;
+}
+
+export interface IStandingResultsGoals {
+    against: number;
+    for: number;
+}
+
+export interface IStandingTeamInfo {
+    id: number;
+    logo: string;
+    name: string;
+}
+
+// End Standings Types
+
+// Player Stats Types
+
+export interface IPlayerStatsResponse extends IBaseResponse {
+    response: IPlayerStats[];
+}
+
+export interface IPlayerStats {
+    player: IPlayerStatsPlayerInfo;
+    statistics: IPlayerStatsStatsInfo[];
+}
+
+export interface IPlayerStatsPlayerInfo {
+    age: number;
+    birth: IPlayerStatsPlayInfoBirth;
+    firstname: string;
+    height: string;
+    id: number;
+    injured: boolean;
+    lastname: string;
+    name: string;
+    nationality: string;
+    photo: string;
+    weight: string;
+}
+
+export interface IPlayerStatsPlayInfoBirth {
+    country: string;
+    date: string;
+    place: string;
+}
+
+export interface IPlayerStatsStatsInfo {
+    cards: IPlayerStatsStatsInfoCards;
+    dribbles: IPlayerStatsStatsInfoDribbles;
+    duels: IPlayerStatsStatsInfoDuels;
+    fouls: IPlayerStatsStatsInfoFouls;
+    games: IPlayerStatsStatsInfoGames;
+    goals: IPlayerStatsStatsInfoGoals;
+    league: IPlayerStatsStatsInfoLeague;
+    passes: IPlayerStatsStatsInfoPasses;
+    penalty: IPlayerStatsStatsInfoPenalty;
+    shots: IPlayerStatsStatsInfoShots;
+    substitutes: IPlayerStatsStatsInfoSubstitutes;
+    tackles: IPlayerStatsStatsInfoTackles;
+    team: IPlayerStatsStatsInfoTeam;
+}
+
+export interface IPlayerStatsStatsInfoCards {
+    red: number;
+    yellow: number;
+    yellowred: number;
+}
+
+export interface IPlayerStatsStatsInfoDribbles {
+    attempts: number;
+    past: number;
+    success: number;
+}
+
+export interface IPlayerStatsStatsInfoDuels {
+    total: number;
+    won: number;
+}
+
+export interface IPlayerStatsStatsInfoFouls {
+    committed: number;
+    drawn: number;
+}
+
+export interface IPlayerStatsStatsInfoGames {
+    appearences: number;
+    captain: boolean;
+    lineups: number;
+    minutes: number;
+    number: number;
+    position: string;
+    rating: string;
+}
+
+export interface IPlayerStatsStatsInfoGoals {
+    assists: number;
+    conceded: number;
+    saves: number;
+    total: number;
+}
+
+export interface IPlayerStatsStatsInfoLeague {
+    country: string;
+    flag: string;
+    id: number;
+    logo: string;
+    name: string;
+    season: number;
+}
+
+export interface IPlayerStatsStatsInfoPasses {
+    accuracy: number;
+    key: number;
+    total: number;
+}
+
+export interface IPlayerStatsStatsInfoPenalty {
+    commited: number;
+    missed: number;
+    saved: number;
+    scored: number;
+    won: number;
+}
+
+export interface IPlayerStatsStatsInfoShots {
+    on: number;
+    total: number;
+}
+
+export interface IPlayerStatsStatsInfoSubstitutes {
+    bench: number;
+    in: number;
+    out: number;
+}
+
+export interface IPlayerStatsStatsInfoTackles {
+    blocks: number;
+    interceptions: number;
+    total: number;
+}
+
+export interface IPlayerStatsStatsInfoTeam {
+    id: number;
+    logo: string;
+    name: string;
+}
+
+// End Player Stats Types
+
+// Teams Types
+
+export interface ITeamsResponse extends IBaseResponse {
+    response: ITeams[];
+}
+
+export interface ITeams {
+    team: ITeamsTeam;
+    venue: ITeamsVenue;
+}
+
+export interface ITeamsTeam {
+    id: number;
+    name: string;
+    code: string;
+    country: string;
+    founded: number;
+    national: boolean;
+    logo: string;
+}
+
+export interface ITeamsVenue {
+    id: number;
+    name: string;
+    address: string;
+    city: string;
+    capacity: number;
+    surface: string;
+    image: string;
+}
+
+// End Team Types
+
+// Players Squads Types
+
+export interface IPlayersSquadsResponse extends IBaseResponse {
+    response: IPlayersSquads[];
+}
+
+export interface IPlayersSquads {
+    team: IPlayersSquadsTeam;
+    players: IPlayersSquadsPlayers[];
+}
+
+export interface IPlayersSquadsTeam {
+    id: number;
+    name: string;
+    logo: string;
+}
+
+export interface IPlayersSquadsPlayers {
+    id: number;
+    name: string;
+    age: number;
+    number: number;
+    position: string;
+    photo: string;
 }

@@ -2,6 +2,7 @@ import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/
 import { IMatchEvent, MatchEventType } from "@/components/common/api-football-response";
 import { MatchToolbox } from "@/components/common/toolbox/match";
 import { Card, CardContent } from "@/components/ui/card";
+import { NavLink } from "react-router-dom";
 
 interface IMatchEventsItemComponentProps {
     event: IMatchEvent;
@@ -29,11 +30,13 @@ export const MatchEventsItemComponent = (props: IMatchEventsItemComponentProps) 
                     </section>
                 </section>
                 <section>
-                    <ApiFootballLogoComponent
-                        src={props.event.team.logo}
-                        alt={`${props.event.team.name} logo`}
-                        width={30}
-                    />
+                    <NavLink to={`/teams/id/${props.event.team.id}`}>
+                        <ApiFootballLogoComponent
+                            src={props.event.team.logo}
+                            alt={`${props.event.team.name} logo`}
+                            width={30}
+                        />
+                    </NavLink>
                 </section>
             </CardContent>
         </Card>

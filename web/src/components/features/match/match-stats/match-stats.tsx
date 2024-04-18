@@ -2,6 +2,7 @@ import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/
 import { IMatchStat } from "@/components/common/api-football-response";
 import { StringsToolbox } from "@/components/common/toolbox/strings";
 import { Separator } from "@/components/ui/separator";
+import { NavLink } from "react-router-dom";
 
 interface IMatchStatsComponentProps {
     stats: IMatchStat[];
@@ -28,25 +29,31 @@ export const MatchStatsComponent = (props: IMatchStatsComponentProps) => {
             <h5 className="text-center text-3xl font-bold my-5">Match Stats</h5>
             <Separator />
             <section className="w-full p-3 flex justify-between">
-                <section className="flex flex-1 justify-center items-center gap-2">
+                <NavLink
+                    to={`/teams/id/${props.stats[0].team.id}`}
+                    className="flex flex-1 justify-center items-center gap-2  font-bold hover:font-black focus:font-black"
+                >
                     <ApiFootballLogoComponent
                         src={props.stats[0].team.logo}
                         alt={`${props.stats[0].team.name} logo`}
                         width={30}
                         height={30}
                     />
-                    <h5 className="hidden sm:block text-lg font-bold">{props.stats[0].team.name}</h5>
-                </section>
+                    <h5 className="hidden sm:block text-lg">{props.stats[0].team.name}</h5>
+                </NavLink>
                 <section className="w-[175px]"></section>
-                <section className="flex flex-1 justify-center items-center gap-2">
-                    <h5 className="hidden sm:block text-lg font-bold">{props.stats[1].team.name}</h5>
+                <NavLink
+                    to={`/teams/id/${props.stats[1].team.id}`}
+                    className="flex flex-1 justify-center items-center gap-2 font-bold hover:font-black focus:font-black"
+                >
+                    <h5 className="hidden sm:block text-lg">{props.stats[1].team.name}</h5>
                     <ApiFootballLogoComponent
                         src={props.stats[1].team.logo}
                         alt={`${props.stats[1].team.name} logo`}
                         width={30}
                         height={30}
                     />
-                </section>
+                </NavLink>
             </section>
             <Separator />
             <section>

@@ -14,23 +14,23 @@ export const BackNavigationComponent = (props: IBackNavigationComponentProps) =>
     // determine if previous page was from ultrashub origin
     const isPreviousPageFromUH = document.referrer.includes(window.location.origin);
 
+    if (!isPreviousPageFromUH || !props.title) {
+        return <></>;
+    }
+
     return (
         <section className="h-[40px] flex flex-row items-center gap-2">
-            {isPreviousPageFromUH && (
-                <>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
-                                <ArrowLeftToLine />
-                            </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            <p>Go back</p>
-                        </TooltipContent>
-                    </Tooltip>
-                    <Separator orientation="vertical" />
-                </>
-            )}
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
+                        <ArrowLeftToLine />
+                    </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                    <p>Go back</p>
+                </TooltipContent>
+            </Tooltip>
+            <Separator orientation="vertical" />
             <h3 className="font-bold">{props.title}</h3>
         </section>
     );

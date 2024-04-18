@@ -3,6 +3,7 @@ import { IMatch, IMatchTeam } from "@/components/common/api-football-response";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
+import { NavLink } from "react-router-dom";
 
 interface IMatchH2HStatsComponentProps {
     matches: IMatch[];
@@ -57,24 +58,30 @@ export const MatchH2HStatsComponent = (props: IMatchH2HStatsComponentProps) => {
     return (
         <Card>
             <CardHeader className="flex flex-row justify-evenly items-center p-2 space-y-0">
-                <section className="flex items-center gap-2">
+                <NavLink
+                    to={`/teams/id/${props.homeTeam.id}`}
+                    className="flex items-center gap-2 font-bold hover:font-black focus:font-black"
+                >
                     <ApiFootballLogoComponent
                         src={props.homeTeam.logo}
                         alt={`${props.homeTeam.name} logo`}
                         width={30}
                         height={30}
                     />
-                    <h5 className="text-lg font-bold hidden sm:block">{props.homeTeam.name}</h5>
-                </section>
-                <section className="flex items-center gap-2">
-                    <h5 className="text-lg font-bold hidden sm:block">{props.awayTeam.name}</h5>
+                    <h5 className="text-lg hidden sm:block">{props.homeTeam.name}</h5>
+                </NavLink>
+                <NavLink
+                    to={`/teams/id/${props.awayTeam.id}`}
+                    className="flex items-center gap-2 font-bold hover:font-black focus:font-black"
+                >
+                    <h5 className="text-lg hidden sm:block">{props.awayTeam.name}</h5>
                     <ApiFootballLogoComponent
                         src={props.awayTeam.logo}
                         alt={`${props.awayTeam.name} logo`}
                         width={30}
                         height={30}
                     />
-                </section>
+                </NavLink>
             </CardHeader>
             <Separator className="my-2" />
             <CardContent className="flex justify-center items-center gap-5 md:gap-10 p-2 pt-0">
