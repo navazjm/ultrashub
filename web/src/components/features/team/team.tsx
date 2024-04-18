@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
 import { useTeam } from "./team.hooks";
 import { TeamMatchesComponent } from "./team-matches/team-matches";
+import { TeamSquadComponent } from "./team-squad/team-squad";
 
 interface ITeamComponentProps {
     teamID: string;
@@ -64,7 +65,7 @@ export const TeamComponent = (props: ITeamComponentProps) => {
                 </TabsContent>
                 <TabsContent value="squad" className="w-full mb-3">
                     {data.squad.length > 0 ? (
-                        <>Squad data</>
+                        <TeamSquadComponent squad={data.squad} />
                     ) : (
                         <p className="text-center my-2">No squad data found. Try again later.</p>
                     )}
