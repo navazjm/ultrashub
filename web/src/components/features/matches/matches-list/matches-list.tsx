@@ -21,7 +21,7 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
         return <Spinner />;
     }
 
-    if (isError || !data) {
+    if (isError || !data || data.allMatches.length == 0) {
         return (
             <ErrorComponent
                 backNavTitle="Error!"
