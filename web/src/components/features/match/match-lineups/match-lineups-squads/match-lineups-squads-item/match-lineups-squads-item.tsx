@@ -17,18 +17,21 @@ interface IMatchLineupsSquadsItemComponentProps {
 export const MatchLineupsSquadsItemComponent = (props: IMatchLineupsSquadsItemComponentProps) => {
     return (
         <section>
-            <NavLink
-                to={`/teams/id/${props.lineup.team.id}`}
-                className="flex items-center gap-2 font-bold hover:font-black focus:font-black"
-            >
-                <ApiFootballLogoComponent
-                    src={props.lineup.team.logo}
-                    alt={`${props.lineup.team.name} logo`}
-                    width={30}
-                    height={30}
-                />
-                <h3 className="text-xl">{props.lineup.team.name}</h3>
-            </NavLink>
+            <section className="flex items-center gap-2">
+                <NavLink
+                    to={`/teams/id/${props.lineup.team.id}`}
+                    className="flex items-center gap-2 font-bold hover:font-black focus:font-black"
+                >
+                    <ApiFootballLogoComponent
+                        src={props.lineup.team.logo}
+                        alt={`${props.lineup.team.name} logo`}
+                        width={30}
+                        height={30}
+                    />
+                    <h3 className="text-xl">{props.lineup.team.name}</h3>
+                </NavLink>
+                <small className="sm:hidden">{props.lineup.formation}</small>
+            </section>
             <Separator className="my-5" />
             <section>
                 <h5 className="text-xl mb-5">Starting XI</h5>
