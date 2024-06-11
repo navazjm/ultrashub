@@ -21,7 +21,7 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
         return <Spinner />;
     }
 
-    if (isError || !data) {
+    if (isError || !data || data.allMatches.length === 0) {
         return (
             <ErrorComponent
                 backNavTitle="Error!"
@@ -69,7 +69,7 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
                         <MatchesListItemComponent match={match} key={match.fixture.id} showScores={data.showScores} />
                     ))}
                 </section>
-                {itemIndex !== data.filteredMatches.length - 1 && <Separator className="my-3 sm:my-5" />}
+                {itemIndex !== matchesDisplayOrder.length - 1 && <Separator className="my-3 sm:my-5" />}
             </section>
         );
     };

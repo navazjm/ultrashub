@@ -99,7 +99,13 @@ export const useCompetiton = (competitionID: string) => {
             setIsCup(newStandings.length > 1);
 
             const newClubs: IStandingTeamInfo[] = [];
-            newStandings.forEach((standings) => standings.forEach((standing) => newClubs.push(standing.team)));
+            newStandings.forEach((standings) =>
+                standings.forEach((standing) => {
+                    if (newClubs.findIndex((club) => club.id === standing.team.id) === -1) {
+                        newClubs.push(standing.team);
+                    }
+                }),
+            );
             newClubs.sort((a, b) => a.name.toLocaleLowerCase().localeCompare(b.name.toLocaleLowerCase()));
             setClubs(newClubs);
         };

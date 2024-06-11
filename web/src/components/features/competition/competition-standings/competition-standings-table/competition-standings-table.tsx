@@ -62,18 +62,19 @@ export const CompetitionStandingsTable = (props: ICompetitionStandingsTableProps
                         </TableCell>
                         <TableCell className="p-1 hidden xl:table-cell">
                             <section className="flex items-center gap-2">
-                                {club.form.split("").map((char, idx) => (
-                                    <section key={`${char}-${idx}`}>
-                                        <p
-                                            className={`w-[25px] p-1 text-xs rounded-full text-center
+                                {club.form &&
+                                    club.form.split("").map((char, idx) => (
+                                        <section key={`${char}-${idx}`}>
+                                            <p
+                                                className={`w-[25px] p-1 text-xs rounded-full text-center
                                                     ${char === "W" && "bg-green-700"} 
                                                     ${char === "L" && "bg-red-700"}
                                                     ${char === "D" && "bg-slate-700"}`}
-                                        >
-                                            {char}
-                                        </p>
-                                    </section>
-                                ))}
+                                            >
+                                                {char}
+                                            </p>
+                                        </section>
+                                    ))}
                             </section>
                         </TableCell>
                     </TableRow>
