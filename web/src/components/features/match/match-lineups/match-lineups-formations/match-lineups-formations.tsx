@@ -11,7 +11,7 @@ export const MatchLineupsFormationsComponent = (props: IMatchLineupsFormationsCo
     const awayTeamLineup = props.lineups[1];
 
     return (
-        <section>
+        <section className="hidden sm:block">
             <section className="hidden sm:grid sm:grid-cols-2 my-5">
                 <MatchLineupsFormationsItemComponent lineup={homeTeamLineup} />
                 <MatchLineupsFormationsItemComponent lineup={awayTeamLineup} reverse={true} />
