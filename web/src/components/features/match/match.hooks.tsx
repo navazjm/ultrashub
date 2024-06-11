@@ -43,23 +43,23 @@ export const useMatch = (matchID: string) => {
                  * due to get a second yellow card
                  */
                 match.events = match.events.filter((event, idx) => {
-                    // first event in match.events is the last event of the match, not possible to be a second yellow.
-                    // Red card event will always occur before a second yellow card event
-                    if (idx === 0) return event;
+                    // last event in match.events is the first event of the match, not possible to be a second yellow.
+                    // As of 06/11/2024, Yellow card event occurs before the Red card event in the match.events array.
+                    if (idx === match.events.length - 1) return event;
 
                     // current event is yellow card
-                    // previous event is red card
+                    // next event is red card
                     // current event player name equals previous event player name
                     // current event time occurs at the same time as previous event time
                     if (
                         event.detail.toLocaleLowerCase() === "yellow card" &&
-                        match.events[idx - 1].detail.toLocaleLowerCase() === "red card" &&
+                        match.events[idx + 1].detail.toLocaleLowerCase() === "red card" &&
                         event.player.name.toLocaleLowerCase() ===
-                            match.events[idx - 1].player.name.toLocaleLowerCase() &&
+                            match.events[idx + 1].player.name.toLocaleLowerCase() &&
                         event.time.elapsed + event.time.extra ===
-                            match.events[idx - 1].time.elapsed + match.events[idx - 1].time.extra
+                            match.events[idx + 1].time.elapsed + match.events[idx + 1].time.extra
                     ) {
-                        match.events[idx - 1].detail = "Second yellow card";
+                        match.events[idx + 1].detail = "Second yellow card";
                         return;
                     }
                     return event;
