@@ -13,7 +13,7 @@ export const CompetitionsComponent = () => {
         return <Spinner />;
     }
 
-    if (isError || !data || data.allCompetitions.length == 0) {
+    if (isError || !data) {
         return (
             <ErrorComponent
                 backNavTitle="Error!"
