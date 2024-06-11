@@ -31,7 +31,7 @@ export const CompetitionMatchesComponent = (props: ICompetitionMatchesComponentP
 
     return (
         <section className="flex flex-col gap-5">
-            {groupMatchesByDate.map((group) => (
+            {groupMatchesByDate.map((group, index) => (
                 <section key={group.date} className="flex flex-col gap-2">
                     <h3 className="font-bold text-lg text-center">{group.date}</h3>
                     <section className="flex flex-row items-center flex-wrap gap-2">
@@ -39,7 +39,7 @@ export const CompetitionMatchesComponent = (props: ICompetitionMatchesComponentP
                             <MatchItemComponent key={match.fixture.id} match={match} isResult={props.isResult} />
                         ))}
                     </section>
-                    <Separator />
+                    {index !== groupMatchesByDate.length - 1 && <Separator />}
                 </section>
             ))}
         </section>
