@@ -28,9 +28,9 @@ func (srv *Server) Routes() http.Handler {
 
 	fileServer := http.FileServer(http.FS(web.StaticFS))
 	router.Handler(http.MethodGet, "/dist/*filepath", fileServer)
-	
+
 	router.HandlerFunc(http.MethodGet, "/api/healthcheck", srv.healthcheckHandler)
 	router.HandlerFunc(http.MethodGet, "/api/apifootball/*path", srv.APIFootballService.ProxyHandler)
 
-	return srv.logRequest(srv.recoverPanic(srv.enableCORS(srv.rateLimit(router))))
+	return srv.secureHeaders(srv.logRequest(srv.recoverPanic(srv.enableCORS(srv.rateLimit(router)))))
 }
