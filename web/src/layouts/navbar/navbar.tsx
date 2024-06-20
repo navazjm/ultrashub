@@ -5,13 +5,13 @@ import {
     CircleDollarSignIcon,
     Code2,
     FileText,
+    Globe,
     Info,
     Lock,
     Mail,
     Menu,
     ShieldCheck,
     Trophy,
-    Zap,
 } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
@@ -68,11 +68,19 @@ const NavbarNavContentComponent = (props: INavbarNavComponentProps) => {
                 </a>
                 <section className="flex flex-col gap-2">
                     <NavLink
+                        to="/competitions/id/9"
+                        className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted focus:bg-muted font-medium"
+                        onClick={() => closeSheet()}
+                    >
+                        <Globe />
+                        Copa America 2024
+                    </NavLink>
+                    <NavLink
                         to="/competitions/id/4"
                         className="flex gap-2 items-center w-full p-2 rounded-md hover:bg-muted focus:bg-muted font-medium"
                         onClick={() => closeSheet()}
                     >
-                        <Zap />
+                        <Globe />
                         UEFA Euro 2024
                     </NavLink>
                     <NavLink
