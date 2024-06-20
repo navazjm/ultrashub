@@ -15,7 +15,7 @@ func (srv *Server) secureHeaders(next http.Handler) http.Handler {
 		w.Header().Set("Cross-Origin-Opener-Policy", "same-origin")
 		w.Header().Set("Cross-Origin-Resource-Policy", "same-origin")
 		w.Header().Set("Origin-Agent-Cluster", "?1")
-		w.Header().Set("Referrer-Policy", "origin-when-cross-origin")
+		w.Header().Set("Referrer-Policy", "strict-origin-when-cross-origin")
 		w.Header().Set("Strict-Transport-Security", "max-age=15552000; includeSubDomains")
 		w.Header().Set("X-Content-Type-Options", "nosniff")
 		w.Header().Set("X-DNS-Prefetch-Control", "off")
