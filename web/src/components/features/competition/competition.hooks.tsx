@@ -78,6 +78,7 @@ export const useCompetiton = (competitionID: string) => {
             const newFixtures = matches.filter((match) => !MatchToolbox.hasMatchFinished(match.fixture.status.short));
             setFixtures(newFixtures);
             const newResults = matches.filter((match) => MatchToolbox.hasMatchFinished(match.fixture.status.short));
+            newResults.sort((r1, r2) => new Date(r2.fixture.date).getTime() - new Date(r1.fixture.date).getTime());
             setResults(newResults);
         };
 
