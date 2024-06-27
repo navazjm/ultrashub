@@ -1,5 +1,5 @@
 # Stage 1: Build Vite React Frontend
-FROM node:21.1-alpine as frontend
+FROM node:20.15-alpine as frontend
 
 WORKDIR /app
 

@@ -46,25 +46,17 @@ export const useCompetiton = (competitionID: string) => {
 
     useEffect(() => {
         const fetchCompeitionByID = async (compID: string) => {
-            try {
-                const resp = await axios.get<any, AxiosResponse<ICompetitionResponse>>("/apifootball/leagues", {
-                    params: {
-                        id: compID,
-                        current: true,
-                    },
-                });
-                if (resp.status !== 200) {
-                    throw new Error();
-                }
-                setCompetition(resp.data.response[0]);
-                return resp.data.response[0];
-            } catch (err) {
-                return null;
-            }
+            const resp: AxiosResponse<ICompetitionResponse> = await axios.get("/apifootball/leagues", {
+                params: {
+                    id: compID,
+                    current: true,
+                },
+            });
+            return resp.data.response[0];
         };
 
         const fetchMatchesByCompetitionID = async (compID: number, seasonYear: number) => {
-            const resp = await axios.get<any, AxiosResponse<IMatchResponse>>("/apifootball/fixtures", {
+            const resp: AxiosResponse<IMatchResponse> = await axios.get("/apifootball/fixtures", {
                 params: {
                     league: compID,
                     season: seasonYear,
@@ -78,11 +70,12 @@ export const useCompetiton = (competitionID: string) => {
             const newFixtures = matches.filter((match) => !MatchToolbox.hasMatchFinished(match.fixture.status.short));
             setFixtures(newFixtures);
             const newResults = matches.filter((match) => MatchToolbox.hasMatchFinished(match.fixture.status.short));
+            newResults.sort((r1, r2) => new Date(r2.fixture.date).getTime() - new Date(r1.fixture.date).getTime());
             setResults(newResults);
         };
 
         const fetchStandingsByCompetitionID = async (compID: number, seasonYear: number) => {
-            const resp = await axios.get<any, AxiosResponse<IStandingsResponse>>("/apifootball/standings", {
+            const resp: AxiosResponse<IStandingsResponse> = await axios.get("/apifootball/standings", {
                 params: {
                     league: compID,
                     season: seasonYear,
@@ -111,7 +104,7 @@ export const useCompetiton = (competitionID: string) => {
         };
 
         const fetchTopGoalScorersByCompetitionID = async (compID: number, seasonYear: number) => {
-            const resp = await axios.get<any, AxiosResponse<IPlayerStatsResponse>>("/apifootball/players/topscorers", {
+            const resp: AxiosResponse<IPlayerStatsResponse> = await axios.get("/apifootball/players/topscorers", {
                 params: {
                     league: compID,
                     season: seasonYear,
@@ -124,7 +117,7 @@ export const useCompetiton = (competitionID: string) => {
         };
 
         const fetchTopAssistsByCompetitionID = async (compID: number, seasonYear: number) => {
-            const resp = await axios.get<any, AxiosResponse<IPlayerStatsResponse>>("/apifootball/players/topassists", {
+            const resp: AxiosResponse<IPlayerStatsResponse> = await axios.get("/apifootball/players/topassists", {
                 params: {
                     league: compID,
                     season: seasonYear,
@@ -137,15 +130,12 @@ export const useCompetiton = (competitionID: string) => {
         };
 
         const fetchTopYellowCardsByCompetitionID = async (compID: number, seasonYear: number) => {
-            const resp = await axios.get<any, AxiosResponse<IPlayerStatsResponse>>(
-                "/apifootball/players/topyellowcards",
-                {
-                    params: {
-                        league: compID,
-                        season: seasonYear,
-                    },
+            const resp: AxiosResponse<IPlayerStatsResponse> = await axios.get("/apifootball/players/topyellowcards", {
+                params: {
+                    league: compID,
+                    season: seasonYear,
                 },
-            );
+            });
             if (resp.status !== 200 || resp.data.response.length < 1) {
                 return;
             }
@@ -153,7 +143,7 @@ export const useCompetiton = (competitionID: string) => {
         };
 
         const fetchTopRedCardsByCompetitionID = async (compID: number, seasonYear: number) => {
-            const resp = await axios.get<any, AxiosResponse<IPlayerStatsResponse>>("/apifootball/players/topredcards", {
+            const resp: AxiosResponse<IPlayerStatsResponse> = await axios.get("/apifootball/players/topredcards", {
                 params: {
                     league: compID,
                     season: seasonYear,
@@ -166,46 +156,47 @@ export const useCompetiton = (competitionID: string) => {
         };
 
         const getUseCompetitionData = async () => {
-            setStatus("loading");
-            // other requests are dependent on this one
-            // therefore set status to error if this request fails to display generic error page component
-            const fetchCompetitionByIDResp = await fetchCompeitionByID(competitionID);
-            if (!fetchCompetitionByIDResp) {
+            try {
+                setStatus("loading");
+                // other requests are dependent on this one
+                // therefore set status to error if this request fails to display generic error page component
+                const fetchCompetitionByIDResp = await fetchCompeitionByID(competitionID);
+                setCompetition(fetchCompetitionByIDResp);
+
+                // we do not care if any of these fail,
+                // by default their respective state variables are set to null
+                // for the requests that fail, we display a generic error message
+                await Promise.allSettled([
+                    fetchMatchesByCompetitionID(
+                        fetchCompetitionByIDResp.league.id,
+                        fetchCompetitionByIDResp.seasons[0].year,
+                    ),
+                    fetchStandingsByCompetitionID(
+                        fetchCompetitionByIDResp.league.id,
+                        fetchCompetitionByIDResp.seasons[0].year,
+                    ),
+                    fetchTopGoalScorersByCompetitionID(
+                        fetchCompetitionByIDResp.league.id,
+                        fetchCompetitionByIDResp.seasons[0].year,
+                    ),
+                    fetchTopAssistsByCompetitionID(
+                        fetchCompetitionByIDResp.league.id,
+                        fetchCompetitionByIDResp.seasons[0].year,
+                    ),
+                    fetchTopYellowCardsByCompetitionID(
+                        fetchCompetitionByIDResp.league.id,
+                        fetchCompetitionByIDResp.seasons[0].year,
+                    ),
+                    fetchTopRedCardsByCompetitionID(
+                        fetchCompetitionByIDResp.league.id,
+                        fetchCompetitionByIDResp.seasons[0].year,
+                    ),
+                ]);
+
+                setStatus("success");
+            } catch (err) {
                 setStatus("error");
-                return;
             }
-
-            // we do not care if any of these fail,
-            // by default their respective state variables are set to null
-            // for the requests that fail, we display a generic error message
-            await Promise.all([
-                fetchMatchesByCompetitionID(
-                    fetchCompetitionByIDResp.league.id,
-                    fetchCompetitionByIDResp.seasons[0].year,
-                ),
-                fetchStandingsByCompetitionID(
-                    fetchCompetitionByIDResp.league.id,
-                    fetchCompetitionByIDResp.seasons[0].year,
-                ),
-                fetchTopGoalScorersByCompetitionID(
-                    fetchCompetitionByIDResp.league.id,
-                    fetchCompetitionByIDResp.seasons[0].year,
-                ),
-                fetchTopAssistsByCompetitionID(
-                    fetchCompetitionByIDResp.league.id,
-                    fetchCompetitionByIDResp.seasons[0].year,
-                ),
-                fetchTopYellowCardsByCompetitionID(
-                    fetchCompetitionByIDResp.league.id,
-                    fetchCompetitionByIDResp.seasons[0].year,
-                ),
-                fetchTopRedCardsByCompetitionID(
-                    fetchCompetitionByIDResp.league.id,
-                    fetchCompetitionByIDResp.seasons[0].year,
-                ),
-            ]);
-
-            setStatus("success");
         };
 
         getUseCompetitionData();

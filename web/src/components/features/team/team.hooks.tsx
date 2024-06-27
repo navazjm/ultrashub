@@ -27,26 +27,18 @@ export const useTeam = (teamID: string) => {
 
     useEffect(() => {
         const fetchTeamByID = async (teamID: string) => {
-            try {
-                const resp = await axios.get<any, AxiosResponse<ITeamsResponse>>("/apifootball/teams", {
-                    params: {
-                        id: teamID,
-                    },
-                });
-                if (resp.status !== 200) {
-                    throw new Error();
-                }
-                setTeam(resp.data.response[0]);
-                return resp.data.response[0];
-            } catch (err) {
-                return null;
-            }
+            const resp: AxiosResponse<ITeamsResponse> = await axios.get("/apifootball/teams", {
+                params: {
+                    id: teamID,
+                },
+            });
+            return resp.data.response[0];
         };
 
         const fetchMatchesByTeamID = async (teamID: number) => {
             setFixtures([]);
             setResults([]);
-            const resp = await axios.get<any, AxiosResponse<IMatchResponse>>("/apifootball/fixtures", {
+            const resp: AxiosResponse<IMatchResponse> = await axios.get("/apifootball/fixtures", {
                 params: {
                     team: teamID,
                     season: 2023, // hardcoded for now as teams endpoint does not return current season details
@@ -66,7 +58,7 @@ export const useTeam = (teamID: string) => {
 
         const fetchPlayersByTeamID = async (teamID: number) => {
             setSquad([]);
-            const resp = await axios.get<any, AxiosResponse<IPlayersSquadsResponse>>("/apifootball/players/squads", {
+            const resp: AxiosResponse<IPlayersSquadsResponse> = await axios.get("/apifootball/players/squads", {
                 params: {
                     team: teamID,
                 },
@@ -78,24 +70,25 @@ export const useTeam = (teamID: string) => {
         };
 
         const getUseTeamData = async () => {
-            setStatus("loading");
-            // other requests are dependent on this one
-            // therefore set status to error if this request fails to display generic error page component
-            const fetchTeamByIDResp = await fetchTeamByID(teamID);
-            if (!fetchTeamByIDResp) {
+            try {
+                setStatus("loading");
+                // other requests are dependent on this one
+                // therefore set status to error if this request fails to display generic error page component
+                const fetchTeamByIDResp = await fetchTeamByID(teamID);
+                setTeam(fetchTeamByIDResp);
+
+                // we do not care if any of these fail,
+                // by default their respective state variables are set to null
+                // for the requests that fail, we display a generic error message
+                await Promise.allSettled([
+                    fetchMatchesByTeamID(fetchTeamByIDResp.team.id),
+                    fetchPlayersByTeamID(fetchTeamByIDResp.team.id),
+                ]);
+
+                setStatus("success");
+            } catch (_err) {
                 setStatus("error");
-                return;
             }
-
-            // we do not care if any of these fail,
-            // by default their respective state variables are set to null
-            // for the requests that fail, we display a generic error message
-            await Promise.all([
-                fetchMatchesByTeamID(fetchTeamByIDResp.team.id),
-                fetchPlayersByTeamID(fetchTeamByIDResp.team.id),
-            ]);
-
-            setStatus("success");
         };
 
         getUseTeamData();
