@@ -10,10 +10,10 @@ interface IMoreLinksProps {
 export const MoreLinksWrapperComponent = (props: IMoreLinksProps) => {
     return (
         <>
-            <section className="xl:hidden">
+            <section className="lg:hidden">
                 <MoreLinksAccordionComponent closeSheet={props.closeSheet} />
             </section>
-            <section className="hidden xl:block">
+            <section className="hidden lg:block">
                 <MoreLinksDropdownMenuComponent closeSheet={props.closeSheet} />
             </section>
         </>
