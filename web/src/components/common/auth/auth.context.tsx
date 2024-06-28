@@ -18,9 +18,9 @@ export const AuthProvider = ({ children }: IProps) => {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(firebaseAuth, async (user) => {
+            setIsLoading(false);
             setFirebaseUser(user);
             if (!user) {
-                setIsLoading(false);
                 setToken("");
                 return;
             }

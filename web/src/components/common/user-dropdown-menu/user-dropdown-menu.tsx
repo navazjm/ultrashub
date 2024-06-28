@@ -62,13 +62,8 @@ export const UserDropdownMenuComponent = () => {
                         )}
                     </li>
                     <li className="px-3">
-                        <Button
-                            className="w-full"
-                            variant="outline"
-                            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                            disabled
-                        >
-                            <NavLink to="/account/preferences" className="flex items-center">
+                        <Button className="w-full" variant="outline" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+                            <NavLink to="/account/information" className="flex items-center">
                                 <UserRound className="mr-2 h-6 w-6" /> Account Information
                             </NavLink>
                         </Button>
