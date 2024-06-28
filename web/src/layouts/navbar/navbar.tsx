@@ -20,6 +20,7 @@ import { ThemeToggleComponent } from "./theme-toggle/theme-toggle";
 import ultrashubLogo from "@/assets/img/logo.png";
 import { useAuthContext } from "@/components/common/auth/auth.hooks";
 import { LoginDialogComponent } from "@/components/common/login-dialog/login-dialog";
+import { UserDropdownMenuComponent } from "@/components/common/user-dropdown-menu/user-dropdown-menu";
 
 export const NavbarComponent = () => {
     const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false);
@@ -179,6 +180,7 @@ const NavbarNavContentComponent = (props: INavbarNavComponentProps) => {
             </section>
             <section className="flex justify-between items-center">
                 {!authCtx.firebaseUser && <LoginDialogComponent />}
+                {authCtx.firebaseUser && <UserDropdownMenuComponent />}
                 <ThemeToggleComponent />
             </section>
         </section>
