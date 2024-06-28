@@ -41,14 +41,14 @@ export const LoginDialogComponent = () => {
 
     return (
         <Dialog>
-            <DialogTrigger>
+            <DialogTrigger asChild>
                 <Button variant="outline">Login</Button>
             </DialogTrigger>
             <DialogContent className="space-y-3">
                 <DialogHeader>
-                    <DialogTitle className="flex items-center justify-center gap-2">
+                    <DialogTitle className="flex items-center justify-center gap-2 text-2xl font-black">
                         <img src={ultrashubLogo} alt="UltrasHub soccer ball logo" className="w-[30px] h-[30px]" />
-                        <h3 className="text-2xl font-black">UltrasHub</h3>
+                        UltrasHub
                     </DialogTitle>
                     <DialogDescription className="text-center">
                         Sign in to sync prefernces across devices or retrieve them when you set up a new device.

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {
     Calendar,
     CircleDollarSignIcon,
@@ -17,10 +17,10 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggleComponent } from "./theme-toggle/theme-toggle";
-import ultrashubLogo from "@/assets/img/logo.png";
 import { useAuthContext } from "@/components/common/auth/auth.hooks";
 import { LoginDialogComponent } from "@/components/common/login-dialog/login-dialog";
 import { UserDropdownMenuComponent } from "@/components/common/user-dropdown-menu/user-dropdown-menu";
+import { UltrasHubLogoComponent } from "@/components/common/ultrashub-logo/ultrashub-logo";
 
 export const NavbarComponent = () => {
     const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false);
@@ -38,10 +38,9 @@ export const NavbarComponent = () => {
                         <NavbarNavContentComponent setIsSheetOpen={setIsSheetOpen} />
                     </SheetContent>
                 </Sheet>
-                <a href="/" className="flex gap-x-2 content-center">
-                    <img src={ultrashubLogo} className="w-[30px] h-[30px]" />
-                    <h3 className="text-2xl font-black">UltrasHub</h3>
-                </a>
+                <NavLink to="/" className="flex gap-x-2 content-center">
+                    <UltrasHubLogoComponent />
+                </NavLink>
             </nav>
             {/** for larger devices, permantently display navbar on the side */}
             <nav className="hidden lg:h-full lg:p-5 lg:flex lg:justify-between lg:flex-col">
@@ -67,10 +66,9 @@ const NavbarNavContentComponent = (props: INavbarNavComponentProps) => {
     return (
         <section className="h-full flex flex-col justify-between">
             <section className="flex flex-col gap-3">
-                <a href="/" className="flex gap-x-2 content-center">
-                    <img src={ultrashubLogo} className="w-[30px] h-[30px]" />
-                    <h3 className="text-2xl font-black">UltrasHub</h3>
-                </a>
+                <NavLink to="/" className="flex gap-x-2 content-center">
+                    <UltrasHubLogoComponent />
+                </NavLink>
                 <section className="flex flex-col gap-2">
                     <NavLink
                         to="/competitions/id/9"
