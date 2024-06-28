@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-
     /*Custom Purple theme from https://zippystarter.com/tools/shadcn-ui-theme-generator*/
     :root {
         --background: 287 0% 95%;
@@ -122,6 +121,7 @@
 
     html {
         font-family: "Montserrat", "Proxima Nova", system-ui, sans-serif;
+        overflow-x: hidden;
     }
 
     body {

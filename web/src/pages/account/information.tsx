@@ -1,7 +1,9 @@
+import { AccountInformationComponent } from "@/components/features/account/account-information/account-information";
+
 export const AccountInformationPage = () => {
     return (
         <>
-            <h3>Hello from AccountInformationPage</h3>
+            <AccountInformationComponent />
         </>
     );
 };
