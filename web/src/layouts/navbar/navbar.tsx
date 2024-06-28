@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import {
     Calendar,
     CircleDollarSignIcon,
@@ -18,6 +18,8 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggleComponent } from "./theme-toggle/theme-toggle";
 import ultrashubLogo from "@/assets/img/logo.png";
+import { useAuthContext } from "@/components/common/auth/auth.hooks";
+import { LoginDialogComponent } from "@/components/common/login-dialog/login-dialog";
 
 export const NavbarComponent = () => {
     const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false);
@@ -58,6 +60,8 @@ const NavbarNavContentComponent = (props: INavbarNavComponentProps) => {
             props.setIsSheetOpen(false);
         }
     };
+
+    const authCtx = useAuthContext();
 
     return (
         <section className="h-full flex flex-col justify-between">
@@ -173,7 +177,8 @@ const NavbarNavContentComponent = (props: INavbarNavComponentProps) => {
                     </Accordion>
                 </section>
             </section>
-            <section>
+            <section className="flex justify-between items-center">
+                {!authCtx.firebaseUser && <LoginDialogComponent />}
                 <ThemeToggleComponent />
             </section>
         </section>
