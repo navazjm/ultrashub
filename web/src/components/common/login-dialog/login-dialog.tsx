@@ -68,11 +68,15 @@ export const LoginDialogComponent = () => {
                         </p>
                         <section className="flex justify-center items-center">
                             <Button variant="link" className="text-current">
-                                <NavLink to="/policies/terms-of-service">Terms of Service</NavLink>
+                                <NavLink to="/policies/terms-of-service" target="_blank">
+                                    Terms of Service
+                                </NavLink>
                             </Button>
                             <Dot className="w-[16px] h-[16px]" />
                             <Button variant="link" className="text-current">
-                                <NavLink to="/policies/privacy">Privacy Policy</NavLink>
+                                <NavLink to="/policies/privacy" target="_blank">
+                                    Privacy Policy
+                                </NavLink>
                             </Button>
                         </section>
                     </section>
