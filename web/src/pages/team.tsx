@@ -9,8 +9,8 @@ export const TeamPage = () => {
     const { id } = useParams<keyof ITeamPageParams>() as ITeamPageParams;
 
     return (
-        <>
+        <section className="col-span-3 lg:col-span-2">
             <TeamComponent teamID={id} />
-        </>
+        </section>
     );
 };

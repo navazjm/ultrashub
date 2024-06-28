@@ -15,7 +15,7 @@ export const NavbarComponent = () => {
     return (
         <>
             {/** for smaller devices, open side nav in sidebar */}
-            <nav className="p-3 flex items-center gap-3 lg:hidden">
+            <nav className="flex items-center gap-3 xl:hidden w-screen mx-auto my-0">
                 <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
                     <SheetTrigger asChild>
                         <Button variant="outline" className="p-2">
@@ -31,7 +31,7 @@ export const NavbarComponent = () => {
                 </NavLink>
             </nav>
             {/** for larger devices, permantently display navbar on the side */}
-            <nav className="hidden lg:h-full lg:p-5 lg:flex lg:justify-between lg:flex-col">
+            <nav className="hidden xl:w-10/12 mx-auto my-0 xl:flex xl:justify-between xl:flex-col">
                 <NavbarNavContentComponent />
             </nav>
         </>
@@ -52,18 +52,18 @@ const NavbarNavContentComponent = (props: INavbarNavComponentProps) => {
     const authCtx = useAuthContext();
 
     return (
-        <section className="h-full lg:h-fit flex flex-col lg:flex-row justify-between">
-            <section className="flex flex-col lg:flex-row lg:items-center gap-3">
+        <section className="h-full xl:h-fit flex flex-col xl:flex-row justify-between">
+            <section className="flex flex-col xl:flex-row xl:items-center gap-3">
                 <NavLink to="/" className="flex gap-x-2 content-center">
                     <UltrasHubLogoComponent />
                 </NavLink>
-                <section className="flex flex-col lg:flex-row lg:items-center gap-2">
+                <section className="flex flex-col xl:flex-row xl:items-center gap-2">
                     <NavLink
                         to="/"
                         className="flex gap-2 items-center text-nowrap w-full p-2 rounded-md hover:bg-muted focus:bg-muted font-medium"
                         onClick={() => closeSheet()}
                     >
-                        <Calendar className="lg:hidden" />
+                        <Calendar className="xl:hidden" />
                         Matches
                     </NavLink>
                     <NavLink
@@ -71,7 +71,7 @@ const NavbarNavContentComponent = (props: INavbarNavComponentProps) => {
                         className="flex gap-2 items-center text-nowrap w-full p-2 rounded-md hover:bg-muted focus:bg-muted font-medium"
                         onClick={() => closeSheet()}
                     >
-                        <Trophy className="lg:hidden" />
+                        <Trophy className="xl:hidden" />
                         Competitions
                     </NavLink>
                     <NavLink
@@ -79,7 +79,7 @@ const NavbarNavContentComponent = (props: INavbarNavComponentProps) => {
                         className="flex gap-2 items-center text-nowrap w-full p-2 rounded-md hover:bg-muted focus:bg-muted font-medium"
                         onClick={() => closeSheet()}
                     >
-                        <Globe className="lg:hidden" />
+                        <Globe className="xl:hidden" />
                         Copa America 2024
                     </NavLink>
                     <NavLink
@@ -87,13 +87,13 @@ const NavbarNavContentComponent = (props: INavbarNavComponentProps) => {
                         className="flex gap-2 items-center  text-nowrap w-full p-2 rounded-md hover:bg-muted focus:bg-muted font-medium"
                         onClick={() => closeSheet()}
                     >
-                        <Globe className="lg:hidden" />
+                        <Globe className="xl:hidden" />
                         UEFA Euro 2024
                     </NavLink>
                     <MoreLinksWrapperComponent closeSheet={closeSheet} />
                 </section>
             </section>
-            <section className="flex items-center justify-between lg:justify-end lg:gap-2">
+            <section className="flex items-center justify-between xl:justify-end xl:gap-2">
                 {!authCtx.firebaseUser && <LoginDialogComponent />}
                 {authCtx.firebaseUser && <UserDropdownMenuComponent />}
                 <ThemeToggleComponent />

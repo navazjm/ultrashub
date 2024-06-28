@@ -10,8 +10,8 @@ export const MatchPage = () => {
     const { id } = useParams<keyof IMatchPageParams>() as IMatchPageParams;
 
     return (
-        <>
+        <section className="col-span-3 lg:col-span-2">
             <MatchComponent id={id} />
-        </>
+        </section>
     );
 };
