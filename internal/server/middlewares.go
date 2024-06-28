@@ -1,11 +1,14 @@
 package server
 
 import (
+	"context"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"golang.org/x/time/rate"
 
+	"github.com/navazjm/ultrashub/internal/users"
 	"github.com/navazjm/ultrashub/internal/utils"
 )
 
@@ -86,6 +89,58 @@ func (srv *Server) rateLimit(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if !limiter.Allow() {
 			utils.RateLimitExceededResponse(w, r, srv.Logger)
+			return
+		}
+
+		next.ServeHTTP(w, r)
+	})
+}
+func (srv *Server) authenticate(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Vary", "Authorization")
+
+		authorizationHeader := r.Header.Get("Authorization")
+
+		if authorizationHeader == "" {
+			users.ContextSetUserID(r, nil)
+			next.ServeHTTP(w, r)
+			return
+		}
+
+		headerParts := strings.Split(authorizationHeader, " ")
+		if len(headerParts) != 2 || headerParts[0] != "Bearer" {
+			utils.InvalidAuthenticationTokenResponse(w, r, srv.Logger)
+			return
+		}
+
+		token := headerParts[1]
+
+		// Verify Firebase token
+		client, err := srv.UsersService.FirebaseApp.Auth(context.Background())
+		if err != nil {
+			utils.ServerErrorResponse(w, r, srv.Logger, err)
+			return
+		}
+
+		firebaseToken, err := client.VerifyIDToken(context.Background(), token)
+		if err != nil {
+			utils.InvalidAuthenticationTokenResponse(w, r, srv.Logger)
+			return
+		}
+
+		// Get user from token
+		uid := firebaseToken.UID
+		r = users.ContextSetUserID(r, &uid)
+		next.ServeHTTP(w, r)
+	})
+}
+
+func (srv *Server) requireAuthenticatedUser(next http.HandlerFunc) http.HandlerFunc {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		userID := users.ContextGetUserID(r)
+
+		if userID == nil {
+			utils.AuthenticationRequiredResponse(w, r, srv.Logger)
 			return
 		}
 

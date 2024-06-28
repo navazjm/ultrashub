@@ -12,6 +12,10 @@ import (
 
 	"github.com/navazjm/ultrashub/internal/apifootball"
 	"github.com/navazjm/ultrashub/internal/server"
+	"github.com/navazjm/ultrashub/internal/users"
+
+	firebase "firebase.google.com/go"
+	"google.golang.org/api/option"
 )
 
 func main() {
@@ -27,6 +31,16 @@ func main() {
 
 	afSerivce := apifootball.NewService(uhServer.Logger, uhServer.Config.APIFootballKey)
 	uhServer.APIFootballService = afSerivce
+
+	opt := option.WithCredentialsFile(uhServer.Config.FirebaseCredsFile)
+	firebaseApp, err := firebase.NewApp(context.Background(), nil, opt)
+	if err != nil {
+		uhServer.Logger.Error(err.Error())
+		os.Exit(1)
+	}
+
+	usersService := users.NewService(uhServer.Logger, db, firebaseApp)
+	uhServer.UsersService = usersService
 
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", uhServer.Config.Port),

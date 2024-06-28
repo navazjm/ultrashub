@@ -18,7 +18,8 @@ type Config struct {
 		MaxIdleConns int
 		MaxIdleTime  time.Duration
 	}
-	APIFootballKey string
+	APIFootballKey    string
+	FirebaseCredsFile string
 	// only need cors for local development
 	Cors struct {
 		TrustedOrigins []string
@@ -47,6 +48,7 @@ func NewConfig() (*Config, error) {
 	flag.IntVar(&cfg.DB.MaxIdleConns, "db-max-idle-conns", 25, "PostgreSQL max idle connections")
 	flag.DurationVar(&cfg.DB.MaxIdleTime, "db-max-idle-time", 15*time.Minute, "PostgreSQL max connection idle time")
 	flag.StringVar(&cfg.APIFootballKey, "af-key", os.Getenv("API_FOOTBALL_KEY"), "API Key for API-Football")
+	flag.StringVar(&cfg.FirebaseCredsFile, "firebase-creds-file", os.Getenv("FIREBASE_CREDS_FILE"), "Path to firebase credentials file")
 	flag.Parse()
 
 	return cfg, nil

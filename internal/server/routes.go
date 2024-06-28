@@ -32,5 +32,7 @@ func (srv *Server) Routes() http.Handler {
 	router.HandlerFunc(http.MethodGet, "/api/healthcheck", srv.healthcheckHandler)
 	router.HandlerFunc(http.MethodGet, "/api/apifootball/*path", srv.APIFootballService.ProxyHandler)
 
-	return srv.secureHeaders(srv.logRequest(srv.recoverPanic(srv.enableCORS(srv.rateLimit(router)))))
+	router.HandlerFunc(http.MethodGet, "/api/users/preferences", srv.requireAuthenticatedUser(srv.UsersService.GetUsersPreferencesHandler))
+
+	return srv.secureHeaders(srv.logRequest(srv.recoverPanic(srv.enableCORS(srv.rateLimit(srv.authenticate(router))))))
 }
