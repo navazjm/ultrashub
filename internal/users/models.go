@@ -6,6 +6,7 @@ import (
 	"errors"
 	"time"
 
+	"github.com/lib/pq"
 	"github.com/navazjm/ultrashub/internal/utils"
 )
 
@@ -37,8 +38,8 @@ func (m UsersPreferencesModel) GetUsersPreferencesByUID(uid string) (*UsersPrefe
 	err := m.DB.QueryRowContext(ctx, query, uid).Scan(
 		&userPreferences.UID,
 		&userPreferences.ShowScores,
-		&userPreferences.FavoriteTeams,
-		&userPreferences.FavoriteCompetitions,
+		pq.Array(&userPreferences.FavoriteTeams),
+		pq.Array(&userPreferences.FavoriteCompetitions),
 		&userPreferences.Timezone,
 		&userPreferences.CreatedAt,
 		&userPreferences.UpdatedAt,
@@ -61,7 +62,7 @@ func (m UsersPreferencesModel) InsertUsersPreferences(userPreferences *UsersPref
 	query := `
         INSERT INTO users_preferences (uid)  
         VALUES ($1)
-        RETURNING show_scores, favorite_teams, favorite_competitions, timezone created_at, updated_at, version`
+        RETURNING show_scores, favorite_teams, favorite_competitions, timezone, created_at, updated_at, version`
 
 	args := []any{userPreferences.UID}
 
@@ -70,8 +71,8 @@ func (m UsersPreferencesModel) InsertUsersPreferences(userPreferences *UsersPref
 
 	err := m.DB.QueryRowContext(ctx, query, args...).Scan(
 		&userPreferences.ShowScores,
-		&userPreferences.FavoriteTeams,
-		&userPreferences.FavoriteCompetitions,
+		pq.Array(&userPreferences.FavoriteTeams),
+		pq.Array(&userPreferences.FavoriteCompetitions),
 		&userPreferences.Timezone,
 		&userPreferences.CreatedAt,
 		&userPreferences.UpdatedAt,

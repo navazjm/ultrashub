@@ -126,3 +126,6 @@ dist-ssr
 *.sw?
 
 .vite/
+
+PROD_*
+DEV_*

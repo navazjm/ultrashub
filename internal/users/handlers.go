@@ -21,12 +21,12 @@ func (as *Service) GetUsersPreferencesHandler(w http.ResponseWriter, r *http.Req
 			err = as.Models.InsertUsersPreferences(userPreferences)
 			if err != nil {
 				utils.ServerErrorResponse(w, r, as.Logger, err)
+				return
 			}
-			utils.NotFoundResponse(w, r, as.Logger)
 		default:
 			utils.ServerErrorResponse(w, r, as.Logger, err)
+			return
 		}
-		return
 	}
 
 	err = utils.WriteJSON(w, http.StatusOK, utils.Envelope{"userPreferneces": userPreferences}, nil)

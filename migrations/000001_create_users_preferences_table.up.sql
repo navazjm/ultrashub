@@ -1,12 +1,13 @@
+
 CREATE TABLE IF NOT EXISTS users_preferences (
     uid TEXT PRIMARY KEY,
     show_scores BOOLEAN NOT NULL DEFAULT FALSE,
     favorite_teams TEXT[] NOT NULL DEFAULT '{}',
     favorite_competitions TEXT[] NOT NULL DEFAULT '{}',
-    timezone text NOT NULL DEFAULT 'America/Chicago',
-    created_at timestamp(0) with time zone NOT NULL DEFAULT NOW(),
-    updated_at timestamp(0) with time zone NOT NULL DEFAULT NOW(),
-    version integer NOT NULL DEFAULT 1
+    timezone TEXT NOT NULL DEFAULT 'America/Chicago',
+    created_at TIMESTAMP(0) WITH TIME ZONE NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP(0) WITH TIME ZONE NOT NULL DEFAULT NOW(),
+    version INTEGER NOT NULL DEFAULT 1
 );
 
 -- Only allow 5 id's per favorite_teams and favorite_competitions
@@ -36,8 +37,12 @@ EXECUTE FUNCTION check_arrays_trigger();
 CREATE OR REPLACE FUNCTION ensure_unique_array_elements()
 RETURNS TRIGGER AS $$
 BEGIN
-    NEW.favorite_teams := (SELECT array_agg(DISTINCT unnest(NEW.favorite_teams)));
-    NEW.favorite_competitions := (SELECT array_agg(DISTINCT unnest(NEW.favorite_competitions)));
+    NEW.favorite_teams := array(
+        SELECT DISTINCT unnest(NEW.favorite_teams)
+    );
+    NEW.favorite_competitions := array(
+        SELECT DISTINCT unnest(NEW.favorite_competitions)
+    );
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
