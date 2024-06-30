@@ -19,8 +19,8 @@ const accountPreferencesFormSchema = z.object({
     timezone: z.string({
         required_error: "Please select a timezone.",
     }),
-    favoriteTeams: z.string().array().max(5, { message: "No more than 5 favorite teams" }),
-    favoriteCompetitions: z.string().array().max(5, { message: "No more than 5 favorite competitions" }),
+    favoriteTeams: z.number().array().max(5, { message: "No more than 5 favorite teams" }),
+    favoriteCompetitions: z.number().array().max(5, { message: "No more than 5 favorite competitions" }),
 });
 
 export type TAccountPreferencesFormSchema = z.infer<typeof accountPreferencesFormSchema>;
@@ -88,7 +88,7 @@ export const AccountPreferencesComponent = () => {
 
         const foundDefaultItems: IFavoriteItemData[] = [];
         defaultValues.forEach((id) => {
-            const foundItem = fetchedData.find((fetchedItem) => `${fetchedItem.id}` === id);
+            const foundItem = fetchedData.find((fetchedItem) => fetchedItem.id === id);
             if (!foundItem) return;
             foundDefaultItems.push(foundItem);
         });

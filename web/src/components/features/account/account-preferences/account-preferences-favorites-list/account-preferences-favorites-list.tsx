@@ -100,22 +100,22 @@ export const AccountPreferencesFavoritesListComponent = (props: IAccountPreferen
         }
     };
 
-    const isIDinFormFavorites = (id: string) => {
+    const isIDinFormFavorites = (id: number) => {
         const formValues = props.form.getValues();
         const index = formValues[props.type].indexOf(id);
         return index !== -1;
     };
 
-    const removeIDfromFavorites = (id: string) => {
+    const removeIDfromFavorites = (id: number) => {
         const formValues = props.form.getValues();
         const newFavoritesItemDataStrs = formValues[props.type].filter((currID) => currID !== id);
         props.form.setValue(props.type, newFavoritesItemDataStrs);
 
-        props.setFavoritesItemData(props.favoritesItemData.filter((favItem) => `${favItem.id}` !== id));
+        props.setFavoritesItemData(props.favoritesItemData.filter((favItem) => favItem.id !== id));
     };
 
-    const addIDtoFavorites = (id: string) => {
-        const favItemData = searchResults.find((res) => `${res.id}` === id);
+    const addIDtoFavorites = (id: number) => {
+        const favItemData = searchResults.find((res) => res.id === id);
         if (!favItemData) return;
         props.setFavoritesItemData([...props.favoritesItemData, favItemData]);
 
@@ -189,9 +189,7 @@ export const AccountPreferencesFavoritesListComponent = (props: IAccountPreferen
                                                 {searchResults.map((favItem, idx) => (
                                                     <TableRow
                                                         key={idx}
-                                                        className={cn(
-                                                            isIDinFormFavorites(`${favItem.id}`) && "bg-muted",
-                                                        )}
+                                                        className={cn(isIDinFormFavorites(favItem.id) && "bg-muted")}
                                                     >
                                                         <TableCell colSpan={2}>
                                                             <section className="flex items-center gap-3">
@@ -205,13 +203,11 @@ export const AccountPreferencesFavoritesListComponent = (props: IAccountPreferen
                                                             </section>
                                                         </TableCell>
                                                         <TableCell className="flex justify-end pr-0">
-                                                            {isIDinFormFavorites(`${favItem.id}`) ? (
+                                                            {isIDinFormFavorites(favItem.id) ? (
                                                                 <Button
                                                                     variant="ghost"
                                                                     type="button"
-                                                                    onClick={() =>
-                                                                        removeIDfromFavorites(`${favItem.id}`)
-                                                                    }
+                                                                    onClick={() => removeIDfromFavorites(favItem.id)}
                                                                 >
                                                                     <Minus className="h-4 w-4" />
                                                                 </Button>
@@ -220,9 +216,7 @@ export const AccountPreferencesFavoritesListComponent = (props: IAccountPreferen
                                                                     <Button
                                                                         variant="ghost"
                                                                         type="button"
-                                                                        onClick={() =>
-                                                                            addIDtoFavorites(`${favItem.id}`)
-                                                                        }
+                                                                        onClick={() => addIDtoFavorites(favItem.id)}
                                                                         disabled={getFavoriteItemsCount() >= 5}
                                                                     >
                                                                         <Plus className="h-4 w-4" />
@@ -263,7 +257,7 @@ export const AccountPreferencesFavoritesListComponent = (props: IAccountPreferen
                                                     <Button
                                                         variant="ghost"
                                                         type="button"
-                                                        onClick={() => removeIDfromFavorites(`${favItem.id}`)}
+                                                        onClick={() => removeIDfromFavorites(favItem.id)}
                                                     >
                                                         <Minus className="h-4 w-4" />
                                                     </Button>

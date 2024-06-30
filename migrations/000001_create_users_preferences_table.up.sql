@@ -2,8 +2,8 @@
 CREATE TABLE IF NOT EXISTS users_preferences (
     uid TEXT PRIMARY KEY,
     show_scores BOOLEAN NOT NULL DEFAULT FALSE,
-    favorite_teams TEXT[] NOT NULL DEFAULT '{}',
-    favorite_competitions TEXT[] NOT NULL DEFAULT '{}',
+    favorite_teams BIGINT[] NOT NULL DEFAULT '{}',
+    favorite_competitions BIGINT[] NOT NULL DEFAULT '{}',
     timezone TEXT NOT NULL DEFAULT 'America/Chicago',
     created_at TIMESTAMP(0) WITH TIME ZONE NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP(0) WITH TIME ZONE NOT NULL DEFAULT NOW(),

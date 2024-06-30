@@ -1,8 +1,8 @@
 export interface IUsersPreferences {
     uid: string;
     showScores: boolean;
-    favoriteTeams: string[];
-    favoriteCompetitions: string[];
+    favoriteTeams: number[];
+    favoriteCompetitions: number[];
     timezone: string;
     createdAt: Date;
     updatedAt: Date;

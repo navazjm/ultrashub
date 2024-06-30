@@ -17,8 +17,8 @@ type UsersPreferencesModel struct {
 type UsersPreferences struct {
 	UID                  string    `json:"uid"`
 	ShowScores           bool      `json:"showScores"`
-	FavoriteTeams        []string  `json:"favoriteTeams"`
-	FavoriteCompetitions []string  `json:"favoriteCompetitions"`
+	FavoriteTeams        []int64   `json:"favoriteTeams"`
+	FavoriteCompetitions []int64   `json:"favoriteCompetitions"`
 	Timezone             string    `json:"timezone"`
 	CreatedAt            time.Time `json:"createdAt"`
 	UpdatedAt            time.Time `json:"updatedAt"`
