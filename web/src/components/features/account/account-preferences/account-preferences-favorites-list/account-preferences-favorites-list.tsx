@@ -23,7 +23,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { UseFormReturn } from "node_modules/react-hook-form/dist/types";
 import { TAccountPreferencesFormSchema } from "../account-preferences";
 import { IFavoriteItemData } from "../account-preferences.types";
-
 import { cn } from "@/lib/shadcn";
 import { ICompetitionResponse, ITeamsResponse } from "@/components/common/api-football-response";
 

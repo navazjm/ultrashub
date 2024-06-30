@@ -15,6 +15,7 @@ import { z } from "zod";
 import { useAccountPreferencesFormData } from "./account-preferences.hooks";
 import { IFavoriteItemData } from "./account-preferences.types";
 import { AccountPreferencesFavoritesListComponent } from "./account-preferences-favorites-list/account-preferences-favorites-list";
+import { ErrorComponent } from "@/components/common/error/error";
 
 const accountPreferencesFormSchema = z.object({
     showScores: z.boolean(),
@@ -52,7 +53,13 @@ export const AccountPreferencesComponent = () => {
     }
 
     if (!data) {
-        return;
+        return (
+            <ErrorComponent
+                backNavTitle="Error!"
+                errorMessage="No user preferences data was found. Refresh the page or try again later."
+            />
+        );
+
     }
 
     const onSelectTimezoneChange = (value: string) => {
