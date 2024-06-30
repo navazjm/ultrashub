@@ -17,7 +17,7 @@ import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/
 import { Input } from "@/components/ui/input";
 import { Fragment, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Minus, Plus, Search } from "lucide-react";
+import { Minus, Plus, RotateCcw, Search } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
 import { useToast } from "@/components/ui/use-toast";
 import { UseFormReturn } from "node_modules/react-hook-form/dist/types";
@@ -34,6 +34,7 @@ interface IAccountPreferencesFavoritesListComponentProps {
     favoritesItemData: IFavoriteItemData[];
     setFavoritesItemData: React.Dispatch<React.SetStateAction<IFavoriteItemData[]>>;
     type: "favoriteTeams" | "favoriteCompetitions";
+    onReset: (type: "favoriteTeams" | "favoriteCompetitions") => void;
 }
 
 export const AccountPreferencesFavoritesListComponent = (props: IAccountPreferencesFavoritesListComponentProps) => {
@@ -149,91 +150,97 @@ export const AccountPreferencesFavoritesListComponent = (props: IAccountPreferen
                             <FormLabel className="text-base">{formLabel}</FormLabel>
                             <FormDescription>{formDesc}</FormDescription>
                         </div>
-                        <Dialog open={isSearchDialogOpen} onOpenChange={onDialogOpenChange}>
-                            <DialogTrigger asChild>
-                                <Button type="button" disabled={getFavoriteItemsCount() >= 5}>
-                                    <Plus className="h-4 w-4" />
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent className="h-screen md:h-[400px] w-screen md:w-[600px] flex flex-col gap-2">
-                                <DialogHeader className="mb-2">
-                                    <DialogTitle>{dialogTitle}</DialogTitle>
-                                    <DialogDescription></DialogDescription>
-                                </DialogHeader>
-                                <form
-                                    id="searchNameForm"
-                                    className="flex gap-2"
-                                    onSubmit={fetchDataBySearchTerm}
-                                >
-                                    <Input
-                                        placeholder="Search by name"
-                                        value={searchTerm}
-                                        onChange={(evt) => setSearchTerm(evt.target.value)}
-                                        form="searchNameForm"
-                                    />
-                                    <Button
-                                        form="searchNameForm"
-                                        type="submit"
-                                        disabled={searchTerm.length < 3}
-                                    >
-                                        {isFetchingData ? <Spinner /> : <Search />}
+                        <div className="flex items-center gap-2">
+                            <Button type="button" variant="outline" onClick={() => props.onReset(props.type)}>
+                                <RotateCcw className="h-4 w-4" />
+                            </Button>
+                            <Dialog open={isSearchDialogOpen} onOpenChange={onDialogOpenChange}>
+                                <DialogTrigger asChild>
+                                    <Button type="button" disabled={getFavoriteItemsCount() >= 5}>
+                                        <Plus className="h-4 w-4" />
                                     </Button>
-                                </form>
-                                {haveFetched && searchResults.length === 0 && (
-                                    <p className="italic text-red-600">Found 0 teams</p>
-                                )}
-                                {searchResults.length > 0 && (
-                                    <Table className="border">
-                                        <TableHeader></TableHeader>
-                                        <TableBody>
-                                            {searchResults.map((favItem, idx) => (
-                                                <TableRow
-                                                    key={idx}
-                                                    className={cn(
-                                                        isIDinFormFavorites(`${favItem.id}`) &&
-                                                        "bg-muted",
-                                                    )}
-                                                >
-                                                    <TableCell colSpan={2}>
-                                                        <section className="flex items-center gap-3">
-                                                            <ApiFootballLogoComponent
-                                                                src={favItem.logo}
-                                                                alt={`${favItem.name} club logo`}
-                                                                width={25}
-                                                                height={25}
-                                                            />
-                                                            <span className="font-bold">{favItem.name}</span>
-                                                        </section>
-                                                    </TableCell>
-                                                    <TableCell className="flex justify-end pr-0">
-                                                        {isIDinFormFavorites(`${favItem.id}`) ? (
-                                                            <Button
-                                                                variant="ghost"
-                                                                type="button"
-                                                                onClick={() => removeIDfromFavorites(`${favItem.id}`)}
-                                                            >
-                                                                <Minus className="h-4 w-4" />
-                                                            </Button>
-                                                        ) : (
-                                                            <>
+                                </DialogTrigger>
+                                <DialogContent className="h-screen md:h-[400px] w-screen md:w-[600px] flex flex-col gap-2">
+                                    <DialogHeader className="mb-2">
+                                        <DialogTitle>{dialogTitle}</DialogTitle>
+                                        <DialogDescription></DialogDescription>
+                                    </DialogHeader>
+                                    <form
+                                        id="searchNameForm"
+                                        className="flex gap-2"
+                                        onSubmit={fetchDataBySearchTerm}
+                                    >
+                                        <Input
+                                            placeholder="Search by name"
+                                            value={searchTerm}
+                                            onChange={(evt) => setSearchTerm(evt.target.value)}
+                                            form="searchNameForm"
+                                        />
+                                        <Button
+                                            form="searchNameForm"
+                                            type="submit"
+                                            disabled={searchTerm.length < 3}
+                                        >
+                                            {isFetchingData ? <Spinner /> : <Search />}
+                                        </Button>
+                                    </form>
+                                    {haveFetched && searchResults.length === 0 && (
+                                        <p className="italic text-red-600">Found 0 teams</p>
+                                    )}
+                                    {searchResults.length > 0 && (
+                                        <Table className="border">
+                                            <TableHeader></TableHeader>
+                                            <TableBody>
+                                                {searchResults.map((favItem, idx) => (
+                                                    <TableRow
+                                                        key={idx}
+                                                        className={cn(
+                                                            isIDinFormFavorites(`${favItem.id}`) &&
+                                                            "bg-muted",
+                                                        )}
+                                                    >
+                                                        <TableCell colSpan={2}>
+                                                            <section className="flex items-center gap-3">
+                                                                <ApiFootballLogoComponent
+                                                                    src={favItem.logo}
+                                                                    alt={`${favItem.name} club logo`}
+                                                                    width={25}
+                                                                    height={25}
+                                                                />
+                                                                <span className="font-bold">{favItem.name}</span>
+                                                            </section>
+                                                        </TableCell>
+                                                        <TableCell className="flex justify-end pr-0">
+                                                            {isIDinFormFavorites(`${favItem.id}`) ? (
                                                                 <Button
                                                                     variant="ghost"
                                                                     type="button"
-                                                                    onClick={() => addIDtoFavorites(`${favItem.id}`)}
-                                                                    disabled={getFavoriteItemsCount() >= 5}
+                                                                    onClick={() => removeIDfromFavorites(`${favItem.id}`)}
                                                                 >
-                                                                    <Plus className="h-4 w-4" />
+                                                                    <Minus className="h-4 w-4" />
                                                                 </Button>
-                                                            </>
-                                                        )}
-                                                    </TableCell>
-                                                </TableRow>
-                                            ))}
-                                        </TableBody>
-                                    </Table>
-                                )}
-                            </DialogContent>
-                        </Dialog>
+                                                            ) : (
+                                                                <>
+                                                                    <Button
+                                                                        variant="ghost"
+                                                                        type="button"
+                                                                        onClick={() => addIDtoFavorites(`${favItem.id}`)}
+                                                                        disabled={getFavoriteItemsCount() >= 5}
+                                                                    >
+                                                                        <Plus className="h-4 w-4" />
+                                                                    </Button>
+                                                                </>
+                                                            )}
+                                                        </TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    )}
+                                </DialogContent>
+                            </Dialog>
+
+                        </div>
                     </section>
 
                     <FormControl>

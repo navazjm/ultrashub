@@ -75,30 +75,29 @@ export const AccountPreferencesComponent = () => {
 
     const resetForm = () => {
         form.reset();
-        const defaultValues = form.formState.defaultValues;
-
-        // update data.favoriteTeams to show original favorites
-        const defaultTeams: IFavoriteItemData[] = [];
-        if (defaultValues?.favoriteTeams) {
-            defaultValues.favoriteTeams.forEach((favTeamID) => {
-                const foundTeam = data?.fetchedTeams.find((fetchedTeam) => `${fetchedTeam.id}` === favTeamID);
-                if (!foundTeam) return;
-                defaultTeams.push(foundTeam);
-            });
-        }
-        data?.setFavoriteTeams(defaultTeams);
-
-        // update data.favoriteCompetitions to show original favorites
-        const defaultCompetitions: IFavoriteItemData[] = [];
-        if (defaultValues?.favoriteCompetitions) {
-            defaultValues.favoriteCompetitions.forEach((favCompID) => {
-                const foundComp = data?.fetchedCompetitions.find((fetchedComp) => `${fetchedComp.id}` === favCompID);
-                if (!foundComp) return;
-                defaultCompetitions.push(foundComp);
-            });
-        }
-        data?.setFavoriteCompetitions(defaultCompetitions);
+        resetListData("favoriteTeams")
+        resetListData("favoriteCompetitions")
     };
+
+    const resetListData = (type: "favoriteTeams" | "favoriteCompetitions") => {
+        const formDefaultValues = form.formState.defaultValues;
+        if (!formDefaultValues) return;
+
+        const defaultValues = formDefaultValues[type];
+        if (!defaultValues) return;
+
+        const fetchedData = type === "favoriteTeams" ? data.fetchedTeams : data.fetchedCompetitions;
+        const setFavoritesItemData = type === "favoriteTeams" ? data.setFavoriteTeams : data.setFavoriteCompetitions;
+
+        const foundDefaultItems: IFavoriteItemData[] = [];
+        defaultValues.forEach((id) => {
+            const foundItem = fetchedData.find((fetchedItem) => `${fetchedItem.id}` === id);
+            if (!foundItem) return;
+            foundDefaultItems.push(foundItem);
+        });
+        setFavoritesItemData(foundDefaultItems);
+    }
+
 
     return (
         <section className="flex flex-col lg:px-5">
@@ -192,8 +191,8 @@ export const AccountPreferencesComponent = () => {
                         </FormItem>
                     )}
                 />
-                <AccountPreferencesFavoritesListComponent type="favoriteTeams" form={form} fetchedData={data.fetchedTeams} setFetchedData={data.setFetchedTeams} favoritesItemData={data.favoriteTeams} setFavoritesItemData={data.setFavoriteTeams} />
-                <AccountPreferencesFavoritesListComponent type="favoriteCompetitions" form={form} fetchedData={data.fetchedCompetitions} setFetchedData={data.setFetchedCompetitions} favoritesItemData={data.favoriteCompetitions} setFavoritesItemData={data.setFavoriteCompetitions} />
+                <AccountPreferencesFavoritesListComponent type="favoriteTeams" form={form} fetchedData={data.fetchedTeams} setFetchedData={data.setFetchedTeams} favoritesItemData={data.favoriteTeams} setFavoritesItemData={data.setFavoriteTeams} onReset={resetListData} />
+                <AccountPreferencesFavoritesListComponent type="favoriteCompetitions" form={form} fetchedData={data.fetchedCompetitions} setFetchedData={data.setFetchedCompetitions} favoritesItemData={data.favoriteCompetitions} setFavoritesItemData={data.setFavoriteCompetitions} onReset={resetListData} />
                 <section className="w-full flex items-center gap-2 p-4">
                     <Button type="button" variant="outline" className="w-1/2" onClick={resetForm}>
                         Cancel
