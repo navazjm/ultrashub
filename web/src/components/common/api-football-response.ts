@@ -486,3 +486,13 @@ export interface IPlayersSquadsPlayers {
     position: string;
     photo: string;
 }
+
+// End Players Squads Types
+
+// Timezone Types
+
+export interface ITimezoneResponse extends IBaseResponse {
+    response: string[];
+}
+
+// End Timezone Types

@@ -23,8 +23,6 @@ export const LoginDialogComponent = () => {
     const handleSignIn = async () => {
         try {
             await signInWithGoogle();
-
-            // TODO: make request to get/create user preferences
         } catch (err) {
             if ((err as FirebaseError).code === "auth/account-exists-with-different-credential") {
                 toast({

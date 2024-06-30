@@ -1,7 +1,9 @@
+import { AccountPreferencesComponent } from "@/components/features/account/account-preferences/account-preferences";
+
 export const AccountPreferencesPage = () => {
     return (
         <>
-            <h3>Hello from AccountPreferencesPage</h3>
+            <AccountPreferencesComponent />
         </>
     );
 };
