@@ -22,7 +22,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { useToast } from "@/components/ui/use-toast";
 import { UseFormReturn } from "node_modules/react-hook-form/dist/types";
 import { TAccountPreferencesFormSchema } from "../account-preferences";
-import { IFavoriteItemData } from "../account-preferences.types";
+import { IFavoriteItemData, TAccountFavoriteFields } from "../account-preferences.types";
 import { cn } from "@/lib/shadcn";
 import { ICompetitionResponse, ITeamsResponse } from "@/components/common/api-football-response";
 
@@ -32,8 +32,8 @@ interface IAccountPreferencesFavoritesListComponentProps {
     setFetchedData: React.Dispatch<React.SetStateAction<IFavoriteItemData[]>>;
     favoritesItemData: IFavoriteItemData[];
     setFavoritesItemData: React.Dispatch<React.SetStateAction<IFavoriteItemData[]>>;
-    type: "favoriteTeams" | "favoriteCompetitions";
-    onReset: (type: "favoriteTeams" | "favoriteCompetitions") => void;
+    type: TAccountFavoriteFields;
+    onReset: (type: TAccountFavoriteFields) => void;
 }
 
 export const AccountPreferencesFavoritesListComponent = (props: IAccountPreferencesFavoritesListComponentProps) => {
@@ -49,43 +49,47 @@ export const AccountPreferencesFavoritesListComponent = (props: IAccountPreferen
         try {
             setIsFetchingData(true);
             const endpoint = props.type === "favoriteTeams" ? "teams" : "leagues";
-            const resp: AxiosResponse<ITeamsResponse | ICompetitionResponse> = await axios.get(`/apifootball/${endpoint}`, {
-                params: {
-                    search: searchTerm,
+            const resp: AxiosResponse<ITeamsResponse | ICompetitionResponse> = await axios.get(
+                `/apifootball/${endpoint}`,
+                {
+                    params: {
+                        search: searchTerm,
+                    },
                 },
-            });
+            );
             if (resp.status !== 200) {
                 throw new Error();
             }
             const newSearchResults: IFavoriteItemData[] = [];
             if (props.type === "favoriteTeams") {
                 const teamsResp = resp as AxiosResponse<ITeamsResponse>;
-                teamsResp.data.response.forEach(resp => {
+                teamsResp.data.response.forEach((resp) => {
                     const newSearchResult: IFavoriteItemData = {
                         id: resp.team.id,
                         name: resp.team.name,
                         logo: resp.team.logo,
                         country: resp.team.country,
-                    }
+                    };
                     newSearchResults.push(newSearchResult);
                 });
-            } else { // props.type === "favoriteCompetitions"
+            } else {
+                // props.type === "favoriteCompetitions"
                 const competitionsResp = resp as AxiosResponse<ICompetitionResponse>;
-                competitionsResp.data.response.forEach(resp => {
+                competitionsResp.data.response.forEach((resp) => {
                     const newSearchResult: IFavoriteItemData = {
                         id: resp.league.id,
                         name: resp.league.name,
                         logo: resp.league.logo,
                         country: resp.country.code,
-                    }
+                    };
                     newSearchResults.push(newSearchResult);
                 });
             }
-            setSearchResults(newSearchResults)
+            setSearchResults(newSearchResults);
             // using spread op below bc on initial page load, fetchedData and favoritesItemData point to the same array in memory.
-            // by using the spread op, currFetchedData gets a newly created array in memory therefore not modifying favoritesItemData (users chosen favorites).  
+            // by using the spread op, currFetchedData gets a newly created array in memory therefore not modifying favoritesItemData (users chosen favorites).
             const currFetchedData = [...props.fetchedData];
-            currFetchedData.push(...newSearchResults)
+            currFetchedData.push(...newSearchResults);
             const newFetchedDataSet = new Set([...currFetchedData]);
             props.setFetchedData([...newFetchedDataSet]);
             setHaveFetched(true);
@@ -130,11 +134,11 @@ export const AccountPreferencesFavoritesListComponent = (props: IAccountPreferen
         setSearchTerm("");
         setSearchResults([]);
         setHaveFetched(false);
-    }
+    };
 
     const title = props.type === "favoriteTeams" ? "Teams" : "Competitions";
     const titleLowercase = title.toLocaleLowerCase();
-    const formLabel = `Favorite ${title}`
+    const formLabel = `Favorite ${title}`;
     const formDesc = `Add up to 5 ${titleLowercase}.`;
     const dialogTitle = `Add ${titleLowercase} to your favorites`;
 
@@ -164,22 +168,14 @@ export const AccountPreferencesFavoritesListComponent = (props: IAccountPreferen
                                         <DialogTitle>{dialogTitle}</DialogTitle>
                                         <DialogDescription></DialogDescription>
                                     </DialogHeader>
-                                    <form
-                                        id="searchNameForm"
-                                        className="flex gap-2"
-                                        onSubmit={fetchDataBySearchTerm}
-                                    >
+                                    <form id="searchNameForm" className="flex gap-2" onSubmit={fetchDataBySearchTerm}>
                                         <Input
                                             placeholder="Search by name"
                                             value={searchTerm}
                                             onChange={(evt) => setSearchTerm(evt.target.value)}
                                             form="searchNameForm"
                                         />
-                                        <Button
-                                            form="searchNameForm"
-                                            type="submit"
-                                            disabled={searchTerm.length < 3}
-                                        >
+                                        <Button form="searchNameForm" type="submit" disabled={searchTerm.length < 3}>
                                             {isFetchingData ? <Spinner /> : <Search />}
                                         </Button>
                                     </form>
@@ -194,8 +190,7 @@ export const AccountPreferencesFavoritesListComponent = (props: IAccountPreferen
                                                     <TableRow
                                                         key={idx}
                                                         className={cn(
-                                                            isIDinFormFavorites(`${favItem.id}`) &&
-                                                            "bg-muted",
+                                                            isIDinFormFavorites(`${favItem.id}`) && "bg-muted",
                                                         )}
                                                     >
                                                         <TableCell colSpan={2}>
@@ -214,7 +209,9 @@ export const AccountPreferencesFavoritesListComponent = (props: IAccountPreferen
                                                                 <Button
                                                                     variant="ghost"
                                                                     type="button"
-                                                                    onClick={() => removeIDfromFavorites(`${favItem.id}`)}
+                                                                    onClick={() =>
+                                                                        removeIDfromFavorites(`${favItem.id}`)
+                                                                    }
                                                                 >
                                                                     <Minus className="h-4 w-4" />
                                                                 </Button>
@@ -223,7 +220,9 @@ export const AccountPreferencesFavoritesListComponent = (props: IAccountPreferen
                                                                     <Button
                                                                         variant="ghost"
                                                                         type="button"
-                                                                        onClick={() => addIDtoFavorites(`${favItem.id}`)}
+                                                                        onClick={() =>
+                                                                            addIDtoFavorites(`${favItem.id}`)
+                                                                        }
                                                                         disabled={getFavoriteItemsCount() >= 5}
                                                                     >
                                                                         <Plus className="h-4 w-4" />
@@ -238,7 +237,6 @@ export const AccountPreferencesFavoritesListComponent = (props: IAccountPreferen
                                     )}
                                 </DialogContent>
                             </Dialog>
-
                         </div>
                     </section>
 
@@ -246,8 +244,7 @@ export const AccountPreferencesFavoritesListComponent = (props: IAccountPreferen
                         <Table className="border">
                             <TableHeader></TableHeader>
                             <TableBody>
-                                {
-                                    props.favoritesItemData.length > 0 &&
+                                {props.favoritesItemData.length > 0 &&
                                     props.favoritesItemData.map((favItem, idx) => (
                                         <Fragment key={idx}>
                                             <TableRow>
@@ -280,6 +277,5 @@ export const AccountPreferencesFavoritesListComponent = (props: IAccountPreferen
                 </FormItem>
             )}
         />
-    )
-
-}
+    );
+};

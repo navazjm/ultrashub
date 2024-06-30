@@ -9,13 +9,13 @@ interface IAccountPreferencesFormData {
     // track user selected favorite teams
     favoriteTeams: IFavoriteItemData[];
     setFavoriteTeams: React.Dispatch<React.SetStateAction<IFavoriteItemData[]>>;
-    // track all teams fetched from server either by initial page render or search result 
+    // track all teams fetched from server either by initial page render or search result
     fetchedTeams: IFavoriteItemData[];
     setFetchedTeams: React.Dispatch<React.SetStateAction<IFavoriteItemData[]>>;
     // track user selected favorite competitions
     favoriteCompetitions: IFavoriteItemData[];
     setFavoriteCompetitions: React.Dispatch<React.SetStateAction<IFavoriteItemData[]>>;
-    // track all competitions fetched from server either by initial page render or search result 
+    // track all competitions fetched from server either by initial page render or search result
     fetchedCompetitions: IFavoriteItemData[];
     setFetchedCompetitions: React.Dispatch<React.SetStateAction<IFavoriteItemData[]>>;
 }
@@ -69,7 +69,7 @@ export const useAccountPreferencesFormData = () => {
                                 name: resp[0].team.name,
                                 logo: resp[0].team.logo,
                                 country: resp[0].team.country,
-                            }
+                            };
                             newFavoriteTeams.push(newFavoriteItemData);
                             return;
                         }
@@ -79,7 +79,7 @@ export const useAccountPreferencesFormData = () => {
                                 name: resp[0].league.name,
                                 logo: resp[0].league.logo,
                                 country: resp[0].country.code,
-                            }
+                            };
                             newFavoriteCompetitions.push(newFavoriteItemData);
                             return;
                         }
@@ -102,21 +102,21 @@ export const useAccountPreferencesFormData = () => {
         }
     }, [authCtx.isLoading]);
 
-    const isLoading = status === "loading";
-    const data: IAccountPreferencesFormData | null = isLoading
+    const isPageLoading = status === "loading";
+    const data: IAccountPreferencesFormData | null = isPageLoading
         ? null
         : {
-            timezones,
-            setTimezones,
-            favoriteTeams,
-            setFavoriteTeams,
-            fetchedTeams,
-            setFetchedTeams,
-            favoriteCompetitions,
-            setFavoriteCompetitions,
-            fetchedCompetitions,
-            setFetchedCompetitions
-        };
+              timezones,
+              setTimezones,
+              favoriteTeams,
+              setFavoriteTeams,
+              fetchedTeams,
+              setFetchedTeams,
+              favoriteCompetitions,
+              setFavoriteCompetitions,
+              fetchedCompetitions,
+              setFetchedCompetitions,
+          };
 
-    return [data, isLoading] as const;
+    return [data, isPageLoading] as const;
 };

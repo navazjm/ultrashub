@@ -4,3 +4,5 @@ export interface IFavoriteItemData {
     logo: string;
     country: string;
 }
+
+export type TAccountFavoriteFields = "favoriteTeams" | "favoriteCompetitions";

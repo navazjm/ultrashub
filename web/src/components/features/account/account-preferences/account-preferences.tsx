@@ -1,21 +1,18 @@
 import { useAuthContext } from "@/components/common/auth/auth.hooks";
 import { Button } from "@/components/ui/button";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Spinner } from "@/components/ui/spinner";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/components/ui/use-toast";
-import { cn } from "@/lib/shadcn";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Check, ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useAccountPreferencesFormData } from "./account-preferences.hooks";
-import { IFavoriteItemData } from "./account-preferences.types";
+import { IFavoriteItemData, TAccountFavoriteFields } from "./account-preferences.types";
 import { AccountPreferencesFavoritesListComponent } from "./account-preferences-favorites-list/account-preferences-favorites-list";
 import { ErrorComponent } from "@/components/common/error/error";
+import { AccountPeferencesTimezonesPopoverComponent } from "./acoount-preferences-timezones-popover/account-preferences-timezones-popover";
 
 const accountPreferencesFormSchema = z.object({
     showScores: z.boolean(),
@@ -29,11 +26,9 @@ const accountPreferencesFormSchema = z.object({
 export type TAccountPreferencesFormSchema = z.infer<typeof accountPreferencesFormSchema>;
 
 export const AccountPreferencesComponent = () => {
-    const [data, isLoading] = useAccountPreferencesFormData();
+    const [data, isPageLoading] = useAccountPreferencesFormData();
     const authCtx = useAuthContext();
-    const { toast } = useToast();
     const [isUpdatingUserPreferences, setIsUpdatingUserPreferences] = useState<boolean>(false);
-    const [isTimezoneSelectPopoverOpen, setIsTimezoneSelectPopoverOpen] = useState<boolean>(false);
     const form = useForm<TAccountPreferencesFormSchema>({
         resolver: zodResolver(accountPreferencesFormSchema),
         defaultValues: {
@@ -43,13 +38,14 @@ export const AccountPreferencesComponent = () => {
             favoriteCompetitions: authCtx.usersPreferences.favoriteCompetitions,
         },
     });
+    const { toast } = useToast();
 
-    if (isLoading) {
+    if (isPageLoading) {
         return (
             <section className="lg:px-5">
                 <Spinner />
             </section>
-        )
+        );
     }
 
     if (!data) {
@@ -59,13 +55,7 @@ export const AccountPreferencesComponent = () => {
                 errorMessage="No user preferences data was found. Refresh the page or try again later."
             />
         );
-
     }
-
-    const onSelectTimezoneChange = (value: string) => {
-        setIsTimezoneSelectPopoverOpen(false);
-        form.setValue("timezone", value);
-    };
 
     const onSubmitHandler = async (values: TAccountPreferencesFormSchema) => {
         try {
@@ -82,11 +72,11 @@ export const AccountPreferencesComponent = () => {
 
     const resetForm = () => {
         form.reset();
-        resetListData("favoriteTeams")
-        resetListData("favoriteCompetitions")
+        resetListData("favoriteTeams");
+        resetListData("favoriteCompetitions");
     };
 
-    const resetListData = (type: "favoriteTeams" | "favoriteCompetitions") => {
+    const resetListData = (type: TAccountFavoriteFields) => {
         const formDefaultValues = form.formState.defaultValues;
         if (!formDefaultValues) return;
 
@@ -103,8 +93,7 @@ export const AccountPreferencesComponent = () => {
             foundDefaultItems.push(foundItem);
         });
         setFavoritesItemData(foundDefaultItems);
-    }
-
+    };
 
     return (
         <section className="flex flex-col lg:px-5">
@@ -145,61 +134,35 @@ export const AccountPreferencesComponent = () => {
                                 <FormLabel className="text-base">Timezone</FormLabel>
                                 <FormDescription>Retrieve matches relative to selected timezone.</FormDescription>
                             </div>
-                            <Popover open={isTimezoneSelectPopoverOpen} onOpenChange={setIsTimezoneSelectPopoverOpen}>
-                                <PopoverTrigger asChild>
-                                    <FormControl>
-                                        <Button
-                                            variant="outline"
-                                            role="combobox"
-                                            className={cn(
-                                                "w-[275px] justify-between",
-                                                !field.value && "text-muted-foreground",
-                                            )}
-                                            disabled={isUpdatingUserPreferences || isLoading}
-                                        >
-                                            {isLoading ? (
-                                                <Spinner />
-                                            ) : (
-                                                <>
-                                                    {!field.value ? "Select language" : field.value}
-                                                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                                </>
-                                            )}
-                                        </Button>
-                                    </FormControl>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-[275px] h-[400px] p-0">
-                                    <Command>
-                                        <CommandInput placeholder="Search language..." />
-                                        <CommandEmpty>No language found.</CommandEmpty>
-                                        <CommandGroup className="overflow-y-scroll">
-                                            {data?.timezones.map((timezone) => (
-                                                <CommandItem
-                                                    value={timezone}
-                                                    key={timezone}
-                                                    onSelect={() => {
-                                                        onSelectTimezoneChange(timezone);
-                                                    }}
-                                                >
-                                                    <Check
-                                                        className={cn(
-                                                            "mr-2 h-4 w-4",
-                                                            timezone === field.value ? "opacity-100" : "opacity-0",
-                                                        )}
-                                                    />
-                                                    {timezone}
-                                                </CommandItem>
-                                            ))}
-                                        </CommandGroup>
-                                    </Command>
-                                </PopoverContent>
-                            </Popover>
+                            <AccountPeferencesTimezonesPopoverComponent
+                                form={form}
+                                field={field}
+                                timezones={data.timezones}
+                                isPageLoading={isPageLoading}
+                                isUpdatingUserPreferences={isUpdatingUserPreferences}
+                            />
                             <FormMessage />
                         </FormItem>
                     )}
                 />
-                <AccountPreferencesFavoritesListComponent type="favoriteTeams" form={form} fetchedData={data.fetchedTeams} setFetchedData={data.setFetchedTeams} favoritesItemData={data.favoriteTeams} setFavoritesItemData={data.setFavoriteTeams} onReset={resetListData} />
-                <AccountPreferencesFavoritesListComponent type="favoriteCompetitions" form={form} fetchedData={data.fetchedCompetitions} setFetchedData={data.setFetchedCompetitions} favoritesItemData={data.favoriteCompetitions} setFavoritesItemData={data.setFavoriteCompetitions} onReset={resetListData} />
+                <AccountPreferencesFavoritesListComponent
+                    type="favoriteTeams"
+                    form={form}
+                    fetchedData={data.fetchedTeams}
+                    setFetchedData={data.setFetchedTeams}
+                    favoritesItemData={data.favoriteTeams}
+                    setFavoritesItemData={data.setFavoriteTeams}
+                    onReset={resetListData}
+                />
+                <AccountPreferencesFavoritesListComponent
+                    type="favoriteCompetitions"
+                    form={form}
+                    fetchedData={data.fetchedCompetitions}
+                    setFetchedData={data.setFetchedCompetitions}
+                    favoritesItemData={data.favoriteCompetitions}
+                    setFavoritesItemData={data.setFavoriteCompetitions}
+                    onReset={resetListData}
+                />
                 <section className="w-full flex items-center gap-2 p-4">
                     <Button type="button" variant="outline" className="w-1/2" onClick={resetForm}>
                         Cancel
@@ -208,7 +171,7 @@ export const AccountPreferencesComponent = () => {
                         form="usersPreferencesForm"
                         type="submit"
                         className="w-1/2"
-                        disabled={isUpdatingUserPreferences || isLoading}
+                        disabled={isUpdatingUserPreferences || isPageLoading}
                     >
                         {isUpdatingUserPreferences ? <Spinner /> : "Save"}
                     </Button>
