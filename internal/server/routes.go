@@ -39,6 +39,7 @@ func (srv *Server) Routes() http.Handler {
 	router.HandlerFunc(http.MethodGet, "/api/apifootball/*path", srv.APIFootballService.ProxyHandler)
 
 	router.HandlerFunc(http.MethodGet, "/api/users/preferences", srv.requireAuthenticatedUser(srv.UsersService.GetUsersPreferencesHandler))
+	router.HandlerFunc(http.MethodPatch, "/api/users/preferences", srv.requireAuthenticatedUser(srv.UsersService.UpdateUsersPreferencesHandler))
 
 	return srv.secureHeaders(srv.logRequest(srv.recoverPanic(srv.enableCORS(srv.rateLimit(srv.authenticate(router))))))
 }

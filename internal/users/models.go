@@ -92,7 +92,7 @@ func (m UsersPreferencesModel) UpdateUsersPreferences(userPreferences *UsersPref
         WHERE uid = $5 and version = $6
         RETURNING created_at, updated_at, version`
 
-	args := []any{userPreferences.UID, userPreferences.Version}
+	args := []any{userPreferences.ShowScores, pq.Array(&userPreferences.FavoriteTeams), pq.Array(&userPreferences.FavoriteCompetitions), &userPreferences.Timezone, &userPreferences.UID, userPreferences.Version}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
