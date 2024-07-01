@@ -1,4 +1,4 @@
-import { useAuthContext } from "@/components/common/auth/auth.hooks";
+import { useAuthContext, useAxiosPrivate } from "@/components/common/auth/auth.hooks";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Spinner } from "@/components/ui/spinner";
@@ -13,6 +13,8 @@ import { IFavoriteItemData, TAccountFavoriteFields } from "./account-preferences
 import { AccountPreferencesFavoritesListComponent } from "./account-preferences-favorites-list/account-preferences-favorites-list";
 import { ErrorComponent } from "@/components/common/error/error";
 import { AccountPeferencesTimezonesPopoverComponent } from "./acoount-preferences-timezones-popover/account-preferences-timezones-popover";
+import { AxiosResponse } from "axios";
+import { IUsersPreferencesResponse } from "@/components/common/auth/auth.types";
 
 const accountPreferencesFormSchema = z.object({
     showScores: z.boolean(),
@@ -28,6 +30,7 @@ export type TAccountPreferencesFormSchema = z.infer<typeof accountPreferencesFor
 export const AccountPreferencesComponent = () => {
     const [data, isPageLoading] = useAccountPreferencesFormData();
     const authCtx = useAuthContext();
+    const axiosPrivate = useAxiosPrivate();
     const [isUpdatingUserPreferences, setIsUpdatingUserPreferences] = useState<boolean>(false);
     const form = useForm<TAccountPreferencesFormSchema>({
         resolver: zodResolver(accountPreferencesFormSchema),
@@ -59,11 +62,15 @@ export const AccountPreferencesComponent = () => {
 
     const onSubmitHandler = async (values: TAccountPreferencesFormSchema) => {
         try {
-            console.log(values);
-            // TODO: send data to server to persist changes
             setIsUpdatingUserPreferences(true);
+            const resp: AxiosResponse<IUsersPreferencesResponse> = await axiosPrivate.patch(
+                "/users/preferences",
+                values,
+            );
+            authCtx.setUsersPreferences(resp.data.data);
             toast({ title: "Success!", description: "User preferences were updated." });
         } catch (err) {
+            // TODO: highlight or toast which fields have an error
             toast({ variant: "destructive", title: "Error!", description: "Failed to update user information." });
         } finally {
             setIsUpdatingUserPreferences(false);
@@ -171,7 +178,7 @@ export const AccountPreferencesComponent = () => {
                         form="usersPreferencesForm"
                         type="submit"
                         className="w-1/2"
-                        disabled={isUpdatingUserPreferences || isPageLoading}
+                        disabled={isUpdatingUserPreferences || isPageLoading || !form.formState.isValid}
                     >
                         {isUpdatingUserPreferences ? <Spinner /> : "Save"}
                     </Button>
