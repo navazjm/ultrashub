@@ -121,7 +121,7 @@ export const AccountPreferencesFavoritesListComponent = (props: IAccountPreferen
 
         const formValues = props.form.getValues();
         formValues[props.type].push(id);
-        props.form.setValue("favoriteTeams", formValues[props.type]);
+        props.form.setValue(props.type, formValues[props.type]);
     };
 
     const getFavoriteItemsCount = () => {
