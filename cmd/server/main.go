@@ -12,21 +12,35 @@ import (
 
 	"github.com/navazjm/ultrashub/internal/apifootball"
 	"github.com/navazjm/ultrashub/internal/server"
+	"github.com/navazjm/ultrashub/internal/users"
+
+	firebase "firebase.google.com/go"
+	"google.golang.org/api/option"
 )
 
 func main() {
 	uhServer := server.New()
 
-	// db, err := server.OpenDB(uhServer.Config)
-	// if err != nil {
-	// 	uhServer.Logger.Error(err.Error())
-	// 	os.Exit(1)
-	// }
-	// defer db.Close()
-	// uhServer.Logger.Info("database connection pool established")
+	db, err := server.OpenDB(uhServer.Config)
+	if err != nil {
+		uhServer.Logger.Error(err.Error())
+		os.Exit(1)
+	}
+	defer db.Close()
+	uhServer.Logger.Info("database connection pool established")
 
 	afSerivce := apifootball.NewService(uhServer.Logger, uhServer.Config.APIFootballKey)
 	uhServer.APIFootballService = afSerivce
+
+	opt := option.WithCredentialsFile(uhServer.Config.FirebaseCredsFile)
+	firebaseApp, err := firebase.NewApp(context.Background(), nil, opt)
+	if err != nil {
+		uhServer.Logger.Error(err.Error())
+		os.Exit(1)
+	}
+
+	usersService := users.NewService(uhServer.Logger, db, firebaseApp)
+	uhServer.UsersService = usersService
 
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", uhServer.Config.Port),
@@ -51,7 +65,7 @@ func main() {
 	}()
 
 	uhServer.Logger.Info("starting server", "port", srv.Addr, "env", uhServer.Config.Env)
-	err := srv.ListenAndServe()
+	err = srv.ListenAndServe()
 	if !errors.Is(err, http.ErrServerClosed) {
 		uhServer.Logger.Error(err.Error())
 		os.Exit(1)
