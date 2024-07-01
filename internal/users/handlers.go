@@ -99,3 +99,23 @@ func (us *Service) UpdateUsersPreferencesHandler(w http.ResponseWriter, r *http.
 	}
 
 }
+
+func (as *Service) DeleteUsersPreferencesHandler(w http.ResponseWriter, r *http.Request) {
+	uid := ContextGetUserID(r)
+
+	err := as.Models.DeleteUsersPreferencesByUID(*uid)
+	if err != nil {
+		switch {
+		case errors.Is(err, utils.ErrRecordNotFound):
+			utils.NotFoundResponse(w, r, as.Logger)
+		default:
+			utils.ServerErrorResponse(w, r, as.Logger, err)
+		}
+		return
+	}
+
+	err = utils.WriteJSON(w, http.StatusOK, utils.Envelope{"message": "users preferences were successfully deleted"}, nil)
+	if err != nil {
+		utils.ServerErrorResponse(w, r, as.Logger, err)
+	}
+}

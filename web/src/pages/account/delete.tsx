@@ -1,7 +1,9 @@
+import { AccountDeleteComponent } from "@/components/features/account/account-delete/account-delete";
+
 export const AccountDeletePage = () => {
     return (
         <>
-            <h3>Hello from AccountDeletePage</h3>
+            <AccountDeleteComponent />
         </>
     );
 };

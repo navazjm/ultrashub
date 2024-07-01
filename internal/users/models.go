@@ -108,7 +108,7 @@ func (m UsersPreferencesModel) UpdateUsersPreferences(userPreferences *UsersPref
 
 func (m UsersPreferencesModel) DeleteUsersPreferencesByUID(uid string) error {
 	query := `
-        DELETE FROM users
+        DELETE FROM users_preferences
         WHERE uid = $1`
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)

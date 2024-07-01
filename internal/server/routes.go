@@ -40,6 +40,7 @@ func (srv *Server) Routes() http.Handler {
 
 	router.HandlerFunc(http.MethodGet, "/api/users/preferences", srv.requireAuthenticatedUser(srv.UsersService.GetUsersPreferencesHandler))
 	router.HandlerFunc(http.MethodPatch, "/api/users/preferences", srv.requireAuthenticatedUser(srv.UsersService.UpdateUsersPreferencesHandler))
+	router.HandlerFunc(http.MethodDelete, "/api/users/preferences", srv.requireAuthenticatedUser(srv.UsersService.DeleteUsersPreferencesHandler))
 
 	return srv.secureHeaders(srv.logRequest(srv.recoverPanic(srv.enableCORS(srv.rateLimit(srv.authenticate(router))))))
 }
