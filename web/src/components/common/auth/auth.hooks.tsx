@@ -1,7 +1,10 @@
-import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { ErrorResponse } from "@/components/common/responses/error";
+import { ResponseToolbox } from "@/components/common/toolbox/response";
 import { axiosPrivate } from "@/lib/axios";
 import { AuthContext } from "./auth.context";
+import { AxiosError } from "axios";
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const useAuthContext = () => {
     const context = useContext(AuthContext);
@@ -31,17 +34,11 @@ export const useAxiosPrivate = () => {
         const respIntercept = axiosPrivate.interceptors.response.use(
             (response) => response,
             async (error) => {
-                console.error(error);
                 // TODO: create dedicated login page for these errors??
-                if (
-                    (error?.response?.status === 400 &&
-                        error?.response?.data?.error === "CREDENTIAL_TOO_OLD_LOGIN_AGAIN") ||
-                    (error?.response?.status === 401 &&
-                        error?.response?.data?.error?.message === "invalid or missing authentication token")
-                ) {
+                const errResp = error as AxiosError<ErrorResponse>;
+                if (ResponseToolbox.isInvalidToken(errResp)) {
                     navigate("/login");
                 }
-
                 return Promise.reject(error);
             },
         );
