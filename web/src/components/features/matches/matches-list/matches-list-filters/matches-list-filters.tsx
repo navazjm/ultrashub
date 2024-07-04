@@ -78,8 +78,8 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersComponentP
     };
 
     return (
-        <section className="flex flex-col sm:flex-row sm:justify-between sm:items-center h-full sm:h-[40px] gap-2">
-            <section className="flex flex-col sm:flex-row sm:items-center gap-2">
+        <section className="flex flex-col lg:flex-row lg:justify-between lg:items-center h-full lg:h-[40px] gap-2">
+            <section className="flex flex-col lg:flex-row lg:items-center gap-2">
                 <section className="flex flex-col content-center gap-2">
                     <Label htmlFor="selectCompetition" className="font-extralight">
                         Filter by Competition
@@ -89,7 +89,7 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersComponentP
                             <Button
                                 variant="outline"
                                 role="combobox"
-                                className="justify-between w-full sm:w-[180px] h-[30px] p-1 "
+                                className="justify-between w-full lg:w-[180px] h-[30px] p-1 "
                             >
                                 <div className="w-80 truncate flex content-center justify-start gap-1">
                                     {props.selectedCompetition.logo && (
@@ -141,7 +141,7 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersComponentP
                         </PopoverContent>
                     </Popover>
                 </section>
-                <Separator orientation="vertical" className="hidden sm:block sm:h-[60px]" />
+                <Separator orientation="vertical" className="hidden lg:block lg:h-[60px]" />
                 <section className="flex flex-col content-center gap-2">
                     <Label htmlFor="selectTeam" className="font-extralight">
                         Filter by Team
@@ -151,7 +151,7 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersComponentP
                             <Button
                                 variant="outline"
                                 role="combobox"
-                                className="justify-between w-full sm:w-[180px] h-[30px] p-1 "
+                                className="justify-between w-full lg:w-[180px] h-[30px] p-1 "
                             >
                                 <div className="w-80 truncate flex content-center justify-start gap-1">
                                     {props.selectedTeam.logo && (
@@ -198,23 +198,8 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersComponentP
                         </PopoverContent>
                     </Popover>
                 </section>
-                {props.displayShowScoresToggle && (
-                    <>
-                        <Separator orientation="vertical" className="hidden sm:block sm:h-[60px]" />
-                        <section className="flex flex-col content-center gap-2">
-                            <Label htmlFor="showResultsSwitch" className="font-extralight">
-                                Show Scores
-                            </Label>
-                            <Switch
-                                id="showResultsSwitch"
-                                checked={props.showScores}
-                                onCheckedChange={() => props.setShowScores((prev) => !prev)}
-                            />
-                        </section>
-                    </>
-                )}
-                <Separator orientation="vertical" className="hidden sm:block sm:h-[60px]" />
-                <section className="hidden sm:block">
+                <Separator orientation="vertical" className="hidden lg:block lg:h-[60px]" />
+                <section className="hidden lg:block">
                     <Tooltip>
                         <TooltipTrigger asChild>
                             <Button variant="outline" onClick={() => onClickResetFilters()} className="p-1">
@@ -227,8 +212,8 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersComponentP
                     </Tooltip>
                 </section>
             </section>
-            <section className="flex flex-col sm:flex-row sm:items-center gap-2">
-                <section className="block sm:hidden">
+            <section className="flex flex-col lg:flex-row lg:items-center gap-2">
+                <section className="block lg:hidden">
                     <Button
                         variant="outline"
                         onClick={() => onClickResetFilters()}
@@ -257,6 +242,21 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersComponentP
                         />
                     </PopoverContent>
                 </Popover>
+                {props.displayShowScoresToggle && (
+                    <>
+                        <Separator orientation="vertical" className="hidden lg:block lg:h-[60px]" />
+                        <section className="flex flex-col content-center gap-2">
+                            <Label htmlFor="showResultsSwitch" className="font-extralight">
+                                Show Scores
+                            </Label>
+                            <Switch
+                                id="showResultsSwitch"
+                                checked={props.showScores}
+                                onCheckedChange={() => props.setShowScores((prev) => !prev)}
+                            />
+                        </section>
+                    </>
+                )}
             </section>
         </section>
     );
