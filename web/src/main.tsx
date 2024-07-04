@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes, Outlet } from "react-router-dom";
-import { AuthProvider } from "@/components/common/auth/auth.context";
-import { ProtectedRoute } from "@/components/common/auth/auth";
+import { AuthProvider } from "@/common/auth/auth.context";
+import { ProtectedRoute } from "@/common/auth/auth";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AccountLayout } from "@/layouts/account";
 import { Layout } from "@/layouts/layout";

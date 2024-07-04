@@ -1,4 +1,4 @@
-import { CompetitionsComponent } from "@/components/features/competitions/competitions";
+import { CompetitionsComponent } from "@/components/modules/competitions/competitions";
 
 export const CompetitionsPage = () => {
     return (

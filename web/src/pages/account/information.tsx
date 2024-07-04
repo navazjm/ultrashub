@@ -1,4 +1,4 @@
-import { AccountInformationComponent } from "@/components/features/account/account-information/account-information";
+import { AccountInformationComponent } from "@/components/modules/account/account-information/account-information";
 
 export const AccountInformationPage = () => {
     return (

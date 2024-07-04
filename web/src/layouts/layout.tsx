@@ -1,5 +1,5 @@
 import { Toaster } from "@/components/ui/toaster";
-import { IProps } from "@/components/common/types";
+import { IProps } from "@/common/types";
 import { NavbarComponent } from "./navbar/navbar";
 
 export const Layout = (props: IProps) => {

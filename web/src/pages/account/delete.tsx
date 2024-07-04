@@ -1,4 +1,4 @@
-import { AccountDeleteComponent } from "@/components/features/account/account-delete/account-delete";
+import { AccountDeleteComponent } from "@/components/modules/account/account-delete/account-delete";
 
 export const AccountDeletePage = () => {
     return (

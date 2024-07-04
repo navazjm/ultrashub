@@ -1,4 +1,4 @@
-import { MatchComponent } from "@/components/features/match/match";
+import { MatchComponent } from "@/components/modules/match/match";
 import { useParams } from "react-router-dom";
 
 interface IMatchPageParams {

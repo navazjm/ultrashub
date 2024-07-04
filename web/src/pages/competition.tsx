@@ -1,4 +1,4 @@
-import { CompetitionComponent } from "@/components/features/competition/competition";
+import { CompetitionComponent } from "@/components/modules/competition/competition";
 import { useParams } from "react-router-dom";
 
 interface ICompetitionPageParams {

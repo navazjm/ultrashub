@@ -1,6 +1,6 @@
-import { useAuthContext } from "@/components/common/auth/auth.hooks";
-import { UsersToolbox } from "@/components/common/toolbox/users";
-import { IProps } from "@/components/common/types";
+import { useAuthContext } from "@/common/auth/auth.hooks";
+import { UsersToolbox } from "@/common/toolbox/users";
+import { IProps } from "@/common/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { User } from "firebase/auth";

@@ -1,4 +1,4 @@
-import { TeamComponent } from "@/components/features/team/team";
+import { TeamComponent } from "@/components/modules/team/team";
 import { useParams } from "react-router-dom";
 
 interface ITeamPageParams {
