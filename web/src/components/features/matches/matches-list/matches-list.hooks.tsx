@@ -5,6 +5,7 @@ import axios from "@/lib/axios";
 import { ALL_MATCHES_COMPS, ALL_MATCHES_TEAMS, IMatchesCompetition, IMatches, IMatchesTeam } from "../matches.types";
 import { findMatchByTeamID } from "../matches.utils";
 import { DateToolbox } from "@/components/common/toolbox/date";
+import { useAuthContext } from "@/components/common/auth/auth.hooks";
 
 interface IMatchListData {
     title: string;
@@ -33,7 +34,7 @@ export const useMatchList = (date?: string) => {
     const currentDateString: string = DateToolbox.apiFootballDateFormat(currentDate);
     const selectedDateString: string = date ? date : currentDateString;
     const selectedDate: Date = new Date(selectedDateString.replaceAll("-", "/"));
-    const defaultShowScores = selectedDateString !== currentDateString;
+    let defaultShowScores = selectedDateString !== currentDateString;
     let title: string = "";
     if (selectedDate > currentDate) {
         title = "Upcoming Fixtures";
@@ -41,6 +42,12 @@ export const useMatchList = (date?: string) => {
         title = "Matches";
     } else {
         title = "Results";
+    }
+
+    const authCtx = useAuthContext();
+    // only set showScores based on user preferences if we have a user and the selected match date is the current date
+    if (authCtx.firebaseUser && selectedDateString === currentDateString) {
+        defaultShowScores = authCtx.usersPreferences.showScores;
     }
 
     const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
