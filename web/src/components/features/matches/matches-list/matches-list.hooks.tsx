@@ -8,7 +8,6 @@ import { DateToolbox } from "@/components/common/toolbox/date";
 import { useAuthContext } from "@/components/common/auth/auth.hooks";
 
 interface IMatchListData {
-    title: string;
     selectedDate: Date;
     allMatches: IMatches[];
     setAllMatches: React.Dispatch<React.SetStateAction<IMatches[]>>;
@@ -34,14 +33,6 @@ export const useMatchList = (date?: string) => {
     const currentDateString: string = DateToolbox.apiFootballDateFormat(currentDate);
     const selectedDateString: string = date ? date : currentDateString;
     const selectedDate: Date = new Date(selectedDateString.replaceAll("-", "/"));
-    let title: string = "";
-    if (selectedDate > currentDate) {
-        title = "Upcoming Fixtures";
-    } else if (selectedDateString === currentDateString) {
-        title = "Matches";
-    } else {
-        title = "Results";
-    }
 
     const authCtx = useAuthContext();
 
@@ -227,7 +218,6 @@ export const useMatchList = (date?: string) => {
         isLoading || isError
             ? null
             : {
-                  title,
                   selectedDate,
                   allMatches,
                   setAllMatches,

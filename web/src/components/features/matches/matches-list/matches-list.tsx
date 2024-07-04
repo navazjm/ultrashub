@@ -1,13 +1,12 @@
 import { IProps, TOP_COMPS_IDS } from "@/components/common/types";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { MatchesListFiltersComponent } from "./matches-list-filters/matches-list-filters";
 import { MatchesListItemComponent } from "./matches-list-item/matches-list-item";
-import VirtualScroller from "virtual-scroller/react";
 import { Spinner } from "@/components/ui/spinner";
 import { useMatchList } from "./matches-list.hooks";
 import { ErrorComponent } from "@/components/common/error/error";
-import { IMatches } from "../matches.types";
 import { NavLink } from "react-router-dom";
 
 interface IMatchesListComponentProps extends IProps {
@@ -48,78 +47,76 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
     );
     const matchesDisplayOrder = [...topCompetitionsMatches, ...worldCompetitionsMatches, ...nonTopCompetitionsMatches];
 
-    /**
-     * Used by VirtualScroller to render each competition's matches when scrolled into view
-     */
-    const renderMatchesByCompetition = (parm: any) => {
-        const { item, itemIndex }: { item: IMatches; itemIndex: number } = parm;
-
-        return (
-            <section key={item.competitionID}>
-                <h4 className="text-lg font-semibold mb-3 sm:mb-5">
-                    <NavLink
-                        to={`/competitions/id/${item.matches[0].league.id}`}
-                        className="hover:font-black focus:font-black"
-                    >
-                        {item.displayName}
-                    </NavLink>
-                </h4>
-                <section className="flex flex-row content-center gap-2 flex-wrap">
-                    {item.matches.map((match) => (
-                        <MatchesListItemComponent match={match} key={match.fixture.id} showScores={data.showScores} />
-                    ))}
-                </section>
-                {itemIndex !== matchesDisplayOrder.length - 1 && <Separator className="my-3 sm:my-5" />}
-            </section>
-        );
-    };
-
     return (
-        <section className="flex flex-col">
-            <h3 className="text-2xl font-bold">{data.title}</h3>
-
-            {/** display filters in accordion component if on mobile devices */}
-            <section className="lg:hidden mb-2 pb-3 bg-background">
-                <Separator className="mt-3" />
-                <Accordion type="single" collapsible className="">
-                    <AccordionItem value="filter">
-                        <AccordionTrigger className="py-2">Filter Matches</AccordionTrigger>
-                        <AccordionContent className="py-4">
-                            <MatchesListFiltersComponent
-                                date={data.selectedDate}
-                                competitions={data.allCompetitions}
-                                selectedCompetition={data.selectedCompetition}
-                                setSelectedCompetition={data.setSelectedCompetition}
-                                teams={data.filteredTeams}
-                                selectedTeam={data.selectedTeam}
-                                setSelectedTeam={data.setSelectedTeam}
-                                displayShowScoresToggle={data.displayShowScoresToggle}
-                                showScores={data.showScores}
-                                setShowScores={data.setShowScores}
-                            />
-                        </AccordionContent>
-                    </AccordionItem>
-                </Accordion>
+        <>
+            <section className="col-span-3 lg:col-span-2 flex flex-col">
+                {/** display filters in accordion component if on mobile devices */}
+                <section className="lg:hidden mb-2 pb-3 bg-background">
+                    <Accordion type="single" collapsible className="rounded-lg border">
+                        <AccordionItem value="filter" className="rounded-md border-0">
+                            <AccordionTrigger className="bg-muted p-3 rounded-md">Filter Matches</AccordionTrigger>
+                            <AccordionContent className="p-3">
+                                <MatchesListFiltersComponent
+                                    date={data.selectedDate}
+                                    competitions={data.allCompetitions}
+                                    selectedCompetition={data.selectedCompetition}
+                                    setSelectedCompetition={data.setSelectedCompetition}
+                                    teams={data.filteredTeams}
+                                    selectedTeam={data.selectedTeam}
+                                    setSelectedTeam={data.setSelectedTeam}
+                                    displayShowScoresToggle={data.displayShowScoresToggle}
+                                    showScores={data.showScores}
+                                    setShowScores={data.setShowScores}
+                                />
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                </section>
+                {matchesDisplayOrder.map((comp, idx) => (
+                    <Card key={idx} className="mb-5">
+                        <CardHeader className="bg-muted p-3 rounded-md rounded-b-none">
+                            <CardTitle className="text-md">
+                                <NavLink
+                                    to={`/competitions/id/${comp.matches[0].league.id}`}
+                                    className="font-normal hover:font-black focus:font-black"
+                                >
+                                    {comp.displayName}
+                                </NavLink>
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="flex flex-col w-full p-0">
+                            {comp.matches.map((match) => (
+                                <MatchesListItemComponent
+                                    match={match}
+                                    key={match.fixture.id}
+                                    showScores={data.showScores}
+                                />
+                            ))}
+                        </CardContent>
+                    </Card>
+                ))}
             </section>
+
             {/** display normal filters toolbar for larger devices */}
-            <section className="hidden lg:block bg-background">
-                <Separator className="my-5" />
-                <MatchesListFiltersComponent
-                    date={data.selectedDate}
-                    competitions={data.allCompetitions}
-                    selectedCompetition={data.selectedCompetition}
-                    setSelectedCompetition={data.setSelectedCompetition}
-                    teams={data.filteredTeams}
-                    selectedTeam={data.selectedTeam}
-                    setSelectedTeam={data.setSelectedTeam}
-                    displayShowScoresToggle={data.displayShowScoresToggle}
-                    showScores={data.showScores}
-                    setShowScores={data.setShowScores}
-                />
-                <Separator className="my-5" />
-            </section>
-
-            <VirtualScroller items={matchesDisplayOrder} itemComponent={renderMatchesByCompetition} />
-        </section>
+            <Card className="hidden lg:block lg:col-span-1 lg:col-start-3 h-fit sticky top-0">
+                <CardHeader className="bg-muted p-3 rounded-md rounded-b-none">
+                    <CardTitle className="text-md font-normal">Filters</CardTitle>
+                </CardHeader>
+                <CardContent className="p-3">
+                    <MatchesListFiltersComponent
+                        date={data.selectedDate}
+                        competitions={data.allCompetitions}
+                        selectedCompetition={data.selectedCompetition}
+                        setSelectedCompetition={data.setSelectedCompetition}
+                        teams={data.filteredTeams}
+                        selectedTeam={data.selectedTeam}
+                        setSelectedTeam={data.setSelectedTeam}
+                        displayShowScoresToggle={data.displayShowScoresToggle}
+                        showScores={data.showScores}
+                        setShowScores={data.setShowScores}
+                    />
+                </CardContent>
+            </Card>
+        </>
     );
 };
