@@ -1,4 +1,4 @@
-import { IMatchFixture } from "@/components/common/api-football-response";
+import { IMatchFixture } from "@/components/common/responses/api-football";
 import { DateToolbox } from "@/components/common/toolbox/date";
 import { Calendar, Clock, MapPin, User } from "lucide-react";
 

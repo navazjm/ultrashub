@@ -1,10 +1,10 @@
-import { Spinner } from "@/components/ui/spinner";
+import { TOP_COMPS_IDS } from "@/components/common/constants";
 import { ErrorComponent } from "@/components/common/error/error";
+import { ICompetition } from "@/components/common/responses/api-football";
+import { Spinner } from "@/components/ui/spinner";
 import { useCompetitions } from "./competitions.hooks";
 import { CompetitionsItemComponent } from "./competitions-item/competitions-item";
 import { CompetitionsSearchComponent } from "./competitions-search/competitions-search";
-import { ICompetition } from "@/components/common/api-football-response";
-import { TOP_COMPS_IDS } from "@/components/common/types";
 
 export const CompetitionsComponent = () => {
     const [data, isLoading, isError] = useCompetitions();

@@ -1,4 +1,4 @@
-import { IMatch } from "@/components/common/api-football-response";
+import { IMatch } from "@/components/common/responses/api-football";
 import { IProps } from "@/components/common/types";
 import { Card, CardHeader, CardFooter, CardContent } from "@/components/ui/card";
 import { MatchQuickInfoCardContentComponent } from "./match-quick-info-card-content/match-quick-info-card-content";

@@ -1,4 +1,4 @@
-import { IMatch, IMatchTeam } from "@/components/common/api-football-response";
+import { IMatch, IMatchTeam } from "@/components/common/responses/api-football";
 import { MatchH2HRecentMatchesComponent } from "./match-h2h-recent-matches/match-h2h-recent-matches";
 import { MatchH2HStatsComponent } from "./match-h2h-stats/match-h2h-stats";
 

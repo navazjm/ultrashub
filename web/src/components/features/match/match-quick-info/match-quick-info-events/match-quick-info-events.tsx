@@ -1,5 +1,5 @@
 import { Separator } from "@/components/ui/separator";
-import { IMatch } from "@/components/common/api-football-response";
+import { IMatch } from "@/components/common/responses/api-football";
 import { MatchQuickInfoEventsItemComponent } from "./match-quick-info-events-item/match-quick-info-events-item";
 
 interface IMatchQuickInfoEventsComponentProps {

@@ -1,4 +1,4 @@
-import { IStandingsByTeam } from "@/components/common/api-football-response";
+import { IStandingsByTeam } from "@/components/common/responses/api-football";
 import { CompetitionStandingsTable } from "./competition-standings-table/competition-standings-table";
 
 interface ICompetitionStandingsComponentProps {

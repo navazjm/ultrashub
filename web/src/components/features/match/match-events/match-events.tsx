@@ -1,4 +1,4 @@
-import { IMatchEvent } from "@/components/common/api-football-response";
+import { IMatchEvent } from "@/components/common/responses/api-football";
 import { MatchEventsItemComponent } from "./match-events-item/match-events-item";
 
 interface IMatchEventsComponentProps {

@@ -1,4 +1,4 @@
-import { IMatchLineup } from "@/components/common/api-football-response";
+import { IMatchLineup } from "@/components/common/responses/api-football";
 import { MatchLineupsSquadsItemComponent } from "./match-lineups-squads-item/match-lineups-squads-item";
 
 interface IMatchLineupsSquadsComponentProps {

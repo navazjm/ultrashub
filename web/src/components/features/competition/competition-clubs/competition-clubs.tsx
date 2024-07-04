@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { IStandingTeamInfo } from "@/components/common/api-football-response";
+import { IStandingTeamInfo } from "@/components/common/responses/api-football";
 import { Card, CardContent } from "@/components/ui/card";
 import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
 import { MoveRight } from "lucide-react";

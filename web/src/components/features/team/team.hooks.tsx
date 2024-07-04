@@ -5,7 +5,7 @@ import {
     IPlayersSquadsResponse,
     ITeams,
     ITeamsResponse,
-} from "@/components/common/api-football-response";
+} from "@/components/common/responses/api-football";
 import { MatchToolbox } from "@/components/common/toolbox/match";
 import axios from "@/lib/axios";
 import { AxiosResponse } from "axios";

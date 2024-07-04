@@ -1,4 +1,4 @@
-import { IMatch } from "@/components/common/api-football-response";
+import { IMatch } from "@/components/common/responses/api-football";
 import { IMatches } from "./matches.types";
 
 export const findMatchByTeamID = (allMatches: IMatches[], teamID: number): IMatch | undefined => {

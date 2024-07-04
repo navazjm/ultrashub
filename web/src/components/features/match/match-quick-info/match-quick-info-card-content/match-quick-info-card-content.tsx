@@ -1,6 +1,6 @@
 import { Separator } from "@/components/ui/separator";
 import { MatchQuickInfoEventsComponent } from "../match-quick-info-events/match-quick-info-events";
-import { IMatch } from "@/components/common/api-football-response";
+import { IMatch } from "@/components/common/responses/api-football";
 import { DateToolbox } from "@/components/common/toolbox/date";
 import { MatchScorelineComponent } from "@/components/common/match-scoreline/match-scoreline";
 import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";

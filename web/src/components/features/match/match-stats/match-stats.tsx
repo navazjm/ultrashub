@@ -1,5 +1,5 @@
 import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
-import { IMatchStat } from "@/components/common/api-football-response";
+import { IMatchStat } from "@/components/common/responses/api-football";
 import { StringsToolbox } from "@/components/common/toolbox/strings";
 import { Separator } from "@/components/ui/separator";
 import { NavLink } from "react-router-dom";

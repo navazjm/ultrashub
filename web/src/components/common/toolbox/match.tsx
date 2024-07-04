@@ -1,4 +1,4 @@
-import { IMatchEvent, IMatchFixture } from "../api-football-response";
+import { IMatchEvent, IMatchFixture } from "../responses/api-football";
 import SoccerBall from "@/assets/img/logo.png";
 
 export class MatchToolbox {

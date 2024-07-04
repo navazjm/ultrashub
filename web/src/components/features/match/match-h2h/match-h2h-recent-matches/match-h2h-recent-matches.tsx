@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { IMatch } from "@/components/common/api-football-response";
+import { IMatch } from "@/components/common/responses/api-football";
 import { DateToolbox } from "@/components/common/toolbox/date";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { MatchScorelineComponent } from "@/components/common/match-scoreline/match-scoreline";

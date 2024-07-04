@@ -1,4 +1,4 @@
-import { IMatch } from "@/components/common/api-football-response";
+import { IMatch } from "@/components/common/responses/api-football";
 import { MatchToolbox } from "@/components/common/toolbox/match";
 
 interface IMatchScorelineComponentProps {

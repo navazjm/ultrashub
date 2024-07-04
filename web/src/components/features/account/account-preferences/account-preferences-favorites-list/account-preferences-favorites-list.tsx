@@ -24,7 +24,7 @@ import { UseFormReturn } from "node_modules/react-hook-form/dist/types";
 import { TAccountPreferencesFormSchema } from "../account-preferences";
 import { IFavoriteItemData, TAccountFavoriteFields } from "../account-preferences.types";
 import { cn } from "@/lib/shadcn";
-import { ICompetitionResponse, ITeamsResponse } from "@/components/common/api-football-response";
+import { ICompetitionResponse, ITeamsResponse } from "@/components/common/responses/api-football";
 
 interface IAccountPreferencesFavoritesListComponentProps {
     form: UseFormReturn<TAccountPreferencesFormSchema>;

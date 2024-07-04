@@ -1,4 +1,4 @@
-import { ICompetition } from "@/components/common/api-football-response";
+import { ICompetition } from "@/components/common/responses/api-football";
 import { useDebounce } from "@/components/common/hooks/debounce";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

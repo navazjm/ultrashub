@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
-import { ICompetition } from "@/components/common/api-football-response";
+import { ICompetition } from "@/components/common/responses/api-football";
 import { NavLink } from "react-router-dom";
 
 interface ICompetitionsItemComponentProps {

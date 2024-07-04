@@ -4,7 +4,7 @@ import {
     MatchEventType,
     IMatchLineup,
     IMatchLineupPlayer,
-} from "@/components/common/api-football-response";
+} from "@/components/common/responses/api-football";
 import { MatchToolbox } from "@/components/common/toolbox/match";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";

@@ -1,7 +1,7 @@
-import { IProps, TOP_COMPS_IDS } from "@/components/common/types";
+import { TOP_COMPS_IDS } from "@/components/common/constants";
+import { IProps } from "@/components/common/types";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MatchesListFiltersComponent } from "./matches-list-filters/matches-list-filters";
 import { MatchesListItemComponent } from "./matches-list-item/matches-list-item";
 import { Spinner } from "@/components/ui/spinner";

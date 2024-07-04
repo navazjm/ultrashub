@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
-import { IMatchResponse } from "@/components/common/api-football-response";
+import { IMatchResponse } from "@/components/common/responses/api-football";
 import axios from "@/lib/axios";
 import { ALL_MATCHES_COMPS, ALL_MATCHES_TEAMS, IMatchesCompetition, IMatches, IMatchesTeam } from "../matches.types";
 import { findMatchByTeamID } from "../matches.utils";
@@ -218,25 +218,25 @@ export const useMatchList = (date?: string) => {
         isLoading || isError
             ? null
             : {
-                  selectedDate,
-                  allMatches,
-                  setAllMatches,
-                  filteredMatches,
-                  setFilteredMatches,
-                  allCompetitions,
-                  setAllCompetitions,
-                  selectedCompetition,
-                  setSelectedCompetition,
-                  allTeams,
-                  setAllTeams,
-                  filteredTeams,
-                  setFilteredTeams,
-                  selectedTeam,
-                  setSelectedTeam,
-                  displayShowScoresToggle,
-                  showScores,
-                  setShowScores,
-              };
+                selectedDate,
+                allMatches,
+                setAllMatches,
+                filteredMatches,
+                setFilteredMatches,
+                allCompetitions,
+                setAllCompetitions,
+                selectedCompetition,
+                setSelectedCompetition,
+                allTeams,
+                setAllTeams,
+                filteredTeams,
+                setFilteredTeams,
+                selectedTeam,
+                setSelectedTeam,
+                displayShowScoresToggle,
+                showScores,
+                setShowScores,
+            };
 
     return [data, isLoading, isError] as const;
 };

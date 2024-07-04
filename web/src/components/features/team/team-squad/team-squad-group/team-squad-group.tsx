@@ -1,5 +1,5 @@
 import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
-import { IPlayersSquadsPlayers } from "@/components/common/api-football-response";
+import { IPlayersSquadsPlayers } from "@/components/common/responses/api-football";
 import { Separator } from "@/components/ui/separator";
 
 interface ITeamSquadGroupComponentProps {

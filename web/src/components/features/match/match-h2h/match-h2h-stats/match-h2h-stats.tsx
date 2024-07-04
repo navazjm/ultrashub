@@ -1,5 +1,5 @@
 import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
-import { IMatch, IMatchTeam } from "@/components/common/api-football-response";
+import { IMatch, IMatchTeam } from "@/components/common/responses/api-football";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";

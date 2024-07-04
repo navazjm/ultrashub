@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
 import { Separator } from "@/components/ui/separator";
-import { IPlayerStats } from "@/components/common/api-football-response";
+import { IPlayerStats } from "@/components/common/responses/api-football";
 
 type IPlayerStatsType = "goals" | "assists" | "yellowcards" | "redcards";
 

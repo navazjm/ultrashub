@@ -1,4 +1,4 @@
-import { IMatch } from "@/components/common/api-football-response";
+import { IMatch } from "@/components/common/responses/api-football";
 import { MatchItemComponent } from "@/components/common/match-item/match-item";
 import { Separator } from "@/components/ui/separator";
 

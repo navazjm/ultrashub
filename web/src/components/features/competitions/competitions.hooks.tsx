@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AxiosResponse } from "axios";
-import { ICompetition, ICompetitionResponse } from "@/components/common/api-football-response";
+import { ICompetition, ICompetitionResponse } from "@/components/common/responses/api-football";
 import axios from "@/lib/axios";
 
 interface ICompetitionsData {
@@ -43,11 +43,11 @@ export const useCompetitions = () => {
         isLoading || isError
             ? null
             : {
-                  allCompetitions,
-                  setAllCompetitions,
-                  filteredCompetitions,
-                  setFilteredCompetitions,
-              };
+                allCompetitions,
+                setAllCompetitions,
+                filteredCompetitions,
+                setFilteredCompetitions,
+            };
 
     return [data, isLoading, isError] as const;
 };

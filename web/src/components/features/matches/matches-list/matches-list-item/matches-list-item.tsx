@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { IProps } from "@/components/common/types";
-import { IMatch } from "@/components/common/api-football-response";
+import { IMatch } from "@/components/common/responses/api-football";
 import { MatchToolbox } from "@/components/common/toolbox/match";
 import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
 import { cn } from "@/lib/shadcn";
@@ -41,9 +41,9 @@ export const MatchesListItemComponent = (props: IMatchesListItemComponentProps) 
                             <section
                                 className={cn(
                                     props.showScores &&
-                                        !matchInProgress &&
-                                        props.match.teams.away.winner &&
-                                        "opacity-40",
+                                    !matchInProgress &&
+                                    props.match.teams.away.winner &&
+                                    "opacity-40",
                                 )}
                             >
                                 {props.match.goals.home}
@@ -55,9 +55,9 @@ export const MatchesListItemComponent = (props: IMatchesListItemComponentProps) 
                             <section
                                 className={cn(
                                     props.showScores &&
-                                        !matchInProgress &&
-                                        props.match.teams.home.winner &&
-                                        "opacity-40",
+                                    !matchInProgress &&
+                                    props.match.teams.home.winner &&
+                                    "opacity-40",
                                 )}
                             >
                                 {props.match.goals.away}

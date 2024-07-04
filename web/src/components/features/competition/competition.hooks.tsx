@@ -8,7 +8,7 @@ import {
     IStandingTeamInfo,
     IStandingsByTeam,
     IStandingsResponse,
-} from "@/components/common/api-football-response";
+} from "@/components/common/responses/api-football";
 import { MatchToolbox } from "@/components/common/toolbox/match";
 import axios from "@/lib/axios";
 import { AxiosResponse } from "axios";
@@ -209,11 +209,11 @@ export const useCompetiton = (competitionID: string) => {
         !topGoalScorers && !topAssists && !topYellowCards && !topRedCards
             ? null
             : {
-                  topGoalScorers,
-                  topAssists,
-                  topYellowCards,
-                  topRedCards,
-              };
+                topGoalScorers,
+                topAssists,
+                topYellowCards,
+                topRedCards,
+            };
 
     const data: IUseCompetitionData = {
         competition,

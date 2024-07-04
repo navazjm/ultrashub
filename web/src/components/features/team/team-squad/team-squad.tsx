@@ -1,4 +1,4 @@
-import { IPlayersSquadsPlayers } from "@/components/common/api-football-response";
+import { IPlayersSquadsPlayers } from "@/components/common/responses/api-football";
 import { TeamSquadGroupComponent } from "./team-squad-group/team-squad-group";
 
 interface ITeamSquadComponentProps {

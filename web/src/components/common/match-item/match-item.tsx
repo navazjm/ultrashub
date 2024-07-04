@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
-import { IMatch } from "@/components/common/api-football-response";
+import { IMatch } from "@/components/common/responses/api-football";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { MatchScorelineComponent } from "@/components/common/match-scoreline/match-scoreline";

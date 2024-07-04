@@ -1,5 +1,5 @@
 import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
-import { IMatchLineup, IMatchLineupPlayer, IMatchLineupTeamColor } from "@/components/common/api-football-response";
+import { IMatchLineup, IMatchLineupPlayer, IMatchLineupTeamColor } from "@/components/common/responses/api-football";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { NavLink } from "react-router-dom";
 
@@ -31,17 +31,17 @@ export const MatchLineupsFormationsItemComponent = (props: IMatchLineupsFormatio
     const teamColors = props.lineup.team.colors
         ? props.lineup.team.colors
         : {
-              player: {
-                  primary: props.reverse ? "191724" : "e0def4",
-                  number: props.reverse ? "e0def4" : "191724",
-                  border: props.reverse ? "e0def4" : "191724",
-              },
-              goalkeeper: {
-                  primary: props.reverse ? "e0def4" : "191724",
-                  number: props.reverse ? "191724" : "e0def4",
-                  border: props.reverse ? "191724" : "e0def4",
-              },
-          };
+            player: {
+                primary: props.reverse ? "191724" : "e0def4",
+                number: props.reverse ? "e0def4" : "191724",
+                border: props.reverse ? "e0def4" : "191724",
+            },
+            goalkeeper: {
+                primary: props.reverse ? "e0def4" : "191724",
+                number: props.reverse ? "191724" : "e0def4",
+                border: props.reverse ? "191724" : "e0def4",
+            },
+        };
 
     return (
         <section className={`flex items-center justify-between ${props.reverse && "flex-row-reverse"}`}>

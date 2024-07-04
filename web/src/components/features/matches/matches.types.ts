@@ -1,4 +1,4 @@
-import { IMatch } from "@/components/common/api-football-response";
+import { IMatch } from "@/components/common/responses/api-football";
 
 export const ALL_MATCHES_COMPS = "All Competitions";
 export const ALL_MATCHES_TEAMS = "All Teams";

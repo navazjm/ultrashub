@@ -1,5 +1,5 @@
 import { ApiFootballLogoComponent } from "@/components/common/api-football-logo/api-football-logo";
-import { IStandingsByTeam } from "@/components/common/api-football-response";
+import { IStandingsByTeam } from "@/components/common/responses/api-football";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { NavLink } from "react-router-dom";
 
@@ -29,11 +29,10 @@ export const CompetitionStandingsTable = (props: ICompetitionStandingsTableProps
                 {props.standings.map((club, idx) => (
                     <TableRow
                         key={club.team.id}
-                        className={`${
-                            idx != props.standings.length - 1 &&
+                        className={`${idx != props.standings.length - 1 &&
                             club.description != props.standings[idx + 1].description &&
                             "border-b-4"
-                        }`}
+                            }`}
                     >
                         <TableCell className="p-1">{club.rank}</TableCell>
                         <TableCell className="p-1">
