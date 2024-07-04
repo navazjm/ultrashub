@@ -12,11 +12,11 @@ export const ApiFootballLogoComponent = (props: IApiFootballLogoComponentProps) 
             src={props.src}
             alt={props.alt}
             loading="lazy"
-            className={`object-scale-down ${props.width ? `w-[${props.width}px]` : "w-auto"} ${
-                props.height ? `h-[${props.height}px]` : "h-auto"
-            }`}
+            className="object-scale-down"
             style={{
                 aspectRatio: aspectRatio ? aspectRatio.toString() : undefined,
+                width: props.width ? `${props.width}px` : "auto",
+                height: props.height ? `${props.height}px` : "auto",
             }}
         />
     );
