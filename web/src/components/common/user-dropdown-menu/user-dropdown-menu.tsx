@@ -72,7 +72,7 @@ export const UserDropdownMenuComponent = (props: IUserDropdownMenuComponentProps
                         )}
                     </li>
                     <li className="px-3">
-                        <Button className="w-full" variant="outline" onClick={onClickAccountInformationBtn}>
+                        <Button asChild className="w-full" variant="outline" onClick={onClickAccountInformationBtn}>
                             <NavLink to="/account/information" className="flex items-center">
                                 <UserRound className="mr-2 h-6 w-6" /> Account Information
                             </NavLink>
