@@ -79,7 +79,7 @@ export const useMatchList = (date?: string) => {
                 const resp = await axios.get<any, AxiosResponse<IMatchResponse>>("/apifootball/fixtures", {
                     params: {
                         date: selectedDateString,
-                        timezone: "America/Chicago",
+                        timezone: authCtx.usersPreferences.timezone, // defaults to "America/Chicago"
                     },
                 });
 

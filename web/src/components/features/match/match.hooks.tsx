@@ -3,6 +3,7 @@ import { AxiosResponse } from "axios";
 import { IMatch, MatchEventType, IMatchResponse } from "@/components/common/api-football-response";
 import axios from "@/lib/axios";
 import { MatchToolbox } from "@/components/common/toolbox/match";
+import { useAuthContext } from "@/components/common/auth/auth.hooks";
 
 interface IUseMatchData {
     match: IMatch;
@@ -15,6 +16,7 @@ interface IFetchMatchByIDResponse {
 }
 
 export const useMatch = (matchID: string) => {
+    const authCtx = useAuthContext();
     const [match, setMatch] = useState<IMatch | null>(null);
     const [h2hMatches, setH2HMatches] = useState<IMatch[] | null>(null);
     const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
@@ -25,6 +27,7 @@ export const useMatch = (matchID: string) => {
                 const resp = await axios.get<any, AxiosResponse<IMatchResponse>>("/apifootball/fixtures", {
                     params: {
                         id: matchID,
+                        timezone: authCtx.usersPreferences.timezone, // defaults to "America/Chicago"
                     },
                 });
                 if (resp.status !== 200) {
