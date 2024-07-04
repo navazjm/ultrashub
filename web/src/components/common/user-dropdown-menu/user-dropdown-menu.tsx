@@ -9,7 +9,11 @@ import { useToast } from "@/components/ui/use-toast";
 import { signOutUser } from "@/lib/firebase";
 import { UsersToolbox } from "../toolbox/users";
 
-export const UserDropdownMenuComponent = () => {
+interface IUserDropdownMenuComponentProps {
+    closeSheet: () => void;
+}
+
+export const UserDropdownMenuComponent = (props: IUserDropdownMenuComponentProps) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
     const { toast } = useToast();
     const navigate = useNavigate();
@@ -24,11 +28,17 @@ export const UserDropdownMenuComponent = () => {
             toast({
                 title: "User was logged out successfully!",
             });
+            props.closeSheet();
         } catch (err) {
             toast({
                 title: "Error trying to log out user. Try again!",
             });
         }
+    };
+
+    const onClickAccountInformationBtn = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+        props.closeSheet();
     };
 
     return (
@@ -62,7 +72,7 @@ export const UserDropdownMenuComponent = () => {
                         )}
                     </li>
                     <li className="px-3">
-                        <Button className="w-full" variant="outline" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+                        <Button className="w-full" variant="outline" onClick={onClickAccountInformationBtn}>
                             <NavLink to="/account/information" className="flex items-center">
                                 <UserRound className="mr-2 h-6 w-6" /> Account Information
                             </NavLink>

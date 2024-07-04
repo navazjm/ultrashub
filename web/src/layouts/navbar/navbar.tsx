@@ -95,7 +95,7 @@ const NavbarNavContentComponent = (props: INavbarNavComponentProps) => {
             </section>
             <section className="flex items-center justify-between lg:justify-end lg:gap-2">
                 {!authCtx.firebaseUser && <LoginDialogComponent />}
-                {authCtx.firebaseUser && <UserDropdownMenuComponent />}
+                {authCtx.firebaseUser && <UserDropdownMenuComponent closeSheet={closeSheet} />}
                 <ThemeToggleComponent />
             </section>
         </section>
