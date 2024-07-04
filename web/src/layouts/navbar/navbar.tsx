@@ -2,7 +2,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Calendar, Globe, Menu, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggleComponent } from "./theme-toggle/theme-toggle";
 import { useAuthContext } from "@/components/common/auth/auth.hooks";
 import { LoginDialogComponent } from "@/components/common/login-dialog/login-dialog";
@@ -23,6 +23,8 @@ export const NavbarComponent = () => {
                         </Button>
                     </SheetTrigger>
                     <SheetContent side="left">
+                        <SheetTitle></SheetTitle>
+                        <SheetDescription></SheetDescription>
                         <NavbarNavContentComponent setIsSheetOpen={setIsSheetOpen} />
                     </SheetContent>
                 </Sheet>
