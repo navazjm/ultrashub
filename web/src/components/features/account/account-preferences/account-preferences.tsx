@@ -54,8 +54,8 @@ export const AccountPreferencesComponent = () => {
     if (!data) {
         return (
             <ErrorComponent
-                backNavTitle="Error!"
-                errorMessage="No user preferences data was found. Refresh the page or try again later."
+                title="Error!"
+                message="No user preferences data was found. Refresh the page or try again later."
             />
         );
     }

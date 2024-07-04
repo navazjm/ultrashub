@@ -24,8 +24,8 @@ export const MatchComponent = (props: IMatchComponentProps) => {
     if (isError || !data) {
         return (
             <ErrorComponent
-                backNavTitle="Error!"
-                errorMessage="No match data was found. Refresh the page or try again later."
+                title="Error!"
+                message="No match data was found. Refresh the page or try again later."
             />
         );
     }

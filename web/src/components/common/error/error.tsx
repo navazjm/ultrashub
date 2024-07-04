@@ -1,20 +1,19 @@
-import { BackNavigationComponent } from "../back-navigation/back-navigation";
-
 interface IErrorComponentProps {
-    backNavTitle?: string;
-    errorMessage?: string;
+    title?: string;
+    message?: string;
 }
 
 export const ErrorComponent = (props: IErrorComponentProps) => {
-    const errorMessage = !!props.errorMessage
-        ? props.errorMessage
+    const title = props.title ? props.title : "Error!"
+    const message = props.message
+        ? props.message
         : "Uh oh! Encountered an error. Please try again later.";
 
     return (
         <>
-            <BackNavigationComponent title={props.backNavTitle} />
+            <h3 className="font-bold">{title}</h3>
             <section className="my-3">
-                <p>{errorMessage}</p>
+                <p>{message}</p>
             </section>
         </>
     );

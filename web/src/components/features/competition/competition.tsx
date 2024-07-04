@@ -21,8 +21,8 @@ export const CompetitionComponent = (props: ICompetitionComponentProps) => {
     if (isError) {
         return (
             <ErrorComponent
-                backNavTitle="Error!"
-                errorMessage="No competition data was found. Refresh the page or try again later."
+                title="Error!"
+                message="No competition data was found. Refresh the page or try again later."
             />
         );
     }

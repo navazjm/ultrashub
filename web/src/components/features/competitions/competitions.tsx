@@ -16,8 +16,8 @@ export const CompetitionsComponent = () => {
     if (isError || !data || data.allCompetitions.length == 0) {
         return (
             <ErrorComponent
-                backNavTitle="Error!"
-                errorMessage="No competitions data was found. Refresh the page or try again later."
+                title="Error!"
+                message="No competitions data was found. Refresh the page or try again later."
             />
         );
     }
@@ -59,7 +59,7 @@ export const CompetitionsComponent = () => {
                         <CompetitionsItemComponent competition={competition} key={competition.league.id} />
                     ))
                 ) : (
-                    <ErrorComponent errorMessage="Wow, such empty" />
+                    <ErrorComponent message="Wow, such empty" />
                 )}
             </section>
         </section>

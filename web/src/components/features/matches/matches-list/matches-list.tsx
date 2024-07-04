@@ -23,8 +23,8 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
     if (isError || !data || data.allMatches.length === 0) {
         return (
             <ErrorComponent
-                backNavTitle="Error!"
-                errorMessage="No matches data was found. Refresh the page or try again later."
+                title="Error!"
+                message="No matches data was found. Refresh the page or try again later."
             />
         );
     }

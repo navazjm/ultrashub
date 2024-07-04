@@ -1,5 +1,4 @@
 import { IMatch } from "@/components/common/api-football-response";
-import { BackNavigationComponent } from "@/components/common/back-navigation/back-navigation";
 import { IProps } from "@/components/common/types";
 import { Card, CardHeader, CardFooter, CardContent } from "@/components/ui/card";
 import { MatchQuickInfoCardContentComponent } from "./match-quick-info-card-content/match-quick-info-card-content";
@@ -11,11 +10,9 @@ export interface IMatchQuickInfoComponentProps extends IProps {
 }
 
 export const MatchQuickInfoComponent = (props: IMatchQuickInfoComponentProps) => {
-    const backNavTitle = `${props.match.teams.home.name} vs. ${props.match.teams.away.name}`;
 
     return (
         <>
-            <BackNavigationComponent title={backNavTitle} />
             <Card className="w-full mt-3">
                 {/** Show fixture details in header for larger devices */}
                 <CardHeader className="hidden sm:flex flex-row items-center flex-wrap opacity-60 gap-5 space-y-0 text-xs">
