@@ -1,6 +1,6 @@
 export const SecurityPolicyPage = () => {
     return (
-        <section>
+        <section className="col-span-3">
             <section className="space-y-5 my-5">
                 <p>
                     We take the security and integrity of UltrasHub very seriously. If you have found a vulnerability,
