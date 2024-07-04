@@ -31,13 +31,15 @@ export const useAxiosPrivate = () => {
         const respIntercept = axiosPrivate.interceptors.response.use(
             (response) => response,
             async (error) => {
+                console.error(error);
+                // TODO: create dedicated login page for these errors??
                 if (
                     (error?.response?.status === 400 &&
                         error?.response?.data?.error === "CREDENTIAL_TOO_OLD_LOGIN_AGAIN") ||
                     (error?.response?.status === 401 &&
                         error?.response?.data?.error?.message === "invalid or missing authentication token")
                 ) {
-                    navigate("/login"); // other apps, navigate to login page
+                    navigate("/login");
                 }
 
                 return Promise.reject(error);
