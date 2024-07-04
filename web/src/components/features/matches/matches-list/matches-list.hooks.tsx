@@ -24,7 +24,7 @@ interface IMatchListData {
     setFilteredTeams: React.Dispatch<React.SetStateAction<IMatchesTeam[]>>;
     selectedTeam: IMatchesTeam;
     setSelectedTeam: React.Dispatch<React.SetStateAction<IMatchesTeam>>;
-    defaultShowScores: boolean;
+    displayShowScoresToggle: boolean;
     showScores: boolean;
     setShowScores: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -34,7 +34,6 @@ export const useMatchList = (date?: string) => {
     const currentDateString: string = DateToolbox.apiFootballDateFormat(currentDate);
     const selectedDateString: string = date ? date : currentDateString;
     const selectedDate: Date = new Date(selectedDateString.replaceAll("-", "/"));
-    let defaultShowScores = selectedDateString !== currentDateString;
     let title: string = "";
     if (selectedDate > currentDate) {
         title = "Upcoming Fixtures";
@@ -45,10 +44,6 @@ export const useMatchList = (date?: string) => {
     }
 
     const authCtx = useAuthContext();
-    // only set showScores based on user preferences if we have a user and the selected match date is the current date
-    if (authCtx.firebaseUser && selectedDateString === currentDateString) {
-        defaultShowScores = authCtx.usersPreferences.showScores;
-    }
 
     const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
     // matches to be displayed to user based on selected filters
@@ -67,8 +62,10 @@ export const useMatchList = (date?: string) => {
     const [filteredTeams, setFilteredTeams] = useState<IMatchesTeam[]>(allTeams);
     // store filter by teams selection
     const [selectedTeam, setSelectedTeam] = useState<IMatchesTeam>(allTeams[0]);
+    // flag if the show scores toggle button should be displayed. On should display on the "/" or "/matches/date/YYYY-MM-DD" when date is the current date
+    const displayShowScoresToggle = selectedDateString === currentDateString;
     // track if user wants to see scores, only used when selectedDate === currentDate
-    const [showScores, setShowScores] = useState<boolean>(defaultShowScores);
+    const [showScores, setShowScores] = useState<boolean>(selectedDateString !== currentDateString);
 
     /** update matches based on the date route param.
      *  get all unique competitions and teams from returned matches
@@ -78,7 +75,7 @@ export const useMatchList = (date?: string) => {
         const getMatches = async () => {
             try {
                 setStatus("loading");
-                setShowScores(defaultShowScores);
+                setShowScores(selectedDateString !== currentDateString || authCtx.usersPreferences.showScores);
                 const resp = await axios.get<any, AxiosResponse<IMatchResponse>>("/apifootball/fixtures", {
                     params: {
                         date: selectedDateString,
@@ -220,6 +217,10 @@ export const useMatchList = (date?: string) => {
         setFilteredMatches([newFilteredMatchByCompetitionID]);
     }, [selectedTeam]);
 
+    useEffect(() => {
+        setShowScores(selectedDateString !== currentDateString || authCtx.usersPreferences.showScores);
+    }, [authCtx.firebaseUser, authCtx.usersPreferences]);
+
     const isLoading = status === "loading";
     const isError = status === "error";
     const data: IMatchListData | null =
@@ -242,7 +243,7 @@ export const useMatchList = (date?: string) => {
                   setFilteredTeams,
                   selectedTeam,
                   setSelectedTeam,
-                  defaultShowScores,
+                  displayShowScoresToggle,
                   showScores,
                   setShowScores,
               };

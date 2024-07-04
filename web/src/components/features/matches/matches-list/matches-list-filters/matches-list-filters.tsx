@@ -24,7 +24,7 @@ interface IMatchesListFiltersComponentProps extends IProps {
     teams: IMatchesTeam[];
     selectedTeam: IMatchesTeam;
     setSelectedTeam: React.Dispatch<React.SetStateAction<IMatchesTeam>>;
-    defaultShowScores: boolean;
+    displayShowScoresToggle: boolean;
     showScores: boolean;
     setShowScores: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -65,7 +65,6 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersComponentP
     };
 
     const onClickResetFilters = () => {
-        props.setShowScores(props.defaultShowScores);
         // by resetting competition selection, we also reset filtered teams selection back to ALL_TEAMS
         if (props.selectedCompetition.id !== 0) {
             onSelectCompetitionChange(ALL_MATCHES_COMPS, props.competitions[0]);
@@ -199,7 +198,7 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersComponentP
                         </PopoverContent>
                     </Popover>
                 </section>
-                {!props.defaultShowScores && (
+                {props.displayShowScoresToggle && (
                     <>
                         <Separator orientation="vertical" className="hidden sm:block sm:h-[60px]" />
                         <section className="flex flex-col content-center gap-2">

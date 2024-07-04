@@ -93,7 +93,7 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
                                 teams={data.filteredTeams}
                                 selectedTeam={data.selectedTeam}
                                 setSelectedTeam={data.setSelectedTeam}
-                                defaultShowScores={data.defaultShowScores}
+                                displayShowScoresToggle={data.displayShowScoresToggle}
                                 showScores={data.showScores}
                                 setShowScores={data.setShowScores}
                             />
@@ -112,7 +112,7 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
                     teams={data.filteredTeams}
                     selectedTeam={data.selectedTeam}
                     setSelectedTeam={data.setSelectedTeam}
-                    defaultShowScores={data.defaultShowScores}
+                    displayShowScoresToggle={data.displayShowScoresToggle}
                     showScores={data.showScores}
                     setShowScores={data.setShowScores}
                 />
