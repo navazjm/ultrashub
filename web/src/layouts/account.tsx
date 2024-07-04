@@ -12,8 +12,8 @@ export const AccountLayout = (props: IProps) => {
     const user = authCtx.firebaseUser as User;
 
     return (
-        <section className="relative col-span-3 lg:grid lg:grid-cols-5 xl:grid-cols-4 lg:h-full">
-            <section className="col-span-2 xl:col-span-1 flex sticky top-0 lg:h-full overflow-hidden">
+        <section className="relative col-span-3 lg:grid lg:grid-cols-5 xl:grid-cols-4 lg:h-[calc(100vh-84px)]">
+            <section className="col-span-2 xl:col-span-1 flex flex-col lg:flex-row lg:sticky lg:top-0 lg:bg-background lg:z-50">
                 <section className="flex flex-col gap-2 w-full">
                     <section className="flex items-center gap-3 p-5">
                         {user.photoURL && user.displayName && (
@@ -27,7 +27,7 @@ export const AccountLayout = (props: IProps) => {
                             </>
                         )}
                         <section>
-                            <h3 className="font-bold text-3xl">{user.displayName}</h3>
+                            <h3 className="font-bold text-lg 2xl:text-3xl">{user.displayName}</h3>
                             {user.metadata.creationTime && (
                                 <span className="font-thin text-sm">
                                     Member since: {new Date(user.metadata.creationTime).toLocaleDateString()}
@@ -82,8 +82,8 @@ export const AccountLayout = (props: IProps) => {
                     </section>
                 </section>
                 <Separator orientation="vertical" className="h-full hidden lg:block" />
+                <Separator className="lg:hidden block mb-3" />
             </section>
-            <Separator className="lg:hidden block mb-3" />
 
             <section className="col-span-3 overflow-y-auto overflow-x-hidden">{props.children}</section>
         </section>
