@@ -5,9 +5,11 @@ import { Spinner } from "@/components/ui/spinner";
 import { useCompetitions } from "./competitions.hooks";
 import { CompetitionsItemComponent } from "./competitions-item/competitions-item";
 import { CompetitionsSearchComponent } from "./competitions-search/competitions-search";
+import { useAuthContext } from "@/common/auth/auth.hooks";
 
 export const CompetitionsComponent = () => {
     const [data, isLoading, isError] = useCompetitions();
+    const authCtx = useAuthContext();
 
     if (isLoading) {
         return <Spinner />;
@@ -22,27 +24,43 @@ export const CompetitionsComponent = () => {
         );
     }
 
-    const topCompetitions: ICompetition[] = [];
-    const nonTopCompetitions: ICompetition[] = [];
+    const userFavoriteCompsIDs = authCtx.usersPreferences.favoriteCompetitions;
 
-    // group competitons by if it is a top com
+    const userFavoriteCompetitions: ICompetition[] = [];
+    const topCompetitions: ICompetition[] = [];
+    const otherCompetitions: ICompetition[] = [];
+
+    // group competitons by user favorites, top competitons, and others.
     data.filteredCompetitions.forEach((comp) => {
-        TOP_COMPS_IDS.includes(comp.league.id) ? topCompetitions.push(comp) : nonTopCompetitions.push(comp);
+        if (userFavoriteCompsIDs.includes(comp.league.id)) {
+            userFavoriteCompetitions.push(comp);
+            return;
+        }
+        if (TOP_COMPS_IDS.includes(comp.league.id)) {
+            topCompetitions.push(comp);
+            return;
+        }
+        otherCompetitions.push(comp);
     });
 
     // within each sub group of top and non-top comps, group by country name
+    userFavoriteCompetitions.sort((a, b) => {
+        const aCompName = `${a.country.name} ${a.league.name}`;
+        const bCompName = `${b.country.name} ${b.league.name}`;
+        return aCompName.localeCompare(bCompName);
+    });
     topCompetitions.sort((a, b) => {
         const aCompName = `${a.country.name} ${a.league.name}`;
         const bCompName = `${b.country.name} ${b.league.name}`;
         return aCompName.localeCompare(bCompName);
     });
-    nonTopCompetitions.sort((a, b) => {
+    otherCompetitions.sort((a, b) => {
         const aCompName = `${a.country.name} ${a.league.name}`;
         const bCompName = `${b.country.name} ${b.league.name}`;
         return aCompName.localeCompare(bCompName);
     });
 
-    const competitionsDisplayList = [...topCompetitions, ...nonTopCompetitions];
+    const competitionsDisplayList = [...userFavoriteCompetitions, ...topCompetitions, ...otherCompetitions];
 
     return (
         <section className="space-y-5">
