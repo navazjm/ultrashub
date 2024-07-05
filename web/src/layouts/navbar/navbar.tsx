@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggleComponent } from "./theme-toggle/theme-toggle";
 import { useAuthContext } from "@/common/auth/auth.hooks";
-import { LoginDialogComponent } from "@/components/shared/login-dialog/login-dialog";
 import { UserDropdownMenuComponent } from "@/components/shared/user-dropdown-menu/user-dropdown-menu";
 import { UltrasHubLogoComponent } from "@/components/shared/ultrashub-logo/ultrashub-logo";
+import { LoginDialogComponent } from "./login-dialog/login-dialog";
 import { MoreLinksWrapperComponent } from "./more-links/more-links";
 
 export const NavbarComponent = () => {

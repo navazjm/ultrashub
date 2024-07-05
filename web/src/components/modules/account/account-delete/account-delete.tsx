@@ -1,29 +1,36 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { User, deleteUser } from "firebase/auth";
 import { Trash } from "lucide-react";
 import { useAuthContext, useAxiosPrivate } from "@/common/auth/auth.hooks";
 import { useToast } from "@/components/ui/use-toast";
 import { ConfirmationDialog } from "@/components/shared/confirmation-dialog/confirmation-dialog";
+import { FirebaseError } from "firebase/app";
+import { ResponseToolbox } from "@/common/toolbox/response";
 
 export const AccountDeleteComponent = () => {
     const [isDeletingUser, setIsDeletingUser] = useState<boolean>(false);
     const authCtx = useAuthContext();
     const { toast } = useToast();
+    const location = useLocation();
     const navigate = useNavigate();
     const axiosPrivate = useAxiosPrivate();
 
     const onClickDeleteAccountHandler = async () => {
         try {
             setIsDeletingUser(true);
+            await deleteUser(authCtx.firebaseUser as User);
             const resp = await axiosPrivate.delete("/users/preferences");
             if (resp.status !== 200) {
                 throw new Error();
             }
-            await deleteUser(authCtx.firebaseUser as User);
             toast({ title: "User was successfully deleted!" });
             navigate("/");
         } catch (err) {
+            if (ResponseToolbox.isRequiresRecentLogin(err as FirebaseError)) {
+                navigate("/login", { state: { previousLocation: location.pathname } });
+                return;
+            }
             toast({ variant: "destructive", title: "Error!", description: "Failed to delete user. Try again later!" });
         } finally {
             setIsDeletingUser(false);

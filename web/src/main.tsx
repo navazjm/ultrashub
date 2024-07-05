@@ -12,6 +12,7 @@ import { AccountPreferencesPage } from "@/pages/account/preferences";
 import { AccountDeletePage } from "@/pages/account/delete";
 import { CompetitionsPage } from "@/pages/competitions";
 import { CompetitionPage } from "@/pages/competition";
+import { LoginPage } from "@/pages/login";
 import { MatchesPage } from "@/pages/matches";
 import { MatchPage } from "@/pages/match";
 import { NotFoundPage } from "@/pages/not-found";
@@ -59,8 +60,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                                     <Route path="delete" element={<AccountDeletePage />} />
                                 </Route>
 
-                                <Route element={<NotFoundPage />} path="*" />
+                                <Route path="*" element={<NotFoundPage />} />
                             </Route>
+                            <Route path="/login" element={<LoginPage />} />
                         </Routes>
                     </BrowserRouter>
                 </TooltipProvider>

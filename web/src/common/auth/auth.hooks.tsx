@@ -4,7 +4,7 @@ import { axiosPrivate } from "@/lib/axios";
 import { AuthContext } from "./auth.context";
 import { AxiosError } from "axios";
 import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const useAuthContext = () => {
     const context = useContext(AuthContext);
@@ -16,6 +16,7 @@ export const useAuthContext = () => {
 
 export const useAxiosPrivate = () => {
     const authCtx = useAuthContext();
+    const location = useLocation();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -34,10 +35,9 @@ export const useAxiosPrivate = () => {
         const respIntercept = axiosPrivate.interceptors.response.use(
             (response) => response,
             async (error) => {
-                // TODO: create dedicated login page for these errors??
                 const errResp = error as AxiosError<ErrorResponse>;
                 if (ResponseToolbox.isInvalidToken(errResp)) {
-                    navigate("/login");
+                    navigate("/login", { state: { previousLocation: location.pathname } });
                 }
                 return Promise.reject(error);
             },
