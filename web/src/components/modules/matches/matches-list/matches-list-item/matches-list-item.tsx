@@ -4,12 +4,16 @@ import { IMatch } from "@/common/responses/api-football";
 import { MatchToolbox } from "@/common/toolbox/match";
 import { ApiFootballLogoComponent } from "@/components/shared/api-football-logo/api-football-logo";
 import { cn } from "@/lib/shadcn";
+import { useAuthContext } from "@/common/auth/auth.hooks";
 
 interface IMatchesListItemComponentProps extends IProps {
     match: IMatch;
     showScores: boolean;
 }
 export const MatchesListItemComponent = (props: IMatchesListItemComponentProps) => {
+    const authCtx = useAuthContext();
+    const userFavoriteTeamsID = authCtx.usersPreferences.favoriteTeams;
+
     const displayMatchStatus: string = MatchToolbox.getDisplayMatchStatus(props.match.fixture);
     const matchInProgress: boolean = MatchToolbox.isMatchInProgress(props.match.fixture.status.short);
     const matchHasStarted: boolean = MatchToolbox.hasMatchStarted(props.match.fixture.status.short);
@@ -17,7 +21,10 @@ export const MatchesListItemComponent = (props: IMatchesListItemComponentProps) 
     return (
         <NavLink
             to={`/matches/id/${props.match.fixture.id}`}
-            className="grid grid-cols-4 items-center w-full p-3 hover:bg-muted focus:bg-muted"
+            className={cn(
+                "grid grid-cols-4 items-center w-full p-3 hover:bg-muted focus:bg-muted",
+                MatchToolbox.hasFavoriteTeam(props.match, userFavoriteTeamsID) && "bg-input",
+            )}
         >
             <section className="font-extralight">{displayMatchStatus}</section>
             <section className="flex items-center justify-between gap-3 p-0 col-span-3">

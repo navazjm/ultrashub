@@ -8,6 +8,9 @@ import { Spinner } from "@/components/ui/spinner";
 import { useMatchList } from "./matches-list.hooks";
 import { ErrorComponent } from "@/components/shared/error/error";
 import { NavLink } from "react-router-dom";
+import { useAuthContext } from "@/common/auth/auth.hooks";
+import { IMatches } from "../matches.types";
+import { MatchToolbox } from "@/common/toolbox/match";
 
 interface IMatchesListComponentProps extends IProps {
     date: string | undefined;
@@ -15,6 +18,7 @@ interface IMatchesListComponentProps extends IProps {
 
 export const MatchesListComponent = (props: IMatchesListComponentProps) => {
     const [data, isLoading, isError] = useMatchList(props.date);
+    const authCtx = useAuthContext();
 
     if (isLoading) {
         return <Spinner />;
@@ -26,23 +30,63 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
         );
     }
 
-    const topCompetitionsMatches = data.filteredMatches.filter((comp) => TOP_COMPS_IDS.includes(comp.competitionID));
+    const userFavoriteTeamsIDs = authCtx.usersPreferences.favoriteTeams;
+    const userFavoriteCompsIDs = authCtx.usersPreferences.favoriteCompetitions;
+
+    // If we found a favorite a team within a non favorited competition,
+    // include the competition in user favorites to be displayed at the top of the page
+    data.filteredMatches.forEach((matchesObj) => {
+        if (userFavoriteCompsIDs.includes(matchesObj.competitionID)) {
+            return;
+        }
+        const foundFavoriteTeam = matchesObj.matches.find((match) =>
+            MatchToolbox.hasFavoriteTeam(match, userFavoriteTeamsIDs),
+        );
+        if (foundFavoriteTeam) {
+            userFavoriteCompsIDs.push(matchesObj.competitionID);
+        }
+    });
+
+    const userFavortieCompetitionsMatches: IMatches[] = [];
+    const topCompetitionsMatches: IMatches[] = [];
+    const worldCompetitionsMatches: IMatches[] = [];
+    const otherCompetitionsMatches: IMatches[] = [];
+
+    data.filteredMatches.forEach((matchesObj) => {
+        if (userFavoriteCompsIDs.includes(matchesObj.competitionID)) {
+            userFavortieCompetitionsMatches.push(matchesObj);
+            return;
+        }
+        if (TOP_COMPS_IDS.includes(matchesObj.competitionID)) {
+            topCompetitionsMatches.push(matchesObj);
+            return;
+        }
+        if (matchesObj.displayName.toLocaleLowerCase().includes("world")) {
+            worldCompetitionsMatches.push(matchesObj);
+            return;
+        }
+        otherCompetitionsMatches.push(matchesObj);
+    });
+
+    userFavortieCompetitionsMatches.sort((a, b) =>
+        a.displayName.localeCompare(b.displayName, undefined, { sensitivity: "base" }),
+    );
     topCompetitionsMatches.sort((a, b) =>
         a.displayName.localeCompare(b.displayName, undefined, { sensitivity: "base" }),
     );
-    const worldCompetitionsMatches = data.filteredMatches.filter((comp) => {
-        return comp.displayName.toLocaleLowerCase().includes("world") && !TOP_COMPS_IDS.includes(comp.competitionID);
-    });
     worldCompetitionsMatches.sort((a, b) =>
         a.displayName.localeCompare(b.displayName, undefined, { sensitivity: "base" }),
     );
-    const nonTopCompetitionsMatches = data.filteredMatches.filter(
-        (comp) => !TOP_COMPS_IDS.includes(comp.competitionID),
-    );
-    nonTopCompetitionsMatches.sort((a, b) =>
+    otherCompetitionsMatches.sort((a, b) =>
         a.displayName.localeCompare(b.displayName, undefined, { sensitivity: "base" }),
     );
-    const matchesDisplayOrder = [...topCompetitionsMatches, ...worldCompetitionsMatches, ...nonTopCompetitionsMatches];
+
+    const matchesDisplayOrder = [
+        ...userFavortieCompetitionsMatches,
+        ...topCompetitionsMatches,
+        ...worldCompetitionsMatches,
+        ...otherCompetitionsMatches,
+    ];
 
     return (
         <>
@@ -72,10 +116,10 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
                 </section>
                 {matchesDisplayOrder.map((comp, idx) => (
                     <Card key={idx} className="mb-5">
-                        <CardHeader className="bg-muted p-3 rounded-md rounded-b-none">
+                        <CardHeader className={"bg-muted p-3 rounded-md rounded-b-none"}>
                             <CardTitle className="text-md">
                                 <NavLink
-                                    to={`/competitions/id/${comp.matches[0].league.id}`}
+                                    to={`/competitions/id/${comp.competitionID}`}
                                     className="font-normal hover:font-black focus:font-black"
                                 >
                                     {comp.displayName}

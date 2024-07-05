@@ -1,7 +1,21 @@
-import { IMatchEvent, IMatchFixture } from "../responses/api-football";
+import { IMatch, IMatchEvent, IMatchFixture } from "../responses/api-football";
 import SoccerBall from "@/assets/img/logo.png";
 
 export class MatchToolbox {
+    /**
+     * @param match
+     * @param favoriteTeamIDs
+     * @returns true if either home or away team of a match is in users favorite teams
+     */
+    public static hasFavoriteTeam(match: IMatch, favoriteTeamIDs: number[]): boolean {
+        for (const favTeamID of favoriteTeamIDs) {
+            if (favTeamID === match.teams.home.id || favTeamID === match.teams.away.id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * @param status - Match.fixture.status.short
      * @returns true if match status means the match is in progress
