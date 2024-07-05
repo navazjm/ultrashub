@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Check, ChevronsUpDown, RotateCcw } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight, ChevronsUpDown, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { Command, CommandList, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
@@ -16,7 +16,8 @@ import { DateToolbox } from "@/common/toolbox/date";
 import { ApiFootballLogoComponent } from "@/components/shared/api-football-logo/api-football-logo";
 
 interface IMatchesListFiltersComponentProps extends IProps {
-    date: Date;
+    currentDate: Date;
+    selectedDate: Date;
     competitions: IMatchesCompetition[];
     selectedCompetition: IMatchesCompetition;
     setSelectedCompetition: React.Dispatch<React.SetStateAction<IMatchesCompetition>>;
@@ -76,24 +77,53 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersComponentP
         }
     };
 
+    /**
+     * Click event handler for the previous and next date buttons, next to the calendar popover button
+     * Based on the dir, go back/forward based on the selected date
+     * @param dir how many days to go back/forward, negative numbers go back
+     */
+    const onClickAdjacentDateBtn = (dir: number) => {
+        const newDate = new Date(props.selectedDate);
+        newDate.setDate(props.selectedDate.getDate() + dir);
+        const dateStr = DateToolbox.apiFootballDateFormat(newDate);
+        navigate(`/matches/date/${dateStr}`);
+    };
+
+    const currentDateString = props.currentDate.toDateString();
+    const selectedDateString = props.selectedDate.toDateString();
+    const datePickerBtnText = currentDateString === selectedDateString ? "Today" : selectedDateString;
+
     return (
         <section className="flex flex-col gap-2">
-            <Popover open={isDatePickerPopoverOpen} onOpenChange={() => setIsDatePickerPopoverOpen((prev) => !prev)}>
-                <PopoverTrigger asChild>
-                    <Button variant={"outline"} className="text-base py-1 px-2">
-                        <CalendarIcon className="mr-2" />
-                        <span className="text-sm">{props.date.toDateString()}</span>
-                    </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                    <Calendar
-                        mode="single"
-                        selected={props.date}
-                        onSelect={(date) => onSelectDatePicker(date)}
-                        initialFocus
-                    />
-                </PopoverContent>
-            </Popover>
+            <section className="w-full grid grid-cols-6 gap-2">
+                <Button variant="outline" onClick={() => onClickAdjacentDateBtn(-1)}>
+                    <ChevronLeft />
+                </Button>
+                <section className="col-span-4">
+                    <Popover
+                        open={isDatePickerPopoverOpen}
+                        onOpenChange={() => setIsDatePickerPopoverOpen((prev) => !prev)}
+                    >
+                        <PopoverTrigger asChild>
+                            <Button variant={"outline"} className="w-full text-base py-1 px-2">
+                                <CalendarIcon className="mr-2" />
+                                <span className="text-sm">{datePickerBtnText}</span>
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0">
+                            <Calendar
+                                mode="single"
+                                selected={props.selectedDate}
+                                onSelect={(date) => onSelectDatePicker(date)}
+                                initialFocus
+                            />
+                        </PopoverContent>
+                    </Popover>
+                </section>
+                <Button variant="outline" onClick={() => onClickAdjacentDateBtn(1)}>
+                    <ChevronRight />
+                </Button>
+            </section>
             <Separator />
             <section className="flex flex-col content-center gap-2">
                 <Label htmlFor="selectCompetition" className="font-extralight">

@@ -8,6 +8,7 @@ import { DateToolbox } from "@/common/toolbox/date";
 import { useAuthContext } from "@/common/auth/auth.hooks";
 
 interface IMatchListData {
+    currentDate: Date;
     selectedDate: Date;
     allMatches: IMatches[];
     setAllMatches: React.Dispatch<React.SetStateAction<IMatches[]>>;
@@ -218,25 +219,26 @@ export const useMatchList = (date?: string) => {
         isLoading || isError
             ? null
             : {
-                selectedDate,
-                allMatches,
-                setAllMatches,
-                filteredMatches,
-                setFilteredMatches,
-                allCompetitions,
-                setAllCompetitions,
-                selectedCompetition,
-                setSelectedCompetition,
-                allTeams,
-                setAllTeams,
-                filteredTeams,
-                setFilteredTeams,
-                selectedTeam,
-                setSelectedTeam,
-                displayShowScoresToggle,
-                showScores,
-                setShowScores,
-            };
+                  currentDate,
+                  selectedDate,
+                  allMatches,
+                  setAllMatches,
+                  filteredMatches,
+                  setFilteredMatches,
+                  allCompetitions,
+                  setAllCompetitions,
+                  selectedCompetition,
+                  setSelectedCompetition,
+                  allTeams,
+                  setAllTeams,
+                  filteredTeams,
+                  setFilteredTeams,
+                  selectedTeam,
+                  setSelectedTeam,
+                  displayShowScoresToggle,
+                  showScores,
+                  setShowScores,
+              };
 
     return [data, isLoading, isError] as const;
 };

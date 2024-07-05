@@ -22,10 +22,7 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
 
     if (isError || !data || data.allMatches.length === 0) {
         return (
-            <ErrorComponent
-                title="Error!"
-                message="No matches data was found. Refresh the page or try again later."
-            />
+            <ErrorComponent title="Error!" message="No matches data was found. Refresh the page or try again later." />
         );
     }
 
@@ -57,7 +54,8 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
                             <AccordionTrigger className="bg-muted p-3 rounded-md">Filter Matches</AccordionTrigger>
                             <AccordionContent className="p-3">
                                 <MatchesListFiltersComponent
-                                    date={data.selectedDate}
+                                    currentDate={data.currentDate}
+                                    selectedDate={data.selectedDate}
                                     competitions={data.allCompetitions}
                                     selectedCompetition={data.selectedCompetition}
                                     setSelectedCompetition={data.setSelectedCompetition}
@@ -104,7 +102,8 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
                 </CardHeader>
                 <CardContent className="p-3">
                     <MatchesListFiltersComponent
-                        date={data.selectedDate}
+                        currentDate={data.currentDate}
+                        selectedDate={data.selectedDate}
                         competitions={data.allCompetitions}
                         selectedCompetition={data.selectedCompetition}
                         setSelectedCompetition={data.setSelectedCompetition}
