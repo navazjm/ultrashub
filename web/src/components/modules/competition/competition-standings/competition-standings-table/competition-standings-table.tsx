@@ -2,12 +2,16 @@ import { ApiFootballLogoComponent } from "@/components/shared/api-football-logo/
 import { IStandingsByTeam } from "@/common/responses/api-football";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { NavLink } from "react-router-dom";
+import { cn } from "@/lib/shadcn";
+import { useAuthContext } from "@/common/auth/auth.hooks";
 
 interface ICompetitionStandingsTableProps {
     standings: IStandingsByTeam[];
 }
 
 export const CompetitionStandingsTable = (props: ICompetitionStandingsTableProps) => {
+    const authCtx = useAuthContext();
+
     return (
         <Table>
             <TableHeader>
@@ -29,11 +33,12 @@ export const CompetitionStandingsTable = (props: ICompetitionStandingsTableProps
                 {props.standings.map((club, idx) => (
                     <TableRow
                         key={club.team.id}
-                        className={`${
+                        className={cn(
                             idx != props.standings.length - 1 &&
-                            club.description != props.standings[idx + 1].description &&
-                            "border-b-4"
-                        }`}
+                                club.description != props.standings[idx + 1].description &&
+                                "border-b-4",
+                            authCtx.usersPreferences.favoriteTeams.includes(club.team.id) && "bg-favorite",
+                        )}
                     >
                         <TableCell className="p-1">{club.rank}</TableCell>
                         <TableCell className="p-1">

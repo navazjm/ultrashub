@@ -4,6 +4,10 @@ import { IMatch } from "@/common/responses/api-football";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { MatchScorelineComponent } from "@/components/shared/match-scoreline/match-scoreline";
+import { cn } from "@/lib/shadcn";
+import { useAuthContext } from "@/common/auth/auth.hooks";
+import { MatchToolbox } from "@/common/toolbox/match";
+import { match } from "assert";
 
 interface IMatchItemComponentProps {
     match: IMatch;
@@ -11,9 +15,15 @@ interface IMatchItemComponentProps {
 }
 
 export const MatchItemComponent = (props: IMatchItemComponentProps) => {
+    const authCtx = useAuthContext();
     return (
         <NavLink to={`/matches/id/${props.match.fixture.id}`} className="w-full">
-            <Card className="w-full p-3 hover:bg-muted focus:bg-muted">
+            <Card
+                className={cn(
+                    "w-full p-3 hover:bg-muted focus:bg-muted",
+                    MatchToolbox.hasFavoriteTeam(props.match, authCtx.usersPreferences.favoriteTeams) && "bg-favorite",
+                )}
+            >
                 <CardContent className="p-2 flex items-center justify-center gap-5">
                     <section className="flex-1 flex items-center justify-end gap-2">
                         <h5 className="hidden sm:block">{props.match.teams.home.name}</h5>
