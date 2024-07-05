@@ -36,6 +36,7 @@ export const MatchesListItemComponent = (props: IMatchesListItemComponentProps) 
                     />
                 </section>
                 <section className="flex justify-center items-center gap-2 w-[45px]">
+                <section className="flex justify-center items-center gap-2 min-w-[45px]">
                     {props.showScores && (
                         <>
                             <section
