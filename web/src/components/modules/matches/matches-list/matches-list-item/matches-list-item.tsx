@@ -23,7 +23,7 @@ export const MatchesListItemComponent = (props: IMatchesListItemComponentProps) 
             to={`/matches/id/${props.match.fixture.id}`}
             className={cn(
                 "grid grid-cols-4 items-center w-full p-3 hover:bg-muted focus:bg-muted",
-                MatchToolbox.hasFavoriteTeam(props.match, userFavoriteTeamsID) && "bg-input",
+                MatchToolbox.hasFavoriteTeam(props.match, userFavoriteTeamsID) && "bg-favorite",
             )}
         >
             <section className="font-extralight">{displayMatchStatus}</section>
