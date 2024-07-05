@@ -18,12 +18,7 @@ export const TeamComponent = (props: ITeamComponentProps) => {
     }
 
     if (isError || !data.team) {
-        return (
-            <ErrorComponent
-                title="Error!"
-                message="No team data was found. Refresh the page or try again later."
-            />
-        );
+        return <ErrorComponent title="Error!" message="No team data was found. Refresh the page or try again later." />;
     }
 
     return (

@@ -3,7 +3,7 @@ import { IProps } from "@/common/types";
 import { Spinner } from "@/components/ui/spinner";
 import { useAuthContext } from "./auth.hooks";
 
-interface IProtectedRouteProps extends IProps { }
+interface IProtectedRouteProps extends IProps {}
 
 export const ProtectedRoute = (props: IProtectedRouteProps) => {
     const authCtx = useAuthContext();

@@ -43,11 +43,11 @@ export const useCompetitions = () => {
         isLoading || isError
             ? null
             : {
-                allCompetitions,
-                setAllCompetitions,
-                filteredCompetitions,
-                setFilteredCompetitions,
-            };
+                  allCompetitions,
+                  setAllCompetitions,
+                  filteredCompetitions,
+                  setFilteredCompetitions,
+              };
 
     return [data, isLoading, isError] as const;
 };

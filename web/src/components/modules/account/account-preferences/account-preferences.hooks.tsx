@@ -106,17 +106,17 @@ export const useAccountPreferencesFormData = () => {
     const data: IAccountPreferencesFormData | null = isPageLoading
         ? null
         : {
-            timezones,
-            setTimezones,
-            favoriteTeams,
-            setFavoriteTeams,
-            fetchedTeams,
-            setFetchedTeams,
-            favoriteCompetitions,
-            setFavoriteCompetitions,
-            fetchedCompetitions,
-            setFetchedCompetitions,
-        };
+              timezones,
+              setTimezones,
+              favoriteTeams,
+              setFavoriteTeams,
+              fetchedTeams,
+              setFetchedTeams,
+              favoriteCompetitions,
+              setFavoriteCompetitions,
+              fetchedCompetitions,
+              setFetchedCompetitions,
+          };
 
     return [data, isPageLoading] as const;
 };

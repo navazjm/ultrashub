@@ -58,9 +58,9 @@ export const useMatch = (matchID: string) => {
                         event.detail.toLocaleLowerCase() === "yellow card" &&
                         match.events[idx + 1].detail.toLocaleLowerCase() === "red card" &&
                         event.player.name.toLocaleLowerCase() ===
-                        match.events[idx + 1].player.name.toLocaleLowerCase() &&
+                            match.events[idx + 1].player.name.toLocaleLowerCase() &&
                         event.time.elapsed + event.time.extra ===
-                        match.events[idx + 1].time.elapsed + match.events[idx + 1].time.extra
+                            match.events[idx + 1].time.elapsed + match.events[idx + 1].time.extra
                     ) {
                         match.events[idx + 1].detail = "Second yellow card";
                         return;
@@ -165,9 +165,9 @@ export const useMatch = (matchID: string) => {
         !match || !h2hMatches
             ? null
             : {
-                match,
-                h2hMatches,
-            };
+                  match,
+                  h2hMatches,
+              };
 
     return [data, isLoading, isError] as const;
 };

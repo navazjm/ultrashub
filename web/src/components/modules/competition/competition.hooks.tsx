@@ -209,11 +209,11 @@ export const useCompetiton = (competitionID: string) => {
         !topGoalScorers && !topAssists && !topYellowCards && !topRedCards
             ? null
             : {
-                topGoalScorers,
-                topAssists,
-                topYellowCards,
-                topRedCards,
-            };
+                  topGoalScorers,
+                  topAssists,
+                  topYellowCards,
+                  topRedCards,
+              };
 
     const data: IUseCompetitionData = {
         competition,

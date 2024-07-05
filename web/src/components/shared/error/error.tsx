@@ -4,10 +4,8 @@ interface IErrorComponentProps {
 }
 
 export const ErrorComponent = (props: IErrorComponentProps) => {
-    const title = props.title ? props.title : "Error!"
-    const message = props.message
-        ? props.message
-        : "Uh oh! Encountered an error. Please try again later.";
+    const title = props.title ? props.title : "Error!";
+    const message = props.message ? props.message : "Uh oh! Encountered an error. Please try again later.";
 
     return (
         <>

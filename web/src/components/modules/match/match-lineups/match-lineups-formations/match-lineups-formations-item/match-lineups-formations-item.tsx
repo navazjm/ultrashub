@@ -31,17 +31,17 @@ export const MatchLineupsFormationsItemComponent = (props: IMatchLineupsFormatio
     const teamColors = props.lineup.team.colors
         ? props.lineup.team.colors
         : {
-            player: {
-                primary: props.reverse ? "191724" : "e0def4",
-                number: props.reverse ? "e0def4" : "191724",
-                border: props.reverse ? "e0def4" : "191724",
-            },
-            goalkeeper: {
-                primary: props.reverse ? "e0def4" : "191724",
-                number: props.reverse ? "191724" : "e0def4",
-                border: props.reverse ? "191724" : "e0def4",
-            },
-        };
+              player: {
+                  primary: props.reverse ? "191724" : "e0def4",
+                  number: props.reverse ? "e0def4" : "191724",
+                  border: props.reverse ? "e0def4" : "191724",
+              },
+              goalkeeper: {
+                  primary: props.reverse ? "e0def4" : "191724",
+                  number: props.reverse ? "191724" : "e0def4",
+                  border: props.reverse ? "191724" : "e0def4",
+              },
+          };
 
     return (
         <section className={`flex items-center justify-between ${props.reverse && "flex-row-reverse"}`}>

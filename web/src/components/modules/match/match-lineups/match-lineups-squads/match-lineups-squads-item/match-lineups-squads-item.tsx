@@ -1,10 +1,5 @@
 import { ApiFootballLogoComponent } from "@/components/shared/api-football-logo/api-football-logo";
-import {
-    IMatchEvent,
-    MatchEventType,
-    IMatchLineup,
-    IMatchLineupPlayer,
-} from "@/common/responses/api-football";
+import { IMatchEvent, MatchEventType, IMatchLineup, IMatchLineupPlayer } from "@/common/responses/api-football";
 import { MatchToolbox } from "@/common/toolbox/match";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";

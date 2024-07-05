@@ -10,7 +10,6 @@ export interface IMatchQuickInfoComponentProps extends IProps {
 }
 
 export const MatchQuickInfoComponent = (props: IMatchQuickInfoComponentProps) => {
-
     return (
         <>
             <Card className="w-full mt-3">

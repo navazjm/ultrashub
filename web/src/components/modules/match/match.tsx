@@ -23,10 +23,7 @@ export const MatchComponent = (props: IMatchComponentProps) => {
 
     if (isError || !data) {
         return (
-            <ErrorComponent
-                title="Error!"
-                message="No match data was found. Refresh the page or try again later."
-            />
+            <ErrorComponent title="Error!" message="No match data was found. Refresh the page or try again later." />
         );
     }
 

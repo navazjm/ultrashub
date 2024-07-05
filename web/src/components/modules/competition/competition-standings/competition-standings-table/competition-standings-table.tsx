@@ -29,10 +29,11 @@ export const CompetitionStandingsTable = (props: ICompetitionStandingsTableProps
                 {props.standings.map((club, idx) => (
                     <TableRow
                         key={club.team.id}
-                        className={`${idx != props.standings.length - 1 &&
+                        className={`${
+                            idx != props.standings.length - 1 &&
                             club.description != props.standings[idx + 1].description &&
                             "border-b-4"
-                            }`}
+                        }`}
                     >
                         <TableCell className="p-1">{club.rank}</TableCell>
                         <TableCell className="p-1">

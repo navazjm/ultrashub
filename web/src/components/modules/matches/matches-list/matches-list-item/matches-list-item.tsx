@@ -35,16 +35,15 @@ export const MatchesListItemComponent = (props: IMatchesListItemComponentProps) 
                         height={30}
                     />
                 </section>
-                <section className="flex justify-center items-center gap-2 w-[45px]">
                 <section className="flex justify-center items-center gap-2 min-w-[45px]">
                     {props.showScores && (
                         <>
                             <section
                                 className={cn(
                                     props.showScores &&
-                                    !matchInProgress &&
-                                    props.match.teams.away.winner &&
-                                    "opacity-40",
+                                        !matchInProgress &&
+                                        props.match.teams.away.winner &&
+                                        "opacity-40",
                                 )}
                             >
                                 {props.match.goals.home}
@@ -56,9 +55,9 @@ export const MatchesListItemComponent = (props: IMatchesListItemComponentProps) 
                             <section
                                 className={cn(
                                     props.showScores &&
-                                    !matchInProgress &&
-                                    props.match.teams.home.winner &&
-                                    "opacity-40",
+                                        !matchInProgress &&
+                                        props.match.teams.home.winner &&
+                                        "opacity-40",
                                 )}
                             >
                                 {props.match.goals.away}
