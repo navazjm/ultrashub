@@ -56,7 +56,6 @@ export const TeamComponent = (props: ITeamComponentProps) => {
             const resp: AxiosResponse<IUsersPreferencesResponse> = await axiosPrivate.patch("/users/preferences", {
                 favoriteTeams: userFavoriteTeams,
             });
-            console.log(resp.data.data);
             authCtx.setUsersPreferences(resp.data.data);
         } catch (err) {
             toast({ variant: "destructive", title: "Error!", description: "Failed to update user's favorite teams." });
