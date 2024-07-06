@@ -171,7 +171,12 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
                                     <Button
                                         variant="ghost"
                                         size="icon"
-                                        className="w-5 h-5 hidden group-hover:block"
+                                        className={cn(
+                                            "w-5 h-5 hidden group-hover:block",
+                                            authCtx.usersPreferences.favoriteCompetitions.includes(
+                                                comp.competitionID,
+                                            ) && "block",
+                                        )}
                                         onClick={() => updateUserFavoriteCompetitions(comp.competitionID)}
                                     >
                                         <Heart
