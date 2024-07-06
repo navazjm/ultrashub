@@ -8,9 +8,15 @@ import { Spinner } from "@/components/ui/spinner";
 import { useMatchList } from "./matches-list.hooks";
 import { ErrorComponent } from "@/components/shared/error/error";
 import { NavLink } from "react-router-dom";
-import { useAuthContext } from "@/common/auth/auth.hooks";
+import { useAuthContext, useAxiosPrivate } from "@/common/auth/auth.hooks";
 import { IMatches } from "../matches.types";
 import { MatchToolbox } from "@/common/toolbox/match";
+import { Button } from "@/components/ui/button";
+import { Heart } from "lucide-react";
+import { AxiosResponse } from "axios";
+import { IUsersPreferencesResponse } from "@/common/auth/auth.types";
+import { useToast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/shadcn";
 
 interface IMatchesListComponentProps extends IProps {
     date: string | undefined;
@@ -19,6 +25,8 @@ interface IMatchesListComponentProps extends IProps {
 export const MatchesListComponent = (props: IMatchesListComponentProps) => {
     const [data, isLoading, isError] = useMatchList(props.date);
     const authCtx = useAuthContext();
+    const axiosPrivate = useAxiosPrivate();
+    const { toast } = useToast();
 
     if (isLoading) {
         return <Spinner />;
@@ -29,6 +37,38 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
             <ErrorComponent title="Error!" message="No matches data was found. Refresh the page or try again later." />
         );
     }
+
+    const updateUserFavoriteCompetitions = async (compID: number) => {
+        const userFavoriteCompetitions = authCtx.usersPreferences.favoriteCompetitions;
+        const userFavoriteCompetitionIdx = userFavoriteCompetitions.findIndex((id) => id === compID);
+        if (userFavoriteCompetitionIdx == -1) {
+            if (authCtx.usersPreferences.favoriteCompetitions.length >= 5) {
+                toast({
+                    variant: "destructive",
+                    title: "Error!",
+                    description: "Cannot add more than 5 competitions to favorites.",
+                });
+                return;
+            }
+
+            userFavoriteCompetitions.push(compID);
+        } else {
+            userFavoriteCompetitions.splice(userFavoriteCompetitionIdx, 1);
+        }
+
+        try {
+            const resp: AxiosResponse<IUsersPreferencesResponse> = await axiosPrivate.patch("/users/preferences", {
+                favoriteCompetitions: userFavoriteCompetitions,
+            });
+            authCtx.setUsersPreferences(resp.data.data);
+        } catch (err) {
+            toast({
+                variant: "destructive",
+                title: "Error!",
+                description: "Failed to update user's favorite competitions.",
+            });
+        }
+    };
 
     const userFavoriteTeamsIDs = authCtx.usersPreferences.favoriteTeams;
     const userFavoriteCompsIDs = authCtx.usersPreferences.favoriteCompetitions;
@@ -115,16 +155,37 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
                     </Accordion>
                 </section>
                 {matchesDisplayOrder.map((comp, idx) => (
-                    <Card key={idx} className="mb-5">
-                        <CardHeader className={"bg-muted p-3 rounded-md rounded-b-none"}>
+                    <Card key={idx} className="mb-5 group">
+                        <CardHeader className="bg-muted p-3 rounded-md rounded-b-none flex flex-row items-center justify-between">
                             <CardTitle className="text-md">
                                 <NavLink
                                     to={`/competitions/id/${comp.competitionID}`}
-                                    className="font-normal hover:font-black focus:font-black"
+                                    className="font-normal transition-all hover:font-black focus:font-black"
                                 >
                                     {comp.displayName}
                                 </NavLink>
                             </CardTitle>
+
+                            {authCtx.firebaseUser && (
+                                <>
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="w-5 h-5 hidden group-hover:block"
+                                        onClick={() => updateUserFavoriteCompetitions(comp.competitionID)}
+                                    >
+                                        <Heart
+                                            className={cn(
+                                                "h-[1rem] w-[1rem] transition-all stroke-primary",
+                                                authCtx.usersPreferences.favoriteCompetitions.includes(
+                                                    comp.competitionID,
+                                                ) && "fill-primary",
+                                            )}
+                                        />
+                                        <span className="sr-only">Toggle favorite competition</span>
+                                    </Button>
+                                </>
+                            )}
                         </CardHeader>
                         <CardContent className="flex flex-col w-full p-0">
                             {comp.matches.map((match) => (
