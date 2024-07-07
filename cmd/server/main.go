@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
@@ -32,7 +33,13 @@ func main() {
 	afSerivce := apifootball.NewService(uhServer.Logger, uhServer.Config.APIFootballKey)
 	uhServer.APIFootballService = afSerivce
 
-	opt := option.WithCredentialsFile(uhServer.Config.FirebaseCredsFile)
+	credsJSON, err := json.Marshal(uhServer.Config.FirebaseCreds)
+	if err != nil {
+		uhServer.Logger.Error("Error marshaling Firebase credentials: %v", err)
+		os.Exit(1)
+	}
+
+	opt := option.WithCredentialsJSON(credsJSON)
 	firebaseApp, err := firebase.NewApp(context.Background(), nil, opt)
 	if err != nil {
 		uhServer.Logger.Error(err.Error())

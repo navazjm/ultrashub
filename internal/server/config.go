@@ -18,8 +18,8 @@ type Config struct {
 		MaxIdleConns int
 		MaxIdleTime  time.Duration
 	}
-	APIFootballKey    string
-	FirebaseCredsFile string
+	APIFootballKey string
+	FirebaseCreds  map[string]string
 	// only need cors for local development
 	Cors struct {
 		TrustedOrigins []string
@@ -48,8 +48,21 @@ func NewConfig() (*Config, error) {
 	flag.IntVar(&cfg.DB.MaxIdleConns, "db-max-idle-conns", 25, "PostgreSQL max idle connections")
 	flag.DurationVar(&cfg.DB.MaxIdleTime, "db-max-idle-time", 15*time.Minute, "PostgreSQL max connection idle time")
 	flag.StringVar(&cfg.APIFootballKey, "af-key", os.Getenv("API_FOOTBALL_KEY"), "API Key for API-Football")
-	flag.StringVar(&cfg.FirebaseCredsFile, "firebase-creds-file", os.Getenv("ULTRASHUB_FIREBASE_CREDS_FILE"), "Path to firebase credentials file")
 	flag.Parse()
+
+	cfg.FirebaseCreds = map[string]string{
+		"type":                        os.Getenv("FIREBASE_TYPE"),
+		"project_id":                  os.Getenv("FIREBASE_PROJECT_ID"),
+		"private_key_id":              os.Getenv("FIREBASE_PRIVATE_KEY_ID"),
+		"private_key":                 os.Getenv("FIREBASE_PRIVATE_KEY"),
+		"client_email":                os.Getenv("FIREBASE_CLIENT_EMAIL"),
+		"client_id":                   os.Getenv("FIREBASE_CLIENT_ID"),
+		"auth_uri":                    os.Getenv("FIREBASE_AUTH_URI"),
+		"token_uri":                   os.Getenv("FIREBASE_TOKEN_URI"),
+		"auth_provider_x509_cert_url": os.Getenv("FIREBASE_AUTH_PROVIDER_X509_CERT_URL"),
+		"client_x509_cert_url":        os.Getenv("FIREBASE_CLIENT_X509_CERT_URL"),
+		"universe_domain":             os.Getenv("FIREBASE_UNIVERSE_DOMAIN"),
+	}
 
 	return cfg, nil
 }
