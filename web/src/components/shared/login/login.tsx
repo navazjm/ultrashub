@@ -27,6 +27,7 @@ export const LoginProvidersComponent = (props: ILoginProvidersComponentProps) =>
                 navigate(previousLocation);
             }
         } catch (err) {
+            console.error(err);
             if (ResponseToolbox.DoesAccountExistWithDiffCredentials(err as FirebaseError)) {
                 toast({
                     variant: "destructive",
