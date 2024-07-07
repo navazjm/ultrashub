@@ -14,7 +14,13 @@ import (
 
 func (srv *Server) secureHeaders(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Security-Policy", "default-src 'self'; style-src 'self' fonts.googleapis.com; font-src fonts.gstatic.com; img-src * data:; script-src 'self' https://cdn.usefathom.com")
+		w.Header().Set("Content-Security-Policy", `
+            default-src 'self'; 
+            style-src 'self' 'unsafe-inline' fonts.googleapis.com; 
+            font-src fonts.gstatic.com; 
+            img-src * data:; 
+            script-src 'self' https://cdn.usefathom.com apis.google.com;
+        `)
 		w.Header().Set("Cross-Origin-Opener-Policy", "same-origin")
 		w.Header().Set("Cross-Origin-Resource-Policy", "same-origin")
 		w.Header().Set("Origin-Agent-Cluster", "?1")
