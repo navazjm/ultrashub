@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import {
     browserLocalPersistence,
+    FacebookAuthProvider,
     getAuth,
     GoogleAuthProvider,
     setPersistence,
@@ -20,6 +21,7 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 export const firebaseAuth = getAuth(firebaseApp);
 const firebaseGoogleAuthProvider = new GoogleAuthProvider();
+const firebaseFacebookAuthProvider = new FacebookAuthProvider();
 
 // Set persistence
 setPersistence(firebaseAuth, browserLocalPersistence).catch((error) => {
@@ -28,6 +30,10 @@ setPersistence(firebaseAuth, browserLocalPersistence).catch((error) => {
 
 export const signInWithGoogle = async () => {
     await signInWithPopup(firebaseAuth, firebaseGoogleAuthProvider);
+};
+
+export const signInWithFacebook = async () => {
+    await signInWithPopup(firebaseAuth, firebaseFacebookAuthProvider);
 };
 
 export const signOutUser = async () => {
