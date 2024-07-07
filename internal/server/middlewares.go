@@ -21,6 +21,7 @@ func (srv *Server) secureHeaders(next http.Handler) http.Handler {
             font-src fonts.gstatic.com; 
             img-src * data:; 
             script-src 'self' https://cdn.usefathom.com apis.google.com;
+            frame-src 'self' ultrashub-c71e0.firebaseapp.com;
         `)
 		w.Header().Set("Cross-Origin-Opener-Policy", "same-origin")
 		w.Header().Set("Cross-Origin-Resource-Policy", "same-origin")
