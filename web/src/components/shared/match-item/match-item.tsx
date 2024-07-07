@@ -7,7 +7,6 @@ import { MatchScorelineComponent } from "@/components/shared/match-scoreline/mat
 import { cn } from "@/lib/shadcn";
 import { useAuthContext } from "@/common/auth/auth.hooks";
 import { MatchToolbox } from "@/common/toolbox/match";
-import { match } from "assert";
 
 interface IMatchItemComponentProps {
     match: IMatch;
