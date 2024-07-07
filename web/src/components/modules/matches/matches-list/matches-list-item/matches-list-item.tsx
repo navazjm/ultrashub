@@ -29,20 +29,20 @@ export const MatchesListItemComponent = (props: IMatchesListItemComponentProps) 
     const matchInProgress: boolean = MatchToolbox.isMatchInProgress(props.match.fixture.status.short);
     const matchHasStarted: boolean = MatchToolbox.hasMatchStarted(props.match.fixture.status.short);
 
-    let toggleHomeTeamFavoriteBtnText = `Add ${props.match.teams.home.name} to favorites`;
+    let toggleHomeTeamFavoriteBtnText = `Add ${props.match.teams.home.name} to favorite teams`;
     const homeTeamUserFavoritesIdx = authCtx.usersPreferences.favoriteTeams.findIndex(
         (teamID) => teamID === props.match.teams.home.id,
     );
     if (homeTeamUserFavoritesIdx !== -1) {
-        toggleHomeTeamFavoriteBtnText = `Remove ${props.match.teams.home.name} to favorites`;
+        toggleHomeTeamFavoriteBtnText = `Remove ${props.match.teams.home.name} as a favorite team`;
     }
 
-    let toggleAwayTeamFavoriteBtnText = `Add ${props.match.teams.away.name} to favorites`;
+    let toggleAwayTeamFavoriteBtnText = `Add ${props.match.teams.away.name} to favorite teams`;
     const awayTeamUserFavoritesIdx = authCtx.usersPreferences.favoriteTeams.findIndex(
         (teamID) => teamID === props.match.teams.away.id,
     );
     if (awayTeamUserFavoritesIdx !== -1) {
-        toggleAwayTeamFavoriteBtnText = `Remove ${props.match.teams.away.name} to favorites`;
+        toggleAwayTeamFavoriteBtnText = `Remove ${props.match.teams.away.name} as a favorite team`;
     }
 
     const updateUserFavoriteTeams = async (
@@ -80,7 +80,7 @@ export const MatchesListItemComponent = (props: IMatchesListItemComponentProps) 
         } catch (err) {
             toast({ variant: "destructive", title: "Error!", description: "Failed to update user's favorite teams." });
         } finally {
-            isHomeTeam ? setIsTogglingHomeTeam(true) : setIsTogglingAwayTeam(true);
+            isHomeTeam ? setIsTogglingHomeTeam(false) : setIsTogglingAwayTeam(false);
             setIsDropdownOpen(false);
         }
     };
