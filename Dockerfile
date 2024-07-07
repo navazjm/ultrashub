@@ -4,7 +4,8 @@ FROM node:20.15-alpine as frontend
 WORKDIR /app
 
 # Copy only the necessary files for installing dependencies
-COPY web/package.json web/package-lock.json ./
+# COPY web/package.json web/package-lock.json ./
+COPY web/package.json ./
 
 # Install dependencies
 RUN npm install
