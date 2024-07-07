@@ -40,7 +40,7 @@ export const CompetitionComponent = (props: ICompetitionComponentProps) => {
     }
 
     const updateUserFavoriteCompetitions = async (compID: number) => {
-        const userFavoriteCompetitions = authCtx.usersPreferences.favoriteCompetitions;
+        const userFavoriteCompetitions = [...authCtx.usersPreferences.favoriteCompetitions];
         const userFavoriteCompetitionIdx = userFavoriteCompetitions.findIndex((id) => id === compID);
         if (userFavoriteCompetitionIdx == -1) {
             if (authCtx.usersPreferences.favoriteCompetitions.length >= 5) {

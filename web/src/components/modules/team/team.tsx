@@ -34,7 +34,7 @@ export const TeamComponent = (props: ITeamComponentProps) => {
     }
 
     const updateUserFavoriteTeams = async (teamID: number) => {
-        const userFavoriteTeams = authCtx.usersPreferences.favoriteTeams;
+        const userFavoriteTeams = [...authCtx.usersPreferences.favoriteTeams];
         const userFavoriteTeamIdx = userFavoriteTeams.findIndex((id) => id === teamID);
         if (userFavoriteTeamIdx == -1) {
             if (authCtx.usersPreferences.favoriteTeams.length >= 5) {
@@ -97,7 +97,7 @@ export const TeamComponent = (props: ITeamComponentProps) => {
                                         className={cn(
                                             "h-[2rem] w-[2rem] transition-all stroke-primary",
                                             authCtx.usersPreferences.favoriteTeams.includes(data.team.team.id) &&
-                                            "fill-primary",
+                                                "fill-primary",
                                         )}
                                     />
                                 )}

@@ -39,7 +39,7 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
     }
 
     const updateUserFavoriteCompetitions = async (compID: number) => {
-        const userFavoriteCompetitions = authCtx.usersPreferences.favoriteCompetitions;
+        const userFavoriteCompetitions = [...authCtx.usersPreferences.favoriteCompetitions];
         const userFavoriteCompetitionIdx = userFavoriteCompetitions.findIndex((id) => id === compID);
         if (userFavoriteCompetitionIdx == -1) {
             if (authCtx.usersPreferences.favoriteCompetitions.length >= 5) {
@@ -70,8 +70,8 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
         }
     };
 
-    const userFavoriteTeamsIDs = authCtx.usersPreferences.favoriteTeams;
-    const userFavoriteCompsIDs = authCtx.usersPreferences.favoriteCompetitions;
+    const userFavoriteTeamsIDs = [...authCtx.usersPreferences.favoriteTeams];
+    const userFavoriteCompsIDs = [...authCtx.usersPreferences.favoriteCompetitions];
 
     // If we found a favorite a team within a non favorited competition,
     // include the competition in user favorites to be displayed at the top of the page

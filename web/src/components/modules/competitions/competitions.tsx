@@ -24,7 +24,7 @@ export const CompetitionsComponent = () => {
         );
     }
 
-    const userFavoriteCompsIDs = authCtx.usersPreferences.favoriteCompetitions;
+    const userFavoriteCompsIDs = [...authCtx.usersPreferences.favoriteCompetitions];
 
     const userFavoriteCompetitions: ICompetition[] = [];
     const topCompetitions: ICompetition[] = [];
