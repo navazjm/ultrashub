@@ -155,8 +155,8 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
                     </Accordion>
                 </section>
                 {matchesDisplayOrder.map((comp, idx) => (
-                    <Card key={idx} className="mb-5 group">
-                        <CardHeader className="bg-muted p-3 rounded-md rounded-b-none flex flex-row items-center justify-between">
+                    <Card key={idx} className="mb-5">
+                        <CardHeader className="bg-muted p-3 rounded-md rounded-b-none flex flex-row items-center justify-between h-[50px]">
                             <CardTitle className="text-md">
                                 <NavLink
                                     to={`/competitions/id/${comp.competitionID}`}
@@ -171,12 +171,7 @@ export const MatchesListComponent = (props: IMatchesListComponentProps) => {
                                     <Button
                                         variant="ghost"
                                         size="icon"
-                                        className={cn(
-                                            "w-5 h-5 hidden group-hover:block",
-                                            authCtx.usersPreferences.favoriteCompetitions.includes(
-                                                comp.competitionID,
-                                            ) && "block",
-                                        )}
+                                        className="w-5 h-5 m-0"
                                         onClick={() => updateUserFavoriteCompetitions(comp.competitionID)}
                                     >
                                         <Heart
