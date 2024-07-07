@@ -62,32 +62,48 @@ const NavbarNavContentComponent = (props: INavbarNavComponentProps) => {
                 <section className="flex flex-col lg:flex-row lg:items-center gap-2">
                     <NavLink
                         to="/"
-                        className="flex gap-2 items-center text-nowrap w-full p-2 rounded-md hover:bg-muted focus:bg-muted font-medium"
                         onClick={() => closeSheet()}
+                        className={({ isActive }) =>
+                            isActive
+                                ? "flex gap-2 items-center text-nowrap w-full p-2 rounded-md bg-muted font-medium"
+                                : "flex gap-2 items-center text-nowrap w-full p-2 rounded-md hover:bg-muted focus:bg-muted font-medium"
+                        }
                     >
                         <Calendar className="lg:hidden" />
                         Matches
                     </NavLink>
                     <NavLink
                         to="/competitions/all"
-                        className="flex gap-2 items-center text-nowrap w-full p-2 rounded-md hover:bg-muted focus:bg-muted font-medium"
                         onClick={() => closeSheet()}
+                        className={({ isActive }) =>
+                            isActive
+                                ? "flex gap-2 items-center text-nowrap w-full p-2 rounded-md bg-muted font-medium"
+                                : "flex gap-2 items-center text-nowrap w-full p-2 rounded-md hover:bg-muted focus:bg-muted font-medium"
+                        }
                     >
                         <Trophy className="lg:hidden" />
                         Competitions
                     </NavLink>
                     <NavLink
                         to="/competitions/id/9"
-                        className="flex gap-2 items-center text-nowrap w-full p-2 rounded-md hover:bg-muted focus:bg-muted font-medium"
                         onClick={() => closeSheet()}
+                        className={({ isActive }) =>
+                            isActive
+                                ? "flex gap-2 items-center text-nowrap w-full p-2 rounded-md bg-muted font-medium"
+                                : "flex gap-2 items-center text-nowrap w-full p-2 rounded-md hover:bg-muted focus:bg-muted font-medium"
+                        }
                     >
                         <Globe className="lg:hidden" />
                         Copa America 2024
                     </NavLink>
                     <NavLink
                         to="/competitions/id/4"
-                        className="flex gap-2 items-center  text-nowrap w-full p-2 rounded-md hover:bg-muted focus:bg-muted font-medium"
                         onClick={() => closeSheet()}
+                        className={({ isActive }) =>
+                            isActive
+                                ? "flex gap-2 items-center text-nowrap w-full p-2 rounded-md bg-muted font-medium"
+                                : "flex gap-2 items-center text-nowrap w-full p-2 rounded-md hover:bg-muted focus:bg-muted font-medium"
+                        }
                     >
                         <Globe className="lg:hidden" />
                         UEFA Euro 2024
