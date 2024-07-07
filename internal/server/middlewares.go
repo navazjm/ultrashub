@@ -23,7 +23,7 @@ func (srv *Server) secureHeaders(next http.Handler) http.Handler {
             script-src 'self' https://cdn.usefathom.com apis.google.com;
             frame-src 'self' ultrashub-c71e0.firebaseapp.com;
         `)
-		w.Header().Set("Cross-Origin-Opener-Policy", "same-origin")
+		w.Header().Set("Cross-Origin-Opener-Policy", "same-origin-allow-popups")
 		w.Header().Set("Cross-Origin-Resource-Policy", "same-origin")
 		w.Header().Set("Origin-Agent-Cluster", "?1")
 		w.Header().Set("Referrer-Policy", "strict-origin-when-cross-origin")
