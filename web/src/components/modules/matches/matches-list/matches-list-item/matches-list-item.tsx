@@ -157,60 +157,62 @@ export const MatchesListItemComponent = (props: IMatchesListItemComponentProps) 
                     <p className="hidden sm:block sm:text-xs md:text-sm lg:text-base">{props.match.teams.away.name}</p>
                 </section>
                 <section className="w-[16px]">
-                    <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="w-5 h-5 p-0">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="16"
-                                    height="16"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="lucide lucide-ellipsis-vertical"
+                    {authCtx.firebaseUser && (
+                        <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" className="w-5 h-5 p-0">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="lucide lucide-ellipsis-vertical"
+                                    >
+                                        <circle cx="12" cy="12" r="1" />
+                                        <circle cx="12" cy="5" r="1" />
+                                        <circle cx="12" cy="19" r="1" />
+                                    </svg>
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="p-0 w-[300px]">
+                                <Button
+                                    className="w-full"
+                                    variant="ghost"
+                                    onClick={(evt) =>
+                                        updateUserFavoriteTeams(
+                                            evt,
+                                            props.match.teams.home.id,
+                                            homeTeamUserFavoritesIdx,
+                                            true,
+                                        )
+                                    }
+                                    disabled={isTogglingHomeTeam || isTogglingAwayTeam}
                                 >
-                                    <circle cx="12" cy="12" r="1" />
-                                    <circle cx="12" cy="5" r="1" />
-                                    <circle cx="12" cy="19" r="1" />
-                                </svg>
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className="p-0 w-[300px]">
-                            <Button
-                                className="w-full"
-                                variant="ghost"
-                                onClick={(evt) =>
-                                    updateUserFavoriteTeams(
-                                        evt,
-                                        props.match.teams.home.id,
-                                        homeTeamUserFavoritesIdx,
-                                        true,
-                                    )
-                                }
-                                disabled={isTogglingHomeTeam || isTogglingAwayTeam}
-                            >
-                                {isTogglingHomeTeam ? <Spinner /> : <>{toggleHomeTeamFavoriteBtnText}</>}
-                            </Button>
-                            <Button
-                                className="w-full"
-                                variant="ghost"
-                                onClick={(evt) =>
-                                    updateUserFavoriteTeams(
-                                        evt,
-                                        props.match.teams.away.id,
-                                        awayTeamUserFavoritesIdx,
-                                        false,
-                                    )
-                                }
-                                disabled={isTogglingHomeTeam || isTogglingAwayTeam}
-                            >
-                                {isTogglingAwayTeam ? <Spinner /> : <>{toggleAwayTeamFavoriteBtnText}</>}
-                            </Button>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                                    {isTogglingHomeTeam ? <Spinner /> : <>{toggleHomeTeamFavoriteBtnText}</>}
+                                </Button>
+                                <Button
+                                    className="w-full"
+                                    variant="ghost"
+                                    onClick={(evt) =>
+                                        updateUserFavoriteTeams(
+                                            evt,
+                                            props.match.teams.away.id,
+                                            awayTeamUserFavoritesIdx,
+                                            false,
+                                        )
+                                    }
+                                    disabled={isTogglingHomeTeam || isTogglingAwayTeam}
+                                >
+                                    {isTogglingAwayTeam ? <Spinner /> : <>{toggleAwayTeamFavoriteBtnText}</>}
+                                </Button>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    )}
                 </section>
             </section>
         </NavLink>
