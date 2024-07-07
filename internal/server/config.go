@@ -51,6 +51,7 @@ func NewConfig() (*Config, error) {
 	flag.StringVar(&cfg.APIFootballKey, "af-key", os.Getenv("API_FOOTBALL_KEY"), "API Key for API-Football")
 	flag.Parse()
 
+	// digital ocean adds extra back slashes to their env vars
 	privateKey := os.Getenv("FIREBASE_PRIVATE_KEY")
 	privateKey = strings.Replace(privateKey, "\\n", "\n", -1)
 

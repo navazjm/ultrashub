@@ -5,6 +5,7 @@ WORKDIR /app
 
 # Copy only the necessary files for installing dependencies
 # COPY web/package.json web/package-lock.json ./
+# used to use the above, but weird issue with npm not including optional deps on MacOS
 COPY web/package.json ./
 
 # Install dependencies
