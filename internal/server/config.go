@@ -52,14 +52,14 @@ func NewConfig() (*Config, error) {
 	flag.Parse()
 
 	// digital ocean adds extra back slashes to their env vars
-	privateKey := os.Getenv("FIREBASE_PRIVATE_KEY")
-	privateKey = strings.Replace(privateKey, "\\n", "\n", -1)
+	firebasePrivateKey := os.Getenv("FIREBASE_PRIVATE_KEY")
+	firebasePrivateKey = strings.Replace(firebasePrivateKey, "\\n", "\n", -1)
 
 	cfg.FirebaseCreds = map[string]string{
 		"type":                        os.Getenv("FIREBASE_TYPE"),
 		"project_id":                  os.Getenv("FIREBASE_PROJECT_ID"),
 		"private_key_id":              os.Getenv("FIREBASE_PRIVATE_KEY_ID"),
-		"private_key":                 privateKey,
+		"private_key":                 firebasePrivateKey,
 		"client_email":                os.Getenv("FIREBASE_CLIENT_EMAIL"),
 		"client_id":                   os.Getenv("FIREBASE_CLIENT_ID"),
 		"auth_uri":                    os.Getenv("FIREBASE_AUTH_URI"),
