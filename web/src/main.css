@@ -26,6 +26,7 @@
         --ring: 287 34% 38%;
         --radius: 0.5rem;
     }
+
     .dark {
         --background: 287 10% 5%;
         --foreground: 287 0% 90%;
@@ -117,9 +118,12 @@
     * {
         @apply border-border;
     }
+
     html {
         font-family: "Montserrat", "Proxima Nova", system-ui, sans-serif;
+        overflow-x: hidden;
     }
+
     body {
         @apply bg-background text-foreground;
     }

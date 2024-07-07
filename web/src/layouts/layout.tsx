@@ -1,15 +1,17 @@
 import { Toaster } from "@/components/ui/toaster";
-import { IProps } from "@/components/common/types";
+import { IProps } from "@/common/types";
 import { NavbarComponent } from "./navbar/navbar";
 
 export const Layout = (props: IProps) => {
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-4 xl:grid-cols-5 gap-5">
-            <header className="lg:h-screen shadow-sm shadow-muted sticky top-0 bg-background z-10">
+        <>
+            <header className="shadow-sm shadow-muted sticky top-0 bg-background z-10 py-3 px-2 sm:px-5 mb-2">
                 <NavbarComponent />
             </header>
-            <main className="p-3 pt-0 lg:col-span-3 lg:p-5">{props.children}</main>
+            <main className="lg:h-[calc(100vh-84px)] w-screen lg:w-10/12 mx-auto my-0 grid grid-cols-3 gap-5 px-2 sm:px-5 pb-3 overflow-x-hidden">
+                {props.children}
+            </main>
             <Toaster />
-        </div>
+        </>
     );
 };

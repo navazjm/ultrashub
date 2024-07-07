@@ -10,7 +10,6 @@ import (
 var (
 	ErrRecordNotFound = errors.New("record not found")
 	ErrEditConflict   = errors.New("edit conflict")
-	ErrDuplicateEmail = errors.New("duplicate email")
 )
 
 func LogError(r *http.Request, logger *slog.Logger, err error) {
@@ -36,7 +35,7 @@ func ServerErrorResponse(w http.ResponseWriter, r *http.Request, logger *slog.Lo
 	LogError(r, logger, err)
 
 	message := "the server encountered a problem and could not process your request"
-	ErrorResponse(w, r,logger, http.StatusInternalServerError, message)
+	ErrorResponse(w, r, logger, http.StatusInternalServerError, message)
 }
 
 func NotFoundResponse(w http.ResponseWriter, r *http.Request, logger *slog.Logger) {
@@ -65,11 +64,6 @@ func EditConflictResponse(w http.ResponseWriter, r *http.Request, logger *slog.L
 func RateLimitExceededResponse(w http.ResponseWriter, r *http.Request, logger *slog.Logger) {
 	message := "rate limit exceeded"
 	ErrorResponse(w, r, logger, http.StatusTooManyRequests, message)
-}
-
-func InvalidCredentialsResponse(w http.ResponseWriter, r *http.Request, logger *slog.Logger) {
-	message := "invalid authentication credentials"
-	ErrorResponse(w, r, logger, http.StatusUnauthorized, message)
 }
 
 func InvalidAuthenticationTokenResponse(w http.ResponseWriter, r *http.Request, logger *slog.Logger) {

@@ -1,4 +1,4 @@
-import { MatchesComponent } from "@/components/features/matches/matches";
+import { MatchesComponent } from "@/components/modules/matches/matches";
 
 export const MatchesPage = () => {
     return (

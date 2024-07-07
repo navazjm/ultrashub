@@ -5,3 +5,8 @@ export const BASE_API_URL = import.meta.env.VITE_ULTRASHUB_BASE_URL || "http://l
 export default axios.create({
     baseURL: BASE_API_URL,
 });
+export const axiosPrivate = axios.create({
+    baseURL: BASE_API_URL,
+    headers: { "Content-Type": "application/json" },
+    withCredentials: true,
+});

@@ -5,12 +5,14 @@ import (
 	"os"
 
 	"github.com/navazjm/ultrashub/internal/apifootball"
+	"github.com/navazjm/ultrashub/internal/users"
 )
 
 type Server struct {
-	Config      *Config
-	Logger      *slog.Logger
+	Config             *Config
+	Logger             *slog.Logger
 	APIFootballService *apifootball.Service
+	UsersService       *users.Service
 }
 
 func New() *Server {

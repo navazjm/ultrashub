@@ -1,6 +1,6 @@
 export const PrivacyPolicyPage = () => {
     return (
-        <>
+        <section className="col-span-3">
             <section className="space-y-5 my-5">
                 <p>Effective date: February 9, 2024</p>
                 <p>Last updated: February 9, 2024</p>
@@ -339,6 +339,6 @@ export const PrivacyPolicyPage = () => {
                     </a>
                 </p>
             </section>
-        </>
+        </section>
     );
 };
