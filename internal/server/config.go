@@ -3,6 +3,7 @@ package server
 import (
 	"flag"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/joho/godotenv"
@@ -50,11 +51,14 @@ func NewConfig() (*Config, error) {
 	flag.StringVar(&cfg.APIFootballKey, "af-key", os.Getenv("API_FOOTBALL_KEY"), "API Key for API-Football")
 	flag.Parse()
 
+	privateKey := os.Getenv("FIREBASE_PRIVATE_KEY")
+	privateKey = strings.Replace(privateKey, "\\n", "\n", -1)
+
 	cfg.FirebaseCreds = map[string]string{
 		"type":                        os.Getenv("FIREBASE_TYPE"),
 		"project_id":                  os.Getenv("FIREBASE_PROJECT_ID"),
 		"private_key_id":              os.Getenv("FIREBASE_PRIVATE_KEY_ID"),
-		"private_key":                 os.Getenv("FIREBASE_PRIVATE_KEY"),
+		"private_key":                 privateKey,
 		"client_email":                os.Getenv("FIREBASE_CLIENT_EMAIL"),
 		"client_id":                   os.Getenv("FIREBASE_CLIENT_ID"),
 		"auth_uri":                    os.Getenv("FIREBASE_AUTH_URI"),
