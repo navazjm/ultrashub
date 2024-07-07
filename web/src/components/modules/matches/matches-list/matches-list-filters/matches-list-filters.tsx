@@ -96,7 +96,7 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersComponentP
     return (
         <section className="flex flex-col gap-2">
             <section className="w-full grid grid-cols-6 gap-2">
-                <Button variant="outline" onClick={() => onClickAdjacentDateBtn(-1)}>
+                <Button variant="outline" onClick={() => onClickAdjacentDateBtn(-1)} className="py-1 px-2">
                     <ChevronLeft />
                 </Button>
                 <section className="col-span-4">
@@ -120,7 +120,7 @@ export const MatchesListFiltersComponent = (props: IMatchesListFiltersComponentP
                         </PopoverContent>
                     </Popover>
                 </section>
-                <Button variant="outline" onClick={() => onClickAdjacentDateBtn(1)}>
+                <Button variant="outline" onClick={() => onClickAdjacentDateBtn(1)} className="py-1 px-2">
                     <ChevronRight />
                 </Button>
             </section>
