@@ -1,6 +1,6 @@
-import { AxiosError, AxiosResponse } from "axios";
-import { ErrorResponse } from "@/components/common/responses/error";
+import { AxiosError } from "axios";
 import { FirebaseError } from "firebase/app";
+import { ErrorResponse } from "@/common/responses/error";
 
 export class ResponseToolbox {
     /**

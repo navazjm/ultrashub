@@ -4,7 +4,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ApiFootballLogoComponent } from "@/components/shared/api-football-logo/api-football-logo";
 import { MoveRight } from "lucide-react";
 import { cn } from "@/lib/shadcn";
-import { MatchToolbox } from "@/common/toolbox/match";
 import { useAuthContext } from "@/common/auth/auth.hooks";
 
 interface ICompetitionClubsComponentProps {

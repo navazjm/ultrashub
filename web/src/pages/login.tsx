@@ -1,6 +1,6 @@
 import ultrashubLogo from "@/assets/img/logo.png";
 import { LoginFooterComponent, LoginProvidersComponent } from "@/components/shared/login/login";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { NavLink } from "react-router-dom";
 
 export const LoginPage = () => {
