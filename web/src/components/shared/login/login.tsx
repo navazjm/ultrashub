@@ -1,13 +1,11 @@
 import { ResponseToolbox } from "@/common/toolbox/response";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { signInWithFacebook, signInWithGoogle } from "@/lib/firebase";
+import { signInWithGoogle } from "@/lib/firebase";
 import { FirebaseError } from "firebase/app";
-import { SiFacebook, SiGoogle } from "@icons-pack/react-simple-icons";
+import { SiGoogle } from "@icons-pack/react-simple-icons";
 import { Dot } from "lucide-react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-
-type LoginProvider = "fb" | "g";
 
 interface ILoginProvidersComponentProps {
     useNavigate: boolean;
@@ -19,9 +17,9 @@ export const LoginProvidersComponent = (props: ILoginProvidersComponentProps) =>
     const location = useLocation();
     const previousLocation = location.state?.previousLocation || "/";
 
-    const handleSignIn = async (provider: LoginProvider) => {
+    const handleSignIn = async () => {
         try {
-            provider === "g" ? await signInWithGoogle() : await signInWithFacebook();
+            await signInWithGoogle();
 
             if (props.useNavigate) {
                 navigate(previousLocation);
@@ -43,11 +41,7 @@ export const LoginProvidersComponent = (props: ILoginProvidersComponentProps) =>
 
     return (
         <section className="space-y-3">
-            <Button variant="outline" className="w-full" onClick={() => handleSignIn("fb")}>
-                <SiFacebook className="mr-2" />
-                Facebook
-            </Button>
-            <Button variant="outline" className="w-full" onClick={() => handleSignIn("g")}>
+            <Button variant="outline" className="w-full" onClick={() => handleSignIn()}>
                 <SiGoogle className="mr-2" />
                 Google
             </Button>
