@@ -98,7 +98,7 @@ The account system will not let you create an account without a Firebase project
 5. Copy the `firebaseConfig` object properties to their respective .env variables in both the project's root and web .env files. These
 .env variables will be prefixed with VITE_
 
-### PosgreSQL
+### PostgreSQL
 
 - You can either chose to use docker compose or to run a postgress db instance locally.
 
