@@ -16,7 +16,7 @@ func (srv *Server) secureHeaders(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Security-Policy", `
             default-src 'self'; 
-            connect-src 'self' identitytoolkit.googleapis.com;
+            connect-src 'self' identitytoolkit.googleapis.com securetoken.googleapis.com;
             style-src 'self' 'unsafe-inline' fonts.googleapis.com; 
             font-src fonts.gstatic.com; 
             img-src * data:; 
