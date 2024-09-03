@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Calendar, Globe, Menu, Trophy } from "lucide-react";
+import { Calendar, Menu, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggleComponent } from "./theme-toggle/theme-toggle";
@@ -83,30 +83,6 @@ const NavbarNavContentComponent = (props: INavbarNavComponentProps) => {
                     >
                         <Trophy className="lg:hidden" />
                         Competitions
-                    </NavLink>
-                    <NavLink
-                        to="/competitions/id/9"
-                        onClick={() => closeSheet()}
-                        className={({ isActive }) =>
-                            isActive
-                                ? "flex gap-2 items-center text-nowrap w-full p-2 rounded-md bg-muted font-medium"
-                                : "flex gap-2 items-center text-nowrap w-full p-2 rounded-md hover:bg-muted focus:bg-muted font-medium"
-                        }
-                    >
-                        <Globe className="lg:hidden" />
-                        Copa America 2024
-                    </NavLink>
-                    <NavLink
-                        to="/competitions/id/4"
-                        onClick={() => closeSheet()}
-                        className={({ isActive }) =>
-                            isActive
-                                ? "flex gap-2 items-center text-nowrap w-full p-2 rounded-md bg-muted font-medium"
-                                : "flex gap-2 items-center text-nowrap w-full p-2 rounded-md hover:bg-muted focus:bg-muted font-medium"
-                        }
-                    >
-                        <Globe className="lg:hidden" />
-                        UEFA Euro 2024
                     </NavLink>
                     <MoreLinksWrapperComponent closeSheet={closeSheet} />
                 </section>
