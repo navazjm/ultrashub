@@ -8,11 +8,11 @@ export const ErrorComponent = (props: IErrorComponentProps) => {
     const message = props.message ? props.message : "Uh oh! Encountered an error. Please try again later.";
 
     return (
-        <>
+        <section className="col-span-2">
             <h3 className="font-bold">{title}</h3>
             <section className="my-3">
                 <p>{message}</p>
             </section>
-        </>
+        </section>
     );
 };
